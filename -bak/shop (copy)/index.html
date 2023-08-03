@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta user-scale="0">
+    <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> -->
+    <link rel="stylesheet" href="styles.css">
+    <title>Test</title>
+</head>
+
+<body>
+    <div class="page-header">
+        <i class="fa-solid fa-bars bars-icon"></i>
+        <label>لیست محصولات</label>
+<!--         <i class="fa-solid fa-arrow-left back-icon"></i> -->
+    </div>
+    <div class="page-content">
+        <div class="top-toolbar hidden">
+            <div class="product-search-wrapper">
+                <i class="product-search-icon fa-solid fa-search"></i>
+                <input class="product-search-input"></input>
+            </div>
+        </div>
+        <div class="product-list"></div>
+    </div>
+    <div id="order-checkout-card" class="order-checkout-card">
+        <button class="btn">ثبت سفارش</button>
+    </div>
+
+    <!-- cloneables -->
+    <div class="hidden">
+            <!-- cloneable product card -->
+            <div id="cloneable-product" class="product-card">
+                <img class="product-image" src="resources/img/bottle-product-mockup-psd-beauty-packaging_53876-130082.avif"></img>
+                <div class="product-info">
+                    <span class="product-title">محصول تست</span>
+                    <span class="product-description">توضیحات تستی برای این محصولی که فقط برای پر کردن این قسمت ثبت شده لطفا جدی نگیرید</span>
+                    <span class="product-price">10000</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn product-action add">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <span class="product-order-count">0</span>
+                    <button class="btn product-action remove">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- cloneable product card placeholder -->
+            <div id="cloneable-product-placeholder" class="product-card">
+                <div class="product-image content-placeholder"></div>
+                <div class="product-info">
+                    <span class="product-title content-placeholder" style="height: 1rem; width: 50%; "></span>
+                    <span class="product-description content-placeholder"  style="height: 2rem; width: 100%; "></span>
+                    <span class="product-price content-placeholder"  style="height: 1rem; width: 25%; "></span>
+                </div>
+                <div class="content-placeholder" style="width: 30px; height: 30px;"></div>
+            </div>
+
+            <!-- cloneable category -->
+            <div id="cloneable-category" class="category hidden">
+                <span class="category-title">نام دسته</span>
+            </div>
+    </div>
+
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/persian.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
