@@ -102,7 +102,7 @@ let productManager = {
                     });
                 categorySelector.classList.add('active-selector');
                 categorySelector.classList.remove('target-selector');
-                productManager.dom.categorySelectorContainer.scrollTo({left: categorySelector.offsetLeft - window.innerWidth / 2, behavior: 'smooth'});
+                productManager.dom.categorySelectorContainer.scrollTo({left: categorySelector.offsetLeft - screen.width / 2, behavior: 'smooth'});
             }
 
         if(o){

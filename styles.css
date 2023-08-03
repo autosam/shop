@@ -214,17 +214,15 @@ body {
     width: 55%;
 }
 
-.product-card .product-info > span {
-    margin-bottom: 10px;
-}
-
 .product-card .product-title {
     font-weight: bold;
     font-size: 0.8rem;
+    margin-bottom: 10px;
 }
 
 .product-card .product-description {
     font-size: 0.65rem;
+    margin-bottom: 10px;
 }
 
 .product-card .product-actions {
@@ -235,7 +233,7 @@ body {
     /* background: #ececec; */
     padding: 4px;
     border-radius: 10px;
-    width: 50px;
+    width: 15%;
     left: 20px;
 }
 
