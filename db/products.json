@@ -6,27 +6,34 @@
     "price": 282000,
     "category": "محافظ",
     "tags": {
-        "box_amount": "۲۴ عدد",
-        "meter": "متراژ ۱.۵"
+      "box_amount": "۲۴ عدد",
+      "meter": "متراژ ۱.۵"
     }
   },
   {
     "title": "محافظ شش خانه استاندارد P6000",
-    "description": "متراژ ۳",
     "image": "",
     "price": 300000,
-    "category": "محافظ"
+    "category": "محافظ",
+    "tags": {
+      "box_amount": "۲۴ عدد",
+      "meter": "متراژ ۳"
+    }
   },
   {
     "title": "محافظ شش خانه استاندارد P6000",
-    "description": "متراژ ۵",
+    "-description": "متراژ ۵",
     "image": "",
     "price": 331000,
-    "category": "محافظ"
+    "category": "محافظ",
+    "tags": {
+      "box_amount": "۲۴ عدد",
+      "meter": "متراژ ۵"
+    }
   },
   {
     "title": "محافظ سه خانه یخچال و فریز استاندارد P3100",
-    "description": "متراژ ۱.۵",
+    "description": "متراژ ۱.۵ - تعداد در کارتن: ۲۴ عدد",
     "image": "",
     "price": 263000,
     "category": "محافظ"
