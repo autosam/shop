@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta user-scale="0">
-    <!-- <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> -->
     <link rel="stylesheet" href="styles.css">
     <title>Test</title>
 </head>
@@ -17,7 +17,7 @@
             <i class="fa-solid fa-bars bars-icon"></i>
             <!-- <label>لیست محصولات</label> -->
             <img src="resources/img/logo-top.png" class="logo-top"></img>
-    <!--         <i class="fa-solid fa-arrow-left back-icon"></i> -->
+            <!--         <i class="fa-solid fa-arrow-left back-icon"></i> -->
         </div>
         <div class="page-toolbar">
             <div class="category-selector-container">
@@ -41,43 +41,73 @@
 
     <!-- cloneables -->
     <div id="cloneables" class="hidden">
-            <!-- cloneable category selector -->
-            <div id="cloneable-category-selector" class="toolbar-category-selector tap-effect hidden">
-                دسته
+        <!-- cloneable category selector -->
+        <div id="cloneable-category-selector" class="toolbar-category-selector tap-effect hidden">
+            دسته
+        </div>
+        <!-- cloneable product card -->
+        <div id="cloneable-product" class="product-card">
+            <img class="product-image" src="resources/img/placeholder_img.png"></img>
+            <div class="product-info">
+                <span class="product-title">محصول تست</span>
+                <span class="product-description"></span>
+                <span class="product-price">0</span>
+                <span class="product-tags"></span>
             </div>
-            <!-- cloneable product card -->
-            <div id="cloneable-product" class="product-card">
-                <img class="product-image" src="resources/img/placeholder_img.png"></img>
-                <div class="product-info">
-                    <span class="product-title">محصول تست</span>
-                    <span class="product-description">توضیحات تستی برای این محصولی که فقط برای پر کردن این قسمت ثبت شده لطفا جدی نگیرید</span>
-                    <span class="product-price">10000</span>
-                </div>
-                <div class="product-actions">
-                    <button class="btn product-action add tap-effect">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <span class="product-order-count">0</span>
-                    <button class="btn product-action remove tap-effect">
-                        <i class="fa-solid fa-minus"></i>
-                    </button>
-                </div>
+            <div class="product-actions">
+                <button class="btn product-action add tap-effect">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <span class="product-order-count">0</span>
+                <button class="btn product-action remove tap-effect">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
             </div>
-            <!-- cloneable product card placeholder -->
-            <div id="cloneable-product-placeholder" class="product-card">
-                <div class="product-image content-placeholder"></div>
-                <div class="product-info">
-                    <span class="product-title content-placeholder" style="height: 1rem; width: 50%; "></span>
-                    <span class="product-description content-placeholder"  style="height: 2rem; width: 100%; "></span>
-                    <span class="product-price content-placeholder"  style="height: 1rem; width: 25%; "></span>
-                </div>
-                <div class="content-placeholder" style="width: 30px; height: 30px;"></div>
+        </div>
+        <!-- cloneable product card placeholder -->
+        <div id="cloneable-product-placeholder" class="product-card">
+            <div class="product-image content-placeholder"></div>
+            <div class="product-info">
+                <span class="product-title content-placeholder" style="height: 1rem; width: 50%; "></span>
+                <span class="product-description content-placeholder" style="height: 2rem; width: 100%; "></span>
+                <span class="product-price content-placeholder" style="height: 1rem; width: 25%; "></span>
+            </div>
+            <div class="content-placeholder" style="width: 30px; height: 30px;"></div>
+        </div>
+
+        <!-- cloneable category -->
+        <div id="cloneable-category" class="category hidden">
+            <span class="category-title">نام دسته</span>
+        </div>
+
+        <!-- cloneable tag -->
+        <span id="cloneable-tag" class="tag">
+            <i class="tag-icon"></i>
+            <span class="tag-divider">|</span>
+            <span class="tag-text">تگ</span>
+        </span>
+
+        <!-- error loading product list -->
+        <div id="load-error" class="load-error-container">
+            <!-- <i class="fa-solid fa-times" style="
+                font-size: xxx-large;
+                background: rgb(211 211 211);
+                padding: 10px;
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
+                color: #f3f3f3;
+            "></i> -->
+            <div>
+                <!-- <h1>مشکلی پیش آمده!</h1>
+                <h2>لطفا دوباره تلاش کنید</h2> -->
+                <button id="retry-btn" class="btn">
+                    <i class="fa-solid fa-undo"></i>
+                    تلاش مجدد
+                </button>
             </div>
 
-            <!-- cloneable category -->
-            <div id="cloneable-category" class="category hidden">
-                <span class="category-title">نام دسته</span>
-            </div>
+        </div>
     </div>
 
     <script src="libs/jquery.min.js"></script>

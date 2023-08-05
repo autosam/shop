@@ -3,13 +3,24 @@ let main = {
         productManager.init();
         $(productManager.dom.orderCheckoutCard).hide();
 
-        this.test();
+        // this.test();
+        this.refreshProducts();
+    },
+    refreshProducts: function(){
+        setTimeout(() => {
+            productManager.loadProductList('db/products.json');
+        }, 0);
     },
     scrollByPercent: function (percent) {
         let totalHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
         let viewportHeight = window.innerHeight || document.documentElement.clientHeight;
         let pixelValue = (viewportHeight * percent) / 100;
         window.scrollTo(0, pixelValue + window.scrollY);
+    },
+    wait: function(ms){
+        return new Promise(resolve => {
+            setTimeout(() => resolve(), ms);
+        });
     },
     test: function(){
         for(let i = 0; i < 12; i++){
@@ -57,6 +68,7 @@ let productManager = {
         cloneableProduct: document.querySelector("#cloneable-product"),
         cloneableProductPlaceholder: document.querySelector("#cloneable-product-placeholder"),
         cloneableCategory: document.querySelector("#cloneable-category"),
+        cloneableTag: document.querySelector("#cloneable-tag"),
         orderCheckoutCard: document.querySelector("#order-checkout-card"),
     },
     init: function(){
@@ -77,6 +89,14 @@ let productManager = {
             let selector = productManager.dom.headerWrapper.querySelector(`#cat-selector-${activeCategoryId}`);
             selector.activate();
         }
+    },
+    createTag: function(icon, text, product){
+        let tag = this.dom.cloneableTag.cloneNode(true);
+        if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
+        if(text) tag.querySelector('.tag-text').innerHTML = text;
+        product.querySelector('.product-tags').appendChild(tag);
+        console.log('created tag' , tag);
+        return tag;
     },
     addCategory: function(o){
         let categoryId = utils.generateRandomChars();
@@ -134,9 +154,19 @@ let productManager = {
 
         if(o){
             if(o.title) title.textContent = o.title;
-            if(o.description) description.textContent = o.description;
+            if(o.description) description.textContent = o.description; else $(description).hide();
             if(o.price) price.textContent = o.price;
             if(o.image) image.src = o.image;
+            if(o.tags){
+                if(o.tags.meter){
+                    this.createTag('fa-ruler', o.tags.meter, product);
+                }
+                if(o.tags.box_amount){
+                    this.createTag('fa-box', o.tags.box_amount, product);
+                }
+            } else {
+                $(product.querySelector(".product-tags")).hide();
+            }
         }
 
         product.setAttribute('data-price', price.textContent);
@@ -203,7 +233,46 @@ let productManager = {
     },
     clearProductList: function(){
         this.dom.productList.innerHTML = '';
-    }
+    },
+    async loadProductList(path){
+        let list, categories = [];
+
+        productManager.clearProductList();
+
+        for(let i = 0; i < 12; i++){
+            productManager.addPlaceholderProduct();
+        }
+
+        await main.wait(utils.randomInt(100, 250));
+
+        try {
+            let response = await fetch(path);
+            list = await response.json();
+        } catch(e) {
+            this.dom.productList.innerHTML = document.querySelector('#load-error').outerHTML;
+            this.dom.productList.querySelector('#retry-btn').onclick = function(){
+                main.refreshProducts();
+            }
+            return;
+        }
+
+        productManager.clearProductList();
+
+        list.forEach(productDefinition => {
+            if(!productDefinition.category) return false;
+
+            let category = categories[productDefinition.category];
+
+            if(!category){
+                category = this.addCategory({title: productDefinition.category});
+                categories[productDefinition.category] = category;
+            }
+
+            let product = this.addProduct({...productDefinition, category});
+        });
+
+        productManager.onScroll();
+    },
 }
 
 let utils = {

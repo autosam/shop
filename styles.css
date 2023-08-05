@@ -145,15 +145,16 @@ body {
     flex-direction: column;
     gap: 30px;
     align-items: center;
+    /* margin-bottom: 110px; */
 }
 
-.product-list.has-order {
+/* .product-list.has-order {
     margin-bottom: 27%;
-}
+} */
 
 .order-checkout-card {
     width: 100%;
-    height: 12%;
+    height: 100px;
     background-color: rgb(245 245 245);
     bottom: 0px;
     position: fixed;
@@ -177,6 +178,8 @@ body {
 .product-card {
     background-color: rgb(255, 255, 255);
     height: 150px;
+    /* min-height: 100px;
+    max-height: 550px; */
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -190,7 +193,7 @@ body {
 
 .product-card .product-image {
     margin: 3%;
-    height: 50%;
+    height: 75px;
     aspect-ratio: 4/4;
     border-radius: 10px;
     object-fit: cover;
@@ -203,6 +206,7 @@ body {
     gap: 10px;
     position: relative;
     width: 55%;
+    max-height: 120px;
 }
 
 .product-card .product-title {
@@ -239,7 +243,7 @@ body {
 
 .product-card .product-price {
     font-size: 0.65rem;
-    color: rgb(255, 72, 0);
+    color: #ff6600;
     font-weight: bold;
 }
 
@@ -303,6 +307,39 @@ body {
     text-align: center;
 }
 
+.product-tags {
+    display: flex;
+    /* flex-direction: row-reverse; */
+    gap: 4px;
+    overflow: auto;
+    flex-wrap: wrap;
+    /* border-top: 1px solid var(--seperatorClr);
+    padding-top: 10px; */
+}
+
+.tag {
+    background-color: rgb(231, 231, 231);
+    padding: 3px 10px 3px 10px;
+    border-radius: 20px;
+    /* margin-top: 2px;
+    margin-bottom: 2px; */
+    margin-right: 0px;
+    color: rgb(83, 83, 83);
+    display: inline-block;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    border-top-right-radius: 5px;
+}
+
+.tag .tag-divider {
+    color: rgb(104, 104, 104);
+}
+
+/* .btn > i {
+    margin-left: 5px;
+    font-size: smaller;
+} */
+
 .btn.product-action {
     border-radius: 100px;
     width: 20px;
@@ -338,6 +375,31 @@ body {
     background: linear-gradient(45deg, #c1c1c1, #ededed);
     border-radius: 10px !important;
     animation: content-placeholder-anim 0.5s alternate infinite;
+}
+
+.load-error-container {
+    text-align: center;
+    margin-top: 30vh;
+}
+
+.load-error-container h1 {
+    font-size: large;
+    font-weight: normal;
+}
+
+.load-error-container h2 {
+    font-size: small;
+    font-weight: normal;
+    margin-top: -10px;
+    /* background-color: red; */
+}
+
+.load-error-container .btn {
+    margin-top: 20px;
+    padding: 10px;
+    width: 200px;
+    background-color: rgb(255 102 0);
+    color: white;
 }
 
 @keyframes content-placeholder-anim {
