@@ -1,10 +1,41 @@
 let main = {
+    dom: {
+        headerWrapper: document.querySelector(".header-wrapper"),
+        productList: document.querySelector(".product-list"),
+        categorySelectorContainer: document.querySelector(".category-selector-container"),
+        cloneableCategorySelector: document.querySelector("#cloneable-category-selector"),
+        cloneableProduct: document.querySelector("#cloneable-product"),
+        cloneableProductPlaceholder: document.querySelector("#cloneable-product-placeholder"),
+        cloneableCategory: document.querySelector("#cloneable-category"),
+        cloneableTag: document.querySelector("#cloneable-tag"),
+        orderCheckoutCard: document.querySelector("#order-checkout-card"),
+
+        barsIcon: document.querySelector('.bars-icon'),
+        hamburgerMenu: document.querySelector('.hamburger-menu'),
+    },
     init: function(){
         productManager.init();
-        $(productManager.dom.orderCheckoutCard).hide();
+        $(main.dom.orderCheckoutCard).hide();
 
         // this.test();
         this.refreshProducts();
+
+        // hamburger menu
+        this.handleHamburgerMenu();
+    },
+    handleHamburgerMenu: function(){
+        console.log(main.dom.hamburgerMenu)
+        main.dom.barsIcon.onclick = function(){
+            let menuHidden = main.dom.hamburgerMenu.classList.contains('soft-hidden');
+            if(menuHidden) {
+                main.dom.hamburgerMenu.classList.remove('soft-hidden');
+                main.dom.headerWrapper.classList.add('hamburger-shown');
+            }
+            else {
+                main.dom.hamburgerMenu.classList.add('soft-hidden');
+                main.dom.headerWrapper.classList.remove('hamburger-shown');
+            }
+        }
     },
     refreshProducts: function(){
         setTimeout(() => {
@@ -60,17 +91,6 @@ let main = {
 }
 
 let productManager = {
-    dom: {
-        headerWrapper: document.querySelector(".header-wrapper"),
-        productList: document.querySelector(".product-list"),
-        categorySelectorContainer: document.querySelector(".category-selector-container"),
-        cloneableCategorySelector: document.querySelector("#cloneable-category-selector"),
-        cloneableProduct: document.querySelector("#cloneable-product"),
-        cloneableProductPlaceholder: document.querySelector("#cloneable-product-placeholder"),
-        cloneableCategory: document.querySelector("#cloneable-category"),
-        cloneableTag: document.querySelector("#cloneable-tag"),
-        orderCheckoutCard: document.querySelector("#order-checkout-card"),
-    },
     init: function(){
         addEventListener("scroll", (event) => {
             productManager.onScroll();
@@ -80,49 +100,48 @@ let productManager = {
         let activeCategory = null;
         let categories = $('.category:not(.hidden)');
         Array.from(categories).forEach((category, index) => {
-            let clientY = category.getBoundingClientRect().y - productManager.dom.headerWrapper.offsetHeight - 20;
+            let clientY = category.getBoundingClientRect().y - main.dom.headerWrapper.offsetHeight - 20;
             if(clientY < 0)
             activeCategory = category;
         });
         if(activeCategory){
             let activeCategoryId = activeCategory.getAttribute('cat-id');
-            let selector = productManager.dom.headerWrapper.querySelector(`#cat-selector-${activeCategoryId}`);
+            let selector = main.dom.headerWrapper.querySelector(`#cat-selector-${activeCategoryId}`);
             selector.activate();
         }
     },
     createTag: function(icon, text, product){
-        let tag = this.dom.cloneableTag.cloneNode(true);
+        let tag = main.dom.cloneableTag.cloneNode(true);
         if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
         if(text) tag.querySelector('.tag-text').innerHTML = text;
         product.querySelector('.product-tags').appendChild(tag);
-        console.log('created tag' , tag);
         return tag;
     },
     addCategory: function(o){
         let categoryId = utils.generateRandomChars();
 
-        let category = this.dom.cloneableCategory.cloneNode(true);
+        let category = main.dom.cloneableCategory.cloneNode(true);
             category.setAttribute('id', 'cat-' + categoryId);
             category.setAttribute('cat-id', categoryId);
 
         let title = category.querySelector('.category-title');
 
-        let categorySelector = this.dom.cloneableCategorySelector.cloneNode(true);
+        let categorySelector = main.dom.cloneableCategorySelector.cloneNode(true);
             categorySelector.setAttribute('id', 'cat-selector-' + categoryId);
             categorySelector.setAttribute('cat-id', categoryId);
             categorySelector.onclick = () => {
-                window.scrollTo(0, category.offsetTop - productManager.dom.headerWrapper.offsetHeight - 10);
+                window.scrollTo(0, category.offsetTop - main.dom.headerWrapper.offsetHeight - 10);
                 // categorySelector.activate();
                 categorySelector.classList.add('target-selector');
             }
             categorySelector.activate = () => {
-                let categorySelectors = productManager.dom.categorySelectorContainer.querySelectorAll('.toolbar-category-selector');
+                let categorySelectors = main.dom.categorySelectorContainer.querySelectorAll('.toolbar-category-selector');
                     Array.from(categorySelectors).forEach(category => {
                         category.classList.remove('active-selector');
                     });
                 categorySelector.classList.add('active-selector');
                 categorySelector.classList.remove('target-selector');
-                productManager.dom.categorySelectorContainer.scrollTo({left: categorySelector.offsetLeft - window.innerWidth / 2, behavior: 'smooth'});
+                main.dom.categorySelectorContainer.scrollTo({left: categorySelector.offsetLeft - window.innerWidth / 2, behavior: 'smooth'});
             }
 
         if(o){
@@ -132,15 +151,15 @@ let productManager = {
             }
         }
 
-        this.dom.productList.appendChild(category);
-        this.dom.categorySelectorContainer.appendChild(categorySelector);
+        main.dom.productList.appendChild(category);
+        main.dom.categorySelectorContainer.appendChild(categorySelector);
 
         return {container: category, toolbarSelector: categorySelector};
     },
     addProduct: function(o){
         if(!o.category) return false;
 
-        let product = this.dom.cloneableProduct.cloneNode(true);
+        let product = main.dom.cloneableProduct.cloneNode(true);
             product.classList.remove('hidden');
             product.setAttribute('id', 'prod-' + utils.generateRandomChars());
 
@@ -159,10 +178,16 @@ let productManager = {
             if(o.image) image.src = o.image;
             if(o.tags){
                 if(o.tags.meter){
-                    this.createTag('fa-ruler', o.tags.meter, product);
+                    this.createTag('fa-ruler', `متراژ ${utils.persianNum(o.tags.meter)}`, product);
+                }
+                if(o.tags.amper){
+                    this.createTag('fa-bolt', `${utils.persianNum(o.tags.amper)} آمپر`, product);
+                }
+                if(o.tags.watt){
+                    this.createTag('fa-bolt', `${utils.persianNum(o.tags.amper)} وات`, product);
                 }
                 if(o.tags.box_amount){
-                    this.createTag('fa-box', o.tags.box_amount, product);
+                    this.createTag('fa-box', `${utils.persianNum(o.tags.box_amount)} عدد`, product);
                 }
             } else {
                 $(product.querySelector(".product-tags")).hide();
@@ -189,10 +214,10 @@ let productManager = {
         return product;
     },
     addPlaceholderProduct: function(){
-        let product = this.dom.cloneableProductPlaceholder.cloneNode(true);
+        let product = main.dom.cloneableProductPlaceholder.cloneNode(true);
             product.classList.remove('hidden');
             product.setAttribute('id', 'plchldr' + utils.generateRandomChars());
-            this.dom.productList.appendChild(product);
+            main.dom.productList.appendChild(product);
     },
     changeOrderCount: function(product, changeNum){
         let orderCountElement = product.querySelector('.product-order-count');
@@ -210,10 +235,10 @@ let productManager = {
         this.handleCheckoutCard();
     },
     handleCheckoutCard: function(){
-        let allOrders = this.dom.productList.getElementsByClassName('ordered');
+        let allOrders = main.dom.productList.getElementsByClassName('ordered');
         if(allOrders.length){ // has orders
-            this.dom.productList.classList.add('has-order');
-            $(this.dom.orderCheckoutCard).slideDown('fast');
+            main.dom.productList.classList.add('has-order');
+            $(main.dom.orderCheckoutCard).slideDown('fast');
             // if($(product).is(":last-child"))
             //     main.scrollByPercent(20);
             
@@ -227,12 +252,12 @@ let productManager = {
             });
             document.querySelector("#order-checkout-card > button").textContent = `ثبت سفارش (${utils.persianNum(fullCheckoutPrice)} تومان)`
         } else { // no orders
-            this.dom.productList.classList.remove('has-order');
-            $(this.dom.orderCheckoutCard).slideUp('fast');
+            main.dom.productList.classList.remove('has-order');
+            $(main.dom.orderCheckoutCard).slideUp('fast');
         }
     },
     clearProductList: function(){
-        this.dom.productList.innerHTML = '';
+        main.dom.productList.innerHTML = '';
     },
     async loadProductList(path){
         let list, categories = [];
@@ -249,8 +274,8 @@ let productManager = {
             let response = await fetch(path);
             list = await response.json();
         } catch(e) {
-            this.dom.productList.innerHTML = document.querySelector('#load-error').outerHTML;
-            this.dom.productList.querySelector('#retry-btn').onclick = function(){
+            main.dom.productList.innerHTML = document.querySelector('#load-error').outerHTML;
+            main.dom.productList.querySelector('#retry-btn').onclick = function(){
                 main.refreshProducts();
             }
             return;

@@ -6,8 +6,8 @@
     "price": 282000,
     "category": "محافظ",
     "tags": {
-      "box_amount": "۲۴ عدد",
-      "meter": "متراژ ۱.۵"
+      "box_amount": "24",
+      "meter": "1.5"
     }
   },
   {
@@ -16,8 +16,8 @@
     "price": 300000,
     "category": "محافظ",
     "tags": {
-      "box_amount": "۲۴ عدد",
-      "meter": "متراژ ۳"
+      "box_amount": "24",
+      "meter": 3
     }
   },
   {
@@ -27,8 +27,19 @@
     "price": 331000,
     "category": "محافظ",
     "tags": {
-      "box_amount": "۲۴ عدد",
-      "meter": "متراژ ۵"
+      "box_amount": 24,
+      "meter": 5
+    }
+  },
+  {
+    "title": "محافظ سه شاخه کولر گازی",
+    "description": "",
+    "image": "",
+    "price": 466000,
+    "category": "محافظ",
+    "tags": {
+      "box_amount": "36",
+      "amper": "40"
     }
   },
   {
@@ -58,5 +69,35 @@
     "image": "",
     "price": 282000,
     "category": "محافظ"
+  },
+  {
+    "title": "رابط چهار خانه ارت دار استاندارد R4000",
+    "image": "",
+    "price": 206000,
+    "category": "رابط",
+    "tags":{
+      "meter":"1.5",
+      "box_amount": 25
+    }
+  },
+  {
+    "title": "رابط سه خانه استاندارد R3000",
+    "image": "",
+    "price": 140000,
+    "category": "رابط",
+    "tags":{
+      "meter":"1.5",
+      "box_amount": 30
+    }
+  },
+  {
+    "title": "رابط سه خانه ارت دار استاندارد R3000",
+    "image": "",
+    "price": 170000,
+    "category": "رابط",
+    "tags":{
+      "meter":"1.5",
+      "box_amount": 30
+    }
   }
 ]
