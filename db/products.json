@@ -2,7 +2,7 @@
   {
     "title": "محافظ شش خانه استاندارد P6000",
     "_description": "متراژ ۱.۵ - تعداد در کارتن: ۲۴ عدد",
-    "image": "",
+    "image": "resources/product-images/1.png",
     "price": 282000,
     "category": "محافظ",
     "tags": {
@@ -12,7 +12,7 @@
   },
   {
     "title": "محافظ شش خانه استاندارد P6000",
-    "image": "",
+    "image": "resources/product-images/2.png",
     "price": 300000,
     "category": "محافظ",
     "tags": {
@@ -23,7 +23,7 @@
   {
     "title": "محافظ شش خانه استاندارد P6000",
     "-description": "متراژ ۵",
-    "image": "",
+    "image": "resources/product-images/3.png",
     "price": 331000,
     "category": "محافظ",
     "tags": {
@@ -34,7 +34,7 @@
   {
     "title": "محافظ سه شاخه کولر گازی",
     "description": "",
-    "image": "",
+    "image": "resources/product-images/4.png",
     "price": 466000,
     "category": "محافظ",
     "tags": {
@@ -45,34 +45,34 @@
   {
     "title": "محافظ سه خانه یخچال و فریز استاندارد P3100",
     "description": "متراژ ۱.۵ - تعداد در کارتن: ۲۴ عدد",
-    "image": "",
+    "image": "resources/product-images/5.png",
     "price": 263000,
     "category": "محافظ"
   },
   {
     "title": "محافظ سه خانه یخچال و فریز استاندارد P3100",
     "description": "متراژ ۳",
-    "image": "",
+    "image": "resources/product-images/6.png",
     "price": 282000,
     "category": "محافظ"
   },
   {
     "title": "محافظ سه خانه صوتی و تصویری استاندارد P3000",
     "description": "متراژ ۱.۵",
-    "image": "",
+    "image": "resources/product-images/7.png",
     "price": 263000,
     "category": "محافظ"
   },
   {
     "title": "محافظ سه خانه صوتی و تصویری استاندارد P3000",
     "description": "متراژ ۳",
-    "image": "",
+    "image": "resources/product-images/8.png",
     "price": 282000,
     "category": "محافظ"
   },
   {
     "title": "رابط چهار خانه ارت دار استاندارد R4000",
-    "image": "",
+    "image": "resources/product-images/9.png",
     "price": 206000,
     "category": "رابط",
     "tags":{
@@ -82,7 +82,7 @@
   },
   {
     "title": "رابط سه خانه استاندارد R3000",
-    "image": "",
+    "image": "resources/product-images/10.png",
     "price": 140000,
     "category": "رابط",
     "tags":{
@@ -92,7 +92,7 @@
   },
   {
     "title": "رابط سه خانه ارت دار استاندارد R3000",
-    "image": "",
+    "image": "resources/product-images/11.png",
     "price": 170000,
     "category": "رابط",
     "tags":{
