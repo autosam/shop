@@ -1,7 +1,7 @@
 let main = {
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
-        productList: document.querySelector(".product-list"),
+        categoryList: document.querySelector(".category-list"),
         categorySelectorContainer: document.querySelector(".category-selector-container"),
         cloneableCategorySelector: document.querySelector("#cloneable-category-selector"),
         cloneableProduct: document.querySelector("#cloneable-product"),
@@ -151,7 +151,7 @@ let productManager = {
             }
         }
 
-        main.dom.productList.appendChild(category);
+        main.dom.categoryList.appendChild(category);
         main.dom.categorySelectorContainer.appendChild(categorySelector);
 
         return {container: category, toolbarSelector: categorySelector};
@@ -207,7 +207,7 @@ let productManager = {
 
         this.changeOrderCount(product, -1);
 
-        o.category.container.appendChild(product);
+        o.category.container.querySelector('.product-list').appendChild(product);
         o.category.container.classList.remove('hidden');
         o.category.toolbarSelector.classList.remove('hidden');
 
@@ -217,7 +217,7 @@ let productManager = {
         let product = main.dom.cloneableProductPlaceholder.cloneNode(true);
             product.classList.remove('hidden');
             product.setAttribute('id', 'plchldr' + utils.generateRandomChars());
-            main.dom.productList.appendChild(product);
+            main.dom.categoryList.appendChild(product);
     },
     changeOrderCount: function(product, changeNum){
         let orderCountElement = product.querySelector('.product-order-count');
@@ -235,9 +235,9 @@ let productManager = {
         this.handleCheckoutCard();
     },
     handleCheckoutCard: function(){
-        let allOrders = main.dom.productList.getElementsByClassName('ordered');
+        let allOrders = main.dom.categoryList.getElementsByClassName('ordered');
         if(allOrders.length){ // has orders
-            main.dom.productList.classList.add('has-order');
+            main.dom.categoryList.classList.add('has-order');
             $(main.dom.orderCheckoutCard).slideDown('fast');
             // if($(product).is(":last-child"))
             //     main.scrollByPercent(20);
@@ -252,12 +252,12 @@ let productManager = {
             });
             document.querySelector("#order-checkout-card > button").textContent = `ثبت سفارش (${utils.persianNum(fullCheckoutPrice)} تومان)`
         } else { // no orders
-            main.dom.productList.classList.remove('has-order');
+            main.dom.categoryList.classList.remove('has-order');
             $(main.dom.orderCheckoutCard).slideUp('fast');
         }
     },
     clearProductList: function(){
-        main.dom.productList.innerHTML = '';
+        main.dom.categoryList.innerHTML = '';
     },
     async loadProductList(path){
         let list, categories = [];
@@ -274,8 +274,8 @@ let productManager = {
             let response = await fetch(path);
             list = await response.json();
         } catch(e) {
-            main.dom.productList.innerHTML = document.querySelector('#load-error').outerHTML;
-            main.dom.productList.querySelector('#retry-btn').onclick = function(){
+            main.dom.categoryList.innerHTML = document.querySelector('#load-error').outerHTML;
+            main.dom.categoryList.querySelector('#retry-btn').onclick = function(){
                 main.refreshProducts();
             }
             return;

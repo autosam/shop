@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta user-scale="0">
-    <!-- <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> -->
     <link rel="stylesheet" href="styles.css">
     <title>Test</title>
 </head>
@@ -32,8 +32,8 @@
     <!-- hamburger menu -->
     <div class="hamburger-menu soft-hidden">
         <div class="hamburger-menu-inner">
-            <button class="btn generic">گزینه ۱</button>
-            <button class="btn generic">گزینه ۱</button>
+            <button class="btn generic">ثبت سفارش محصولات</button>
+            <button class="btn generic">لیست قیمت</button>
             <button class="btn generic">گزینه ۱</button>
             <button class="btn generic">گزینه ۱</button>
             <button class="btn generic">گزینه ۱</button>
@@ -50,10 +50,24 @@
             </div>
         </div>
         <!-- products list -->
-        <div class="product-list"></div>
+        <div class="category-list"></div>
     </div>
     <div id="order-checkout-card" class="order-checkout-card">
         <button class="btn">ثبت سفارش</button>
+    </div>
+    <div class="app-bar">
+        <div class="app-bar-item">
+            <i class="fa-solid fa-home"></i>
+            <span>خانه</span>
+        </div>
+        <div class="app-bar-item active">
+            <i class="fa-solid fa-shopping-cart"></i>
+            <span>ثبت سفارش</span>
+        </div>
+        <div class="app-bar-item">
+            <i class="fa-solid fa-user"></i>
+            <span>کاربر</span>
+        </div>
     </div>
 
     <!-- cloneables -->
@@ -69,9 +83,24 @@
                 <span class="product-title">محصول تست</span>
                 <span class="product-description"></span>
                 <span class="product-tags"></span>
-                <span class="product-price">0</span>
+                <span class="divider"></span>
+                <div class="product-additional">
+                    <span class="product-price">0</span>
+                    <div>
+                        <button class="btn default">
+                            <i class="fa-solid fa-plus"></i>
+                            یک عدد
+                        </button>
+                        <button class="btn">
+                            <i class="fa-solid fa-plus"></i>
+                            یک کارتن 
+                            <!-- <i class="fa-solid "></i> -->
+                        </button>
+
+                    </div>
+                </div>
             </div>
-            <div class="product-actions">
+            <div class="product-actions hidden">
                 <button class="btn product-action add tap-effect">
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -95,6 +124,7 @@
         <!-- cloneable category -->
         <div id="cloneable-category" class="category hidden">
             <span class="category-title">نام دسته</span>
+            <div class="product-list"></div>
         </div>
 
         <!-- cloneable tag -->
