@@ -22,6 +22,18 @@ let main = {
 
         // hamburger menu
         this.handleHamburgerMenu();
+
+        // appbar
+        this.handleAppBar();
+    },
+    handleAppBar: function(){
+        let items = Array.from(document.querySelectorAll('.app-bar-item'));
+            items.forEach(item => {
+                item.onclick = function(){
+                    items.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            })
     },
     handleHamburgerMenu: function(){
         console.log(main.dom.hamburgerMenu)
@@ -196,7 +208,7 @@ let productManager = {
 
         product.setAttribute('data-price', price.textContent);
 
-        price.textContent = utils.persianNum(price.textContent) + ' تومان';
+        price.innerHTML = utils.persianNum(price.textContent) + ' <small>تومان</small>';
 
         addButton.onclick = () => {
             productManager.changeOrderCount(product, 1);
