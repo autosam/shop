@@ -14,7 +14,7 @@
     "title": "محافظ شش خانه استاندارد P6000",
     "description": "",
     "price": "300000",
-    "image": "resources/product-images/2.png",
+    "image": "resources/product-images/1.png",
     "category": "محافظ",
     "tags": {
       "box_amount": "24",
@@ -25,7 +25,7 @@
     "title": "محافظ شش خانه استاندارد P6000",
     "description": "",
     "price": "331000",
-    "image": "resources/product-images/3.png",
+    "image": "resources/product-images/1.png",
     "category": "محافظ",
     "tags": {
       "box_amount": 24,
@@ -33,97 +33,91 @@
     }
   },
   {
-    "title": "محافظ سه شاخه کولر گازی",
+    "title": "محافظ سه خانه صوتی و تصویری استاندارد P3000",
     "description": "",
-    "price": "466000",
-    "image": "resources/product-images/4.png",
+    "price": "0",
+    "image": "resources/product-images/2.png",
     "category": "محافظ",
     "tags": {
-      "box_amount": "36",
-      "amper": "40"
+      "box_amount": "28",
+      "meter": "1.5"
     }
-  },
-  {
-    "title": "محافظ سه خانه یخچال و فریز استاندارد P3100",
-    "description": "متراژ ۱.۵ - تعداد در کارتن: ۲۴ عدد",
-    "price": "263000",
-    "image": "resources/product-images/5.png",
-    "category": "محافظ",
-    "tags": {}
-  },
-  {
-    "title": "محافظ سه خانه یخچال و فریز استاندارد P3100",
-    "description": "متراژ ۳",
-    "price": "282000",
-    "image": "resources/product-images/6.png",
-    "category": "محافظ",
-    "tags": {}
   },
   {
     "title": "محافظ سه خانه صوتی و تصویری استاندارد P3000",
-    "description": "متراژ ۱.۵",
-    "price": "263000",
-    "image": "resources/product-images/7.png",
+    "description": "",
+    "price": "0",
+    "image": "resources/product-images/2.png",
     "category": "محافظ",
-    "tags": {}
+    "tags": {
+      "box_amount": "28",
+      "meter": "3"
+    }
   },
   {
-    "title": "محافظ سه خانه صوتی و تصویری استاندارد P3000",
-    "description": "متراژ ۳",
-    "price": "282000",
-    "image": "resources/product-images/8.png",
+    "title": "محافظ سه خانه صوتی و تصویری استاندارد ارت دار P3000",
+    "description": "",
+    "price": "0",
+    "image": "resources/product-images/3.png",
     "category": "محافظ",
-    "tags": {}
-  },
-  {
-    "title": "رابط چهار خانه ارت دار استاندارد R4000",
-    "description": "",
-    "price": "206000",
-    "image": "resources/product-images/9.png",
-    "category": "رابط",
     "tags": {
-      "meter": "1.5",
-      "box_amount": 25
+      "box_amount": "28",
+      "meter": "1.5"
     }
   },
   {
-    "title": "رابط سه خانه استاندارد R3000",
+    "title": "محافظ سه خانه صوتی و تصویری استاندارد ارت دار P3000",
     "description": "",
-    "price": "140000",
-    "image": "resources/product-images/10.png",
-    "category": "رابط",
+    "price": "0",
+    "image": "resources/product-images/3.png",
+    "category": "محافظ",
     "tags": {
-      "meter": "1.5",
-      "box_amount": 30
+      "box_amount": "28",
+      "meter": "3"
     }
   },
   {
-    "title": "رابط سه خانه ارت دار استاندارد R3000",
+    "title": "محافظ سه خانه یخچالی استاندارد P3100",
     "description": "",
-    "price": "170000",
-    "image": "resources/product-images/11.png",
-    "category": "رابط",
+    "price": "0",
+    "image": "resources/product-images/2.png",
+    "category": "محافظ",
     "tags": {
-      "meter": "1.5",
-      "box_amount": 30
+      "box_amount": "28",
+      "meter": "1.5"
     }
   },
   {
-    "title": "نام تست",
+    "title": "محافظ سه خانه یخچالی استاندارد P3100",
     "description": "",
-    "price": "99",
-    "image": "",
-    "category": "دسته سامان تست",
+    "price": "0",
+    "image": "resources/product-images/2.png",
+    "category": "محافظ",
     "tags": {
-      "amper": "69"
+      "box_amount": "28",
+      "meter": "3"
     }
   },
   {
-    "title": "محمدرضا",
+    "title": "محافظ سه خانه یخچالی استاندارد ارت دار P3100",
     "description": "",
-    "price": "0000",
-    "image": "resources/product-images/24.png",
-    "category": "امگا",
-    "tags": null
+    "price": "0",
+    "image": "resources/product-images/3.png",
+    "category": "محافظ",
+    "tags": {
+      "box_amount": "28",
+      "meter": "1.5"
+    }
+  },
+  {
+    "title": "محافظ سه خانه یخچالی استاندارد ارت دار P3100",
+    "description": "",
+    "price": "0",
+    "image": "resources/product-images/3.png",
+    "category": "محافظ",
+    "tags": {
+      "box_amount": "28",
+      "meter": "3"
+    }
   }
 ]
