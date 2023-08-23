@@ -175,8 +175,10 @@ let productManager = {
             product.classList.remove('hidden');
             product.setAttribute('id', 'prod-' + utils.generateRandomChars());
 
-        let addButton = product.querySelector('.btn.product-action.add'),
-            removeButton = product.querySelector('.btn.product-action.remove'),
+        // let addButton = product.querySelector('.btn.product-action.add'),
+        //     removeButton = product.querySelector('.btn.product-action.remove'),
+        let addBoxButton = product.querySelector('.btn.action.add-box'),
+            addSingleButton = product.querySelector('.btn.action.add-single'),
             orderCount = product.querySelector('.product-order-count'),
             title = product.querySelector('.product-title'),
             description = product.querySelector('.product-description'),
@@ -211,14 +213,22 @@ let productManager = {
 
         product.setAttribute('data-price', price.textContent);
 
-        price.innerHTML = utils.persianNum(price.textContent) + ' <small>تومان</small>';
+        if(o.price >= 0){
+            price.innerHTML = utils.persianNum(price.textContent) + ' <small>تومان</small>';
+        }
+        else {
+            price.innerHTML = `<span style="color: gray"> ناموجود </span>`;
+            addBoxButton.disabled = true;
+            addSingleButton.disabled = true;
+        }
 
-        addButton.onclick = () => {
-            productManager.changeOrderCount(product, 1);
-        }
-        removeButton.onclick = () => {
-            productManager.changeOrderCount(product, -1);
-        }
+        // todo: rewrite this to work with new design
+        // addButton.onclick = () => {
+        //     productManager.changeOrderCount(product, 1);
+        // }
+        // removeButton.onclick = () => {
+        //     productManager.changeOrderCount(product, -1);
+        // }
 
         this.changeOrderCount(product, -1);
 

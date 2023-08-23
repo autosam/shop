@@ -375,7 +375,7 @@
   {
     "title": "رابط جمع شو کلید دار",
     "description": "",
-    "price": "عدم موجودی",
+    "price": "-1",
     "image": "resources/product-images/11.png",
     "category": "رابط",
     "tags": {
@@ -386,7 +386,7 @@
   {
     "title": "رابط جمع شو کلید دار",
     "description": "",
-    "price": "عدم موجودی",
+    "price": "-1",
     "image": "resources/product-images/11.png",
     "category": "رابط",
     "tags": {
@@ -484,7 +484,7 @@
   {
     "title": "پرژکتور",
     "description": "",
-    "price": "عدم موجودی",
+    "price": "-1",
     "image": "resources/product-images/20.png",
     "category": "روشنایی",
     "tags": {
@@ -568,7 +568,10 @@
     "price": "62500",
     "image": "resources/product-images/19.png",
     "category": "هویه",
-    "tags": null
+    "tags": {
+      "box_amount": "10",
+      "watt": "40"
+    }
   },
   {
     "title": "نوک",
@@ -576,7 +579,10 @@
     "price": "68500",
     "image": "resources/product-images/19.png",
     "category": "هویه",
-    "tags": null
+    "tags": {
+      "box_amount": "10",
+      "watt": "60"
+    }
   },
   {
     "title": "نوک اورجینال",
@@ -584,7 +590,10 @@
     "price": "125000",
     "image": "resources/product-images/19.png",
     "category": "هویه",
-    "tags": null
+    "tags": {
+      "box_amount": "10",
+      "watt": "40"
+    }
   },
   {
     "title": "نوک اورجینال",
@@ -592,7 +601,10 @@
     "price": "163000",
     "image": "resources/product-images/19.png",
     "category": "هویه",
-    "tags": null
+    "tags": {
+      "box_amount": "10",
+      "watt": "60"
+    }
   },
   {
     "title": "المنت",
