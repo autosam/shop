@@ -196,10 +196,13 @@ let productManager = {
                     this.createTag('fa-bolt', `${utils.persianNum(o.tags.amper)} آمپر`, product);
                 }
                 if(o.tags.watt){
-                    this.createTag('fa-bolt', `${utils.persianNum(o.tags.amper)} وات`, product);
+                    this.createTag('fa-bolt', `${utils.persianNum(o.tags.watt)} وات`, product);
                 }
                 if(o.tags.box_amount){
                     this.createTag('fa-box', `${utils.persianNum(o.tags.box_amount)} عدد`, product);
+                }
+                if(o.tags.custom){
+                    this.createTag('fa-tag', `${o.tags.custom}`, product);
                 }
             } else {
                 $(product.querySelector(".product-tags")).hide();

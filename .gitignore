@@ -2,3 +2,4 @@ resources/fontawesome-6.4.0
 .pm
 .idea
 .bak
+db/products copy.json
