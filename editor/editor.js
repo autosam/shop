@@ -68,6 +68,7 @@ let main = {
     editTags: function(e){
         let product = e.closest('.product');
         let tags = JSON.parse(product.getAttribute('data-tags'));
+            product.classList.add('editing');
 
         let tagsEditModalContent = document.querySelector('.edit-tags-modal').cloneNode(true);
             tagsEditModalContent.classList.remove('hidden');
@@ -89,6 +90,7 @@ let main = {
         }
 
         let modal;
+
         tagsEditModalContent.querySelector('.add-tag-btn').onclick = function(){
             let title = this.closest('div').querySelector('.add-tag-title').value,
                 value = this.closest('div').querySelector('.add-tag-value').value;
@@ -102,7 +104,9 @@ let main = {
             main.editTags(product);
         }
 
-        modal = this.modalize(tagsEditModalContent);
+        modal = this.modalize(tagsEditModalContent, null, function(){
+            product.classList.remove('editing');
+        });
 
     },
     serializeProduct: function(product){
@@ -141,7 +145,7 @@ let main = {
         await pickerWritable.write(blob);
         await pickerWritable.close();
     },
-    modalize: function(element, html){
+    modalize: function(element, html, onModalClose){
         let modal = document.querySelector('.modal-wrapper').cloneNode(true);
             modal.classList.remove('hidden');
         if(html){
@@ -150,9 +154,18 @@ let main = {
         if(element){
             modal.querySelector('.modal-foreground').appendChild(element);
         }
-        modal.querySelector('.modal-close').onclick = function(){
-            modal.remove();
-        }
+        // modal.querySelector('.modal-close').onclick = function(){
+        //     modal.remove();
+        // }
+        let background = modal.querySelector('.modal-background');
+            background.onclick = function(e){
+                if(e.target === background){
+                    modal.remove();
+                    if(onModalClose){
+                        onModalClose();
+                    }
+                }
+            }
         document.body.appendChild(modal);
         return modal;
     }

@@ -51,6 +51,10 @@ body {
     gap: 10px;
 }
 
+.product.editing {
+    background-color: aqua;
+}
+
 .product input, .product textarea {
     border: none;
     /* border-left: 1px solid black; */
