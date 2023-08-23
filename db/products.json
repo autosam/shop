@@ -117,5 +117,13 @@
     "tags": {
       "amper": "69"
     }
+  },
+  {
+    "title": "محمدرضا",
+    "description": "",
+    "price": "0000",
+    "image": "resources/product-images/24.png",
+    "category": "امگا",
+    "tags": null
   }
 ]
