@@ -41,27 +41,20 @@
 
     <div class="toolbar">
         <button onclick="main.addProductDom()">➕ محصول جدید</button>
-        <button onclick="main.saveProducts()">ذخیره</button>
+        <button onclick="main.saveProducts()">✔️ ذخیره</button>
+        <textarea style="width: 100px; height: 50px; float: left;" id="save-result"></textarea>
     </div>
-    <div class="product-list">
-        <!-- <thead style="background-color: rgb(180, 180, 180);">
-            <td>نام محصول</td>
-            <td>توضیحات</td>
-            <td>تگ ها</td>
-            <td>قیمت</td>
-            <td>عکس</td>
-            <td>دسته</td>
-            <td>عملیات</td>
-        </thead>
-        <tbody></tbody> -->
-        <!-- cloneable product -->
-    </div>
+
+    <div class="product-list"></div>
+
     <div>
-        <textarea style="width: 100%; height: 500px" id="save-result"></textarea>
+        <!-- <textarea style="width: 100px; height: 50px" id="save-result"></textarea> -->
     </div>
     
     <div id="cloneables" class="hidden">
         <div class="product cloneable">
+            <button onclick="main.changeProductDomOrder(this, 1)" class="move-up-product">⬆️</button>
+            <button onclick="main.changeProductDomOrder(this, 0)" class="move-down-product">⬇️</button>
             <input class="product-title" placeholder="نام محصول"></input>
             <textarea class="product-description" placeholder="توضیحات"></textarea>
             <!-- <textarea class="product-tags" placeholder="تگ ها"></textarea> -->
@@ -71,28 +64,10 @@
             <button onclick="main.editTags(this)">🏷️ تگ ها</button>
             <div>
                 <button onclick="main.removeProductDom(this)" class="remove-product">❌</button>
-                <button onclick="main.changeProductDomOrder(this, 1)" class="move-up-product">⬆️</button>
-                <button onclick="main.changeProductDomOrder(this, 0)" class="move-down-product">⬇️</button>
             </div>
         </div>
-        <table>
-
-            <!-- <tr class="product cloneable">
-                <td> <input class="product-title" placeholder="نام محصول"></input> </td>
-                <td> <textarea class="product-description" placeholder="توضیحات"></textarea> </td>
-                <td> <textarea class="product-tags" placeholder="تگ ها"></textarea> </td>
-                <td> <input class="product-price" placeholder="قیمت"></input> </td>
-                <td> <input class="product-image" placeholder="عکس"></input> </td>
-                <td> <input class="product-category" placeholder="دسته"></input> </td>
-                <td> 
-                    <button class="remove-product">❌</button>
-                    <button class="move-up-product">⬆️</button>
-                    <button class="move-down-product">⬇️</button>
-                </td>
-            </tr> -->
-
-        </table>
     </div>
+    <script src="../libs/jquery.min.js"></script>
     <script src="editor.js"></script>
 </body>
 

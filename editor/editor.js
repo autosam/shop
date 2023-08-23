@@ -35,6 +35,7 @@ let main = {
     },
     addProductDom: function(def){
         let product = this.dom.cloneableProduct.cloneNode(true);
+            product.classList.remove('cloneable');
         
         if(def){
             product.querySelector('.product-title').value = def.title || '';
@@ -53,7 +54,16 @@ let main = {
         e.closest('.product').remove();
     },
     changeProductDomOrder: function(e, state){
-        // let product = e.
+        let product = e.closest('.product');
+        // console.log($(product))
+        let index = $(product).index();
+        if(index <= 0 && state) return;
+        let ins = state ? main.dom.productList.children[index - 1] : main.dom.productList.children[index + 2];
+        main.dom.productList.insertBefore(product, ins);
+        product.classList.remove('edited');
+        setTimeout(() => {
+            product.classList.add('edited');
+        });
     },
     editTags: function(e){
         let product = e.closest('.product');
