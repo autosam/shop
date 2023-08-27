@@ -122,10 +122,11 @@ let productManager = {
             selector.activate();
         }
     },
-    createTag: function(icon, text, product){
+    createTag: function(icon, text, product, important){
         let tag = main.dom.cloneableTag.cloneNode(true);
         if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
         if(text) tag.querySelector('.tag-text').innerHTML = text;
+        if(important) tag.classList.add('tag-important');
         product.querySelector('.product-tags').appendChild(tag);
         return tag;
     },
