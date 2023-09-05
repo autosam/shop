@@ -20,6 +20,13 @@
     font-weight: 900;
 }
 
+@media screen and (max-width: 768px){
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        height: 0px;
+    }
+  }
+
 :root {
     --seperatorClr: #ebebeb;
 }
@@ -304,15 +311,15 @@ body {
 .order-checkout-card {
     width: 100%;
     height: 100px;
-    background-color: rgb(245 245 245);
-    bottom: 0px;
+    background-color: rgb(255, 255, 255);
+    bottom: 60px;
     position: fixed;
     /* border-top-right-radius: 15px; */
     /* border-top-left-radius: 15px; */
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 3px solid rgb(239 239 239);
+    border-top: 1px solid var(--seperatorClr);
     z-index: 3;
 }
 
@@ -389,14 +396,16 @@ body {
 }
 
 .product-card.ordered {
-    background: rgb(255 245 238);
+    /* background: rgb(255 245 238); */
     border-bottom: 10px solid rgb(255 102 0);
     /* filter: drop-shadow(2px 4px 4px rgb(255 102 0 / 28%)); */
-    transition: all 0.2s;
+    /* transition: all 0.2s; */
     /* transform: scale(1.01); */
     /* background: rgb(255 102 0); */
     /* color: white; */
-    background: white;
+    /* background: white; */
+    /* border-right: 10px solid black; */
+    outline: 1px solid rgb(255 102 0);
 }
 
 .product-card .product-price {
@@ -485,7 +494,7 @@ body {
 .product-additional .btn.action.add-box {
     background: linear-gradient(45deg, #f16100, #ff893a);
     color: white;
-    min-width: 100px;
+    width: 100px;
 }
 .product-additional .btn.action.add-single {
     /* background: linear-gradient(45deg, #b8b8b8, #e4e4e4); */
@@ -494,7 +503,7 @@ body {
     /* background: rgb(255 102 0 / 15%); */
     outline: 1px solid var(--color);
     color: var(--color);
-    min-width: 70px;
+    width: 70px;
 }
 .product-additional .btn.action:disabled {
     /* filter: grayscale() brightness(1.3) contrast(0.6);
@@ -502,6 +511,63 @@ body {
     background: rgb(219, 219, 219);
     outline: 1px solid rgb(196, 196, 196);
     color: rgb(161, 161, 161);
+}
+.product-additional .generic-quantity-selector {
+    width: 195px;
+    height: 30px;
+    background-color: #ff893a10;
+    border-radius: 10px;
+    outline: 1px solid #f16100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow-y: clip;
+    overflow-x: clip;
+    box-shadow: 0 3px 5px #00000026;
+}
+.generic-quantity-selector .minus-btn,
+.generic-quantity-selector .plus-btn {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    cursor: pointer;
+
+    background-color: #ff893a3b;
+    color: #f16100;
+}
+
+.generic-quantity-selector .plus-btn {
+    border-right: 1px solid #f16100;
+    /* background: linear-gradient(45deg, #f16100, #ff893a); */
+    background: #ff6600;
+    color: white;
+}
+
+.generic-quantity-selector .minus-btn {
+    border-left: 1px solid #f16100;
+}
+
+.product-card.ordered .btn.action.add-single, .product-card.ordered .btn.action.add-box {
+    display: none;
+}
+
+.product-card:not(.ordered) .generic-quantity-selector {
+    display: none;
+}
+
+.product-card.ordered[data-orders="1"] .generic-quantity-selector .minus-btn .fa-minus {
+    display: none;
+}
+
+.product-card.ordered:not([data-orders="1"]) .generic-quantity-selector .minus-btn .fa-trash {
+    display: none
+}
+
+.generic-quantity-selector .middle-text {
+    font-weight: bold;
+    color: #ff6600;
 }
 
 .product-tags {

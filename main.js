@@ -1,4 +1,5 @@
 let main = {
+    username: 'سامان محمدی',
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
         categoryList: document.querySelector(".category-list"),
@@ -20,11 +21,37 @@ let main = {
         // this.test();
         this.refreshProducts();
 
+        document.querySelector('#order-checkout-card .btn').onclick = function(){
+            main.checkout();
+        }
+
         // hamburger menu
         this.handleHamburgerMenu();
 
         // appbar
         this.handleAppBar();
+    },
+    checkout: function(){
+        $.ajax({
+            url: 'https://omegarelectrice.com/v2/api/order.php',
+            type: 'POST',
+            data: JSON.stringify({
+                product: 'testproduct',
+                quantity: utils.randomInt(1, 9999),
+                type: 'box',
+                user: main.username,
+            }),
+            dataType: "json", 
+            success: function(response) {
+                console.log(response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle the error response here
+                console.log("Error: " + textStatus + " - " + errorThrown);
+                console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
+                console.log("Content: " + jqXHR.responseText);
+            },
+        });
     },
     handleAppBar: function(){
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
@@ -180,6 +207,7 @@ let productManager = {
         //     removeButton = product.querySelector('.btn.product-action.remove'),
         let addBoxButton = product.querySelector('.btn.action.add-box'),
             addSingleButton = product.querySelector('.btn.action.add-single'),
+            quantitySelector = product.querySelector('.generic-quantity-selector'),
             orderCount = product.querySelector('.product-order-count'),
             title = product.querySelector('.product-title'),
             description = product.querySelector('.product-description'),
@@ -203,6 +231,7 @@ let productManager = {
                 }
                 if(o.tags.box_amount){
                     this.createTag('fa-box', `${utils.persianNum(o.tags.box_amount)} عدد`, product);
+                    product.setAttribute('data-box-quantity', o.tags.box_amount);
                 }
                 if(o.tags.custom){
                     this.createTag('fa-tag', `${o.tags.custom}`, product);
@@ -223,14 +252,20 @@ let productManager = {
             addSingleButton.disabled = true;
         }
 
-        // todo: rewrite this to work with new design
-        // addButton.onclick = () => {
-        //     productManager.changeOrderCount(product, 1);
-        // }
-        // removeButton.onclick = () => {
-        //     productManager.changeOrderCount(product, -1);
-        // }
-
+        addBoxButton.onclick = function(){
+            product.setAttribute('data-order-type', 'box');
+            productManager.changeOrderCount(product, 1);
+        }
+        addSingleButton.onclick = function(){
+            product.setAttribute('data-order-type', 'single');
+            productManager.changeOrderCount(product, 1);
+        }
+        quantitySelector.querySelector('.plus-btn').onclick = function(){
+            productManager.changeOrderCount(product, 1);
+        }
+        quantitySelector.querySelector('.minus-btn').onclick = function(){
+            productManager.changeOrderCount(product, -1);
+        }
         this.changeOrderCount(product, -1);
 
         o.category.container.querySelector('.product-list').appendChild(product);
@@ -246,17 +281,26 @@ let productManager = {
             main.dom.categoryList.appendChild(product);
     },
     changeOrderCount: function(product, changeNum){
-        let orderCountElement = product.querySelector('.product-order-count');
-        let orderCount = parseInt(persianJs(orderCountElement.textContent).toEnglishNumber());
+        // return;
+        // let orderCountElement = product.querySelector('.product-order-count');
+        let orderType = product.getAttribute('data-order-type');
+        let orderCountElement = product.querySelector('.generic-quantity-selector .middle-text');
+        // let orderCount = parseInt(persianJs(orderCountElement.textContent).toEnglishNumber());
+        let orderCount = parseInt(product.getAttribute('data-orders'));
         orderCount += changeNum;
         if(orderCount < 0) orderCount = 0;
-        orderCountElement.textContent = persianJs(orderCount.toString()).englishNumber();
+
+        let orderInfoText = 'کارتن';
+        if(orderType == 'single') orderInfoText = 'عدد';
+        orderCountElement.textContent = `${persianJs(orderCount.toString()).englishNumber()} ${orderInfoText}`;
 
         if(orderCount){
             product.classList.add('ordered');
         } else {
             product.classList.remove('ordered');
         }
+
+        product.setAttribute('data-orders', orderCount);
 
         this.handleCheckoutCard();
     },
@@ -271,9 +315,15 @@ let productManager = {
             let fullCheckoutPrice = 0;
             Array.from(allOrders).forEach(product => {
                 let price = parseInt(product.getAttribute('data-price'));
-                let orderCount = parseInt(persianJs(product.querySelector('.product-order-count').textContent).toEnglishNumber());
-                let productCheckoutPrice = price * orderCount;
-                product.setAttribute('data-debug', JSON.stringify({price, orderCount, productCheckoutPrice}));
+                let orderType = product.getAttribute('data-order-type');
+                let orderCount = product.getAttribute('data-orders');
+                let productCheckoutPrice;
+                if(orderType == "box"){
+                    let boxQuantity = product.getAttribute('data-box-quantity');
+                    productCheckoutPrice = price * boxQuantity * orderCount;
+                } else {
+                    productCheckoutPrice = price * orderCount;
+                }
                 fullCheckoutPrice += productCheckoutPrice;
             });
             document.querySelector("#order-checkout-card > button").textContent = `ثبت سفارش (${utils.persianNum(fullCheckoutPrice)} تومان)`

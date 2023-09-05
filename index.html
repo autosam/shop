@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta user-scale="0">
-    <!-- <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> -->
     <link rel="stylesheet" href="styles.css">
     <title>Test</title>
 </head>
@@ -93,7 +93,7 @@
             دسته
         </div>
         <!-- cloneable product card -->
-        <div id="cloneable-product" class="product-card">
+        <div id="cloneable-product" data-orders="0" class="product-card">
             <img class="product-image" src="resources/img/placeholder_img.png"></img>
             <div class="product-info">
                 <span class="product-title">محصول تست</span>
@@ -112,11 +112,22 @@
                             یک کارتن 
                             <!-- <i class="fa-solid "></i> -->
                         </button>
+                        <div class="generic-quantity-selector">
+                            <div class="minus-btn">
+                                <i class="fa-solid fa-minus"></i>
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
 
+                            <div class="middle-text"></div>
+
+                            <div class="plus-btn">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="product-actions hidden">
+            <!-- <div class="product-actions hidden">
                 <button class="btn product-action add tap-effect">
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -124,7 +135,7 @@
                 <button class="btn product-action remove tap-effect">
                     <i class="fa-solid fa-minus"></i>
                 </button>
-            </div>
+            </div> -->
         </div>
         <!-- cloneable product card placeholder -->
         <div id="cloneable-product-placeholder" class="product-card">
