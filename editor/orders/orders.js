@@ -77,7 +77,7 @@ let productsHelper = {
     },
     loadProducts: function(){
         return new Promise((resolve, reject) => {
-            fetch("https://autosam.github.io/db/products.json").then(response => response.json()).then(list => {
+            fetch("https://autosam.github.io/shop/db/products.json").then(response => response.json()).then(list => {
                 resolve(list);
                 productsHelper.list = list;
             });
