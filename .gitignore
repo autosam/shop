@@ -2,3 +2,4 @@
 .idea
 .bak
 db/products copy.json
+editor/orders/libs/bootstrap/css/bootstrap-5.3-rtl-min.css

@@ -45,6 +45,11 @@ let main = {
             product.querySelector('.product-category').value = def.category || '';
             // product.querySelector('.product-tags').value = JSON.stringify(def.tags, null, 1) || '';
             product.setAttribute('data-tags', JSON.stringify(def.tags) || "{}");
+            if(def.id){
+                product.setAttribute('data-product-id', def.id);
+            } else {
+                product.setAttribute('data-product-id', Math.round(Math.random() * 951847321));
+            }
         }
         
         this.dom.productList.appendChild(product);
@@ -116,8 +121,9 @@ let main = {
         let image = product.querySelector('.product-image').value || '';
         let category = product.querySelector('.product-category').value || '';
         let tags = JSON.parse(product.getAttribute('data-tags'));
+        let id = product.getAttribute('data-product-id');
         // return JSON.stringify({title, description, price, image, category});
-        return {title, description, price, image, category, tags};
+        return {title, description, price, image, category, tags, id};
         // product.querySelector('.product-tags').value = JSON.stringify(def.tags, null, 1) || '';
     },
     saveProducts: function(){

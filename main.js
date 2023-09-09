@@ -217,6 +217,9 @@ let productManager = {
             } else {
                 $(product.querySelector(".product-tags")).hide();
             }
+            if(o.id){
+                product.setAttribute('data-product-id', o.id);
+            }
         }
 
         product.setAttribute('data-price', price.textContent);
@@ -361,13 +364,14 @@ let productManager = {
             });
             let type = order.getAttribute('data-order-type');
             let quantity = order.getAttribute('data-orders');
+            let productId = order.getAttribute('data-product-id');
            
             $.ajax({
                 url: 'https://omegarelectrice.com/v2/api/order.php',
                 type: 'POST',
                 data: JSON.stringify({
                     user: main.username,
-                    product: name,
+                    product: productId,
                     quantity,
                     type,
                 }),

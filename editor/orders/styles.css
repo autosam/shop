@@ -22,9 +22,9 @@
 
 
 body {
-    direction: rtl;
     font-family: 'sans';
     font-size: small;
+    /* text-align: revert; */
 }
 
 .orders-container {
@@ -64,4 +64,15 @@ body {
 .loading-overlay .spinner-border {
     width: 100px;
     height: 100px;
+}
+
+.tag {
+    background: rgba(0, 0, 0, 0.556);
+    color: rgb(255, 255, 255);
+    width: max-content;
+    padding: 2px 5px;
+    font-size: x-small;
+    margin: 2px;
+    border-radius: 5px;
+    font-weight: bold;
 }
