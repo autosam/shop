@@ -1,0 +1,4 @@
+dbUserName: pwausr
+dbUserPass: Q@bl;31HSWJh
+
+utf8mb4_unicode_ci

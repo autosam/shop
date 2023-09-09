@@ -22,7 +22,7 @@ let main = {
         this.refreshProducts();
 
         document.querySelector('#order-checkout-card .btn').onclick = function(){
-            main.checkout();
+            productManager.checkout();
         }
 
         // hamburger menu
@@ -30,28 +30,6 @@ let main = {
 
         // appbar
         this.handleAppBar();
-    },
-    checkout: function(){
-        $.ajax({
-            url: 'https://omegarelectrice.com/v2/api/order.php',
-            type: 'POST',
-            data: JSON.stringify({
-                product: 'testproduct',
-                quantity: utils.randomInt(1, 9999),
-                type: 'box',
-                user: main.username,
-            }),
-            dataType: "json", 
-            success: function(response) {
-                console.log(response);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // Handle the error response here
-                console.log("Error: " + textStatus + " - " + errorThrown);
-                console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
-                console.log("Content: " + jqXHR.responseText);
-            },
-        });
     },
     handleAppBar: function(){
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
@@ -373,6 +351,38 @@ let productManager = {
         });
 
         productManager.onScroll();
+    },
+    checkout: function(){
+        let allOrders = main.dom.categoryList.getElementsByClassName('ordered');
+        Array.from(allOrders).forEach(order => {
+            let name = order.querySelector('.product-title').textContent.trim();
+            order.querySelectorAll('.tag-text').forEach(tag => {
+                name += " - " + tag.textContent;
+            });
+            let type = order.getAttribute('data-order-type');
+            let quantity = order.getAttribute('data-orders');
+           
+            $.ajax({
+                url: 'https://omegarelectrice.com/v2/api/order.php',
+                type: 'POST',
+                data: JSON.stringify({
+                    user: main.username,
+                    product: name,
+                    quantity,
+                    type,
+                }),
+                dataType: "json", 
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error response here
+                    console.log("Error: " + textStatus + " - " + errorThrown);
+                    console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
+                    console.log("Content: " + jqXHR.responseText);
+                },
+            });
+        })
     },
 }
 
