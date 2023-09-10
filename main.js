@@ -1,5 +1,5 @@
 let main = {
-    username: 'سامان محمدی',
+    username: 'کاربر تست',
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
         categoryList: document.querySelector(".category-list"),
@@ -367,7 +367,7 @@ let productManager = {
             let productId = order.getAttribute('data-product-id');
            
             $.ajax({
-                url: 'https://omegarelectrice.com/v2/api/order.php',
+                url: 'https://api.omegarelectrice.com/order.php',
                 type: 'POST',
                 data: JSON.stringify({
                     user: main.username,

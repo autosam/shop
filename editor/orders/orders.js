@@ -1,6 +1,6 @@
 function getOrders(){
     return new Promise((resolve, reject) => {
-        fetch('https://omegarelectrice.com/v2/api/orderList.php')
+        fetch('https://api.omegarelectrice.com/orderList.php')
         .then(response => response.json())
         .then(res => {
             resolve(res);
@@ -34,7 +34,7 @@ async function refreshOrders(){
         if(order.processed == 1) processed = '<span class="badge bg-success"> تایید شده </span>';
         else if(order.processed == -1) processed = '<span class="badge bg-danger"> رد شده </span>';
         tbody.innerHTML += `
-        <tr>
+        <tr data-order-id="${order.order_id}">
             <td>${i+1}</td>
             <td>${order.timestamp}</td>
             <td>${order.user}</td>
@@ -42,11 +42,37 @@ async function refreshOrders(){
             <td style="text-align: center;">${order.quantity}</td>
             <td style="text-align: center;">${order.type == 'single' ? "تکی" : "جعبه ای"}</td>
             <td style="text-align: center;">${processed}</td>
-            <td style="text-align: center;">-</td>
+            <td style="text-align: center;">
+                <i class="order-accept fa-solid fa-check btn btn-success"></i>
+                <i class="order-reject fa-solid fa-times btn btn-danger"></i>
+            </td>
         </tr>
         `;
     });
+
+    Array.from(tbody.querySelectorAll('tr')).forEach(row => {
+        let orderId = row.getAttribute('data-order-id');
+        row.querySelector('.order-accept').onclick = function(){
+            setOrderState(orderId, 1);
+        }
+        row.querySelector('.order-reject').onclick = function(){
+            setOrderState(orderId, -1);
+        }
+    });
+
     document.querySelector('.orders-container').setAttribute('data-loading', false);
+}
+
+function setOrderState(orderId, state){
+    fetch(`https://api.omegarelectrice.com/orderState.php?order_id=${orderId}&state=${state}`)
+    .then(response => response.json)
+    .then(json => {
+        refreshOrders();
+        toast('success', 'عملیات با موفقیت انجام شد');
+    }).catch(e => {
+        toast('error', e);
+        refreshOrders();
+    });
 }
 
 async function init(){
