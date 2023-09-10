@@ -24,25 +24,25 @@ async function refreshOrders(){
             name = `${product.title}`;
             
             for(let key in product.tags){
-                name += ` <div class="tag">${productsHelper.tagIdToText(key)}: ${product.tags[key]}</div> `;
+                name += ` <div class="badge bg-secondary">${productsHelper.tagIdToText(key)}: ${product.tags[key]}</div> `;
             }
         } else {
             name = order.product;
         }
 
-        let processed = 'در حال بررسی';
-        if(order.processed == 1) processed = 'تایید شده';
-        else if(order.processed == -1) processed = 'رد شده';
+        let processed = '<span class="badge bg-primary"> در حال بررسی </span>';
+        if(order.processed == 1) processed = '<span class="badge bg-success"> تایید شده </span>';
+        else if(order.processed == -1) processed = '<span class="badge bg-danger"> رد شده </span>';
         tbody.innerHTML += `
         <tr>
             <td>${i+1}</td>
             <td>${order.timestamp}</td>
             <td>${order.user}</td>
             <td>${name}</td>
-            <td>${order.quantity}</td>
-            <td>${order.type == 'single' ? "تکی" : "جعبه ای"}</td>
-            <td>${processed}</td>
-            <td>-</td>
+            <td style="text-align: center;">${order.quantity}</td>
+            <td style="text-align: center;">${order.type == 'single' ? "تکی" : "جعبه ای"}</td>
+            <td style="text-align: center;">${processed}</td>
+            <td style="text-align: center;">-</td>
         </tr>
         `;
     });
@@ -51,7 +51,7 @@ async function refreshOrders(){
 
 async function init(){
     // productsList = await loadProducts();
-    productsHelper.init();
+    await productsHelper.init();
 
     let refreshBtn = document.querySelector('.btn.refresh');
     refreshBtn.onclick = function(){
@@ -71,13 +71,16 @@ let productsHelper = {
     list: null,
     initialied: false,
     async init(){
-        await this.loadProducts();
-        console.log(this.list);
-        this.initialied = true;
+        return new Promise((resolve, reject) => {
+            this.loadProducts().then(() => {
+                productsHelper.initialied = true;
+                resolve(productsHelper.list);
+            });
+        })
     },
     loadProducts: function(){
         return new Promise((resolve, reject) => {
-            fetch("https://autosam.github.io/shop/db/products.json").then(response => response.json()).then(list => {
+            fetch("../../db/products.json").then(response => response.json()).then(list => {
                 resolve(list);
                 productsHelper.list = list;
             });
@@ -98,7 +101,7 @@ let productsHelper = {
             case "amper": return "آمپر";
             case "watt": return "وات";
             case "box_amount": return "تعداد در کارتن";
-            case "custom": return "";
+            case "custom": return "تگ";
         }
     }
 }
