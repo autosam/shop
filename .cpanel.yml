@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/omegarelectrice/dashboard.omegarelectrice.com/
-    - /bin/cp -R images $DEPLOYPATH
+    - /bin/cp -R . $DEPLOYPATH
