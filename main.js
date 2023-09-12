@@ -56,7 +56,7 @@ let main = {
     },
     refreshProducts: function(){
         setTimeout(() => {
-            productManager.loadProductList('https://api.omegarelectrice.com/json/products.json');
+            productManager.loadProductList(`https://api.omegarelectrice.com/json/products.json?tmp=${new Date().getTime()}`);
         }, 0);
     },
     scrollByPercent: function (percent) {

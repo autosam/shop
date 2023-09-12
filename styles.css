@@ -304,8 +304,8 @@ body {
     border-top-right-radius: 0px;
 }
 
-.product-list.has-order {
-    margin-bottom: 110px;
+.category-list.has-order {
+    margin-bottom: 170px;
 }
 
 .order-checkout-card {
