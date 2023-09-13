@@ -1,7 +1,0 @@
-dbUserName: pwausr
-dbUserPass: Q@bl;31HSWJh
-
-ftpUser: samanftp
-ftpPass: )%,scQa]PvHW
-
-utf8mb4_unicode_ci
