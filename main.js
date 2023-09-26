@@ -2,6 +2,8 @@ let main = {
     username: 'کاربر تست',
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
+        appBar: document.querySelector('.app-bar'),
+        loadingOverlay: document.querySelector('.loading-overlay'),
         categoryList: document.querySelector(".category-list"),
         categorySelectorContainer: document.querySelector(".category-selector-container"),
         cloneableCategorySelector: document.querySelector("#cloneable-category-selector"),
@@ -10,6 +12,7 @@ let main = {
         cloneableCategory: document.querySelector("#cloneable-category"),
         cloneableTag: document.querySelector("#cloneable-tag"),
         orderCheckoutCard: document.querySelector("#order-checkout-card"),
+        orderCheckoutScreen: document.querySelector('#order-checkout-screen'),
 
         barsIcon: document.querySelector('.bars-icon'),
         hamburgerMenu: document.querySelector('.hamburger-menu'),
@@ -21,9 +24,8 @@ let main = {
         // this.test();
         this.refreshProducts();
 
-        document.querySelector('#order-checkout-card .btn').onclick = function(){
-            productManager.checkout();
-        }
+        // checkout
+        this.handleCheckout();
 
         // hamburger menu
         this.handleHamburgerMenu();
@@ -35,10 +37,18 @@ let main = {
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
             items.forEach(item => {
                 item.onclick = function(){
-                    items.forEach(item => item.classList.remove('active'));
+                    items.forEach(item => {
+                        item.classList.remove('active');
+                        console.log(item.querySelector('i'));
+                        item.querySelector('i').classList.add('fa-regular');
+                        item.querySelector('i').classList.remove('fa-solid');
+                    });
                     this.classList.add('active');
+                    this.querySelector('i').classList.add('fa-solid');
+                    this.querySelector('i').classList.remove('fa-regular');
                 }
-            })
+            });
+        document.querySelector('#page-order').click();
     },
     handleHamburgerMenu: function(){
         console.log(main.dom.hamburgerMenu)
@@ -53,6 +63,79 @@ let main = {
                 main.dom.headerWrapper.classList.remove('hamburger-shown');
             }
         }
+    },
+    openCheckoutScreen: function(){
+        let orderListElm = main.dom.orderCheckoutScreen.querySelector('.finalize-order-list');
+
+        orderListElm.innerHTML = '';
+
+        let allOrders = main.dom.categoryList.getElementsByClassName('ordered');
+        Array.from(allOrders).forEach(order => {
+            let name = order.querySelector('.product-title').textContent.trim();
+            order.querySelectorAll('.tag-text').forEach(tag => {
+                name += " - " + tag.textContent;
+            });
+            let type = order.getAttribute('data-order-type');
+            let quantity = order.getAttribute('data-orders');
+            let productId = order.getAttribute('data-product-id');
+
+            orderListElm.innerHTML += `
+                <div class="checkout-list-item">
+                    ${name}: ${quantity} عدد
+                </div>
+            `
+            
+            return;
+            $.ajax({
+                url: 'https://api.omegarelectrice.com/order.php',
+                type: 'POST',
+                data: JSON.stringify({
+                    user: main.username,
+                    product: productId,
+                    quantity,
+                    type,
+                }),
+                dataType: "json", 
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle the error response here
+                    console.log("Error: " + textStatus + " - " + errorThrown);
+                    console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
+                    console.log("Content: " + jqXHR.responseText);
+                },
+            });
+        });
+
+        $(main.dom.orderCheckoutScreen).slideDown();
+        $(main.dom.appBar).fadeOut('fast');
+    },
+    closeCheckoutScreen: function(){
+        $(main.dom.orderCheckoutScreen).slideUp('fast');
+        $(main.dom.appBar).slideDown('fast');
+    },
+    handleCheckout: function(){
+        // productManager.checkout();
+        document.querySelector('#order-checkout-card .btn').onclick = function(){
+            main.openCheckoutScreen();
+        }
+        document.querySelector("#order-checkout-screen .finalize-order-btn").onclick = function(){
+            (async function(){
+                main.loadingStart();
+                await productManager.checkout();
+                main.loadingEnd();
+                main.closeCheckoutScreen();
+                productManager.trashOrdered();
+            })();
+            
+        }
+    },
+    loadingStart: function(){
+        $(main.dom.loadingOverlay).fadeIn('fast');
+    },
+    loadingEnd: function(){
+        $(main.dom.loadingOverlay).fadeOut();
     },
     refreshProducts: function(){
         setTimeout(() => {
@@ -173,6 +256,11 @@ let productManager = {
         main.dom.categorySelectorContainer.appendChild(categorySelector);
 
         return {container: category, toolbarSelector: categorySelector};
+    },
+    trashOrdered: function(){
+        [...document.querySelectorAll('.product-card.ordered')].forEach(product => {
+            productManager.changeOrderCount(product, -999999);
+        });
     },
     addProduct: function(o){
         if(!o.category) return false;
@@ -356,35 +444,41 @@ let productManager = {
         productManager.onScroll();
     },
     checkout: function(){
-        let allOrders = main.dom.categoryList.getElementsByClassName('ordered');
-        Array.from(allOrders).forEach(order => {
-            let name = order.querySelector('.product-title').textContent.trim();
-            order.querySelectorAll('.tag-text').forEach(tag => {
-                name += " - " + tag.textContent;
-            });
-            let type = order.getAttribute('data-order-type');
-            let quantity = order.getAttribute('data-orders');
-            let productId = order.getAttribute('data-product-id');
-           
-            $.ajax({
-                url: 'https://api.omegarelectrice.com/order.php',
-                type: 'POST',
-                data: JSON.stringify({
-                    user: main.username,
-                    product: productId,
-                    quantity,
-                    type,
-                }),
-                dataType: "json", 
-                success: function(response) {
-                    console.log(response);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle the error response here
-                    console.log("Error: " + textStatus + " - " + errorThrown);
-                    console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
-                    console.log("Content: " + jqXHR.responseText);
-                },
+        return new Promise((resolve, reject) => {
+            let setId = utils.generateRandomChars(8);
+            let allOrders = main.dom.categoryList.getElementsByClassName('ordered');
+            Array.from(allOrders).forEach(order => {
+                let name = order.querySelector('.product-title').textContent.trim();
+                order.querySelectorAll('.tag-text').forEach(tag => {
+                    name += " - " + tag.textContent;
+                });
+                let type = order.getAttribute('data-order-type');
+                let quantity = order.getAttribute('data-orders');
+                let productId = order.getAttribute('data-product-id');
+                
+                $.ajax({
+                    url: 'https://api.omegarelectrice.com/order.php',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        user: main.username,
+                        product: productId,
+                        quantity,
+                        type,
+                        setId
+                    }),
+                    dataType: "json", 
+                    success: function(response) {
+                        console.log(response);
+                        resolve(response);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Handle the error response here
+                        console.log("Error: " + textStatus + " - " + errorThrown);
+                        console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
+                        console.log("Content: " + jqXHR.responseText);
+                        reject();
+                    },
+                });
             });
         })
     },

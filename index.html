@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta user-scale="0">
-    <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="resources/fontawesome-6.4.0/css/all.min.css"> -->
+    <!-- <link rel="stylesheet" href="resources/fontawesome-pro-6.4.2/css/all.css"> -->
+    <link rel="stylesheet" href="https://cdn.omegarelectrice.com/fa-pro-6.4.2/css/all.css">
     
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> -->
     <link rel="stylesheet" href="styles.css">
@@ -62,26 +64,53 @@
         <button class="btn">ثبت سفارش</button>
     </div>
 
+    <!-- checkout finalize overlay -->
+    <div id="order-checkout-screen" class="order-checkout-screen">
+        <div class="finalize-order-top">
+            <div class="finalize-order-header-text">
+                <i class="fa-regular fa-bag-shopping"></i>
+                <span>سبد خرید</span>
+            </div>
+            <div onclick="main.closeCheckoutScreen()" class="collapse-btn"> 
+                <i class="fa-solid fa-times"></i> 
+                <span> لغو سفارش </span>
+            </div>
+        </div>
+        <div class="finalize-order-list">orderlist</div>
+        <div class="finalize-order-actions">
+            <button class="finalize-order-btn">
+                ثبت نهایی سفارش
+            </button>
+        </div>
+    </div>
+
+    <!-- loading overlay -->
+    <div class="loading-overlay" style="display: none;">
+        <div>
+            <i class="fa-duotone fa-spinner-third fa-spin"></i>
+        </div>
+    </div>
+
     <!-- bottom app bar -->
     <div class="app-bar">
         <div class="app-bar-item">
-            <i class="fa-solid fa-home"></i>
+            <i class="fa-regular fa-home"></i>
             <span>خانه</span>
         </div>
         <div class="app-bar-item">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-regular fa-magnifying-glass"></i>
             <span>جستجو</span>
         </div>
-        <div class="app-bar-item active">
-            <i class="fa-solid fa-shopping-cart"></i>
+        <div id="page-order" class="app-bar-item">
+            <i class="fa-regular fa-shopping-cart"></i>
             <span>ثبت سفارش</span>
         </div>
         <div class="app-bar-item">
-            <i class="fa-solid fa-list"></i>
+            <i class="fa-regular fa-list"></i>
             <span>گزینه</span>
         </div>
         <div class="app-bar-item">
-            <i class="fa-solid fa-user"></i>
+            <i class="fa-regular fa-user"></i>
             <span>کاربر</span>
         </div>
     </div>
