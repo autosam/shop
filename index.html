@@ -64,7 +64,7 @@
         <button class="btn">ثبت سفارش</button>
     </div>
 
-    <!-- checkout finalize overlay -->
+    <!-- checkout finalize screen -->
     <div id="order-checkout-screen" class="order-checkout-screen">
         <div class="finalize-order-top">
             <div class="finalize-order-header-text">
@@ -82,6 +82,17 @@
                 <i class="fa-regular fa-shopping-cart"></i>
                 نهایی سازی سفارش
             </button>
+        </div>
+    </div>
+
+    <!-- username screen -->
+    <div style="display: none;" id="welcome-screen" class="welcome-screen fullscreen">
+        <!-- <h2>خوش آمدید!</h2> -->
+        <div class="user-register-container">
+            <img src="resources/img/logo-full-color-transparent.png"></img>
+            <span>لطفا نام و نام خانوادگی خود را وارد کنید:</span>
+            <input></input>
+            <button class="btn generic">ورود</button>
         </div>
     </div>
 
@@ -110,7 +121,7 @@
             <i class="fa-regular fa-list"></i>
             <span>گزینه</span>
         </div>
-        <div class="app-bar-item">
+        <div id="app-bar-user" class="app-bar-item">
             <i class="fa-regular fa-user"></i>
             <span>کاربر</span>
         </div>

@@ -30,6 +30,9 @@ let main = {
         // hamburger menu
         this.handleHamburgerMenu();
 
+        // user
+        this.handleUser();
+
         // appbar
         this.handleAppBar();
     },
@@ -39,7 +42,6 @@ let main = {
                 item.onclick = function(){
                     items.forEach(item => {
                         item.classList.remove('active');
-                        console.log(item.querySelector('i'));
                         item.querySelector('i').classList.add('fa-regular');
                         item.querySelector('i').classList.remove('fa-solid');
                     });
@@ -48,6 +50,10 @@ let main = {
                     this.querySelector('i').classList.remove('fa-regular');
                 }
             });
+
+        document.querySelector('#app-bar-user').onclick = function(){
+            main.openWelcomeScreen();
+        }
         document.querySelector('#page-order').click();
     },
     handleHamburgerMenu: function(){
@@ -98,6 +104,34 @@ let main = {
     },
     closeCheckoutScreen: function(){
         $(main.dom.orderCheckoutScreen).slideUp('fast');
+        $(main.dom.appBar).slideDown('fast');
+    },
+    setUsername: function(username){
+        main.username = username;
+        utils.setCookie('username', username);
+    },
+    handleUser: function(){
+        let username = utils.getCookie('username');
+        if(!username)
+            this.openWelcomeScreen();
+        else 
+            main.username = username;
+    },
+    openWelcomeScreen: function(){
+        document.querySelector('#welcome-screen .btn').onclick = function(){
+            let username = document.querySelector('#welcome-screen input').value;
+            if(!username){
+                return;
+            }
+            main.setUsername(username);
+            main.closeWelcomeScreen();
+        }
+
+        $('#welcome-screen').show();
+        $(main.dom.appBar).fadeOut('fast');
+    },
+    closeWelcomeScreen: function(){
+        $('#welcome-screen').slideUp('fast');
         $(main.dom.appBar).slideDown('fast');
     },
     handleCheckout: function(){
@@ -486,6 +520,26 @@ let utils = {
     },
     persianNum: function(text){
         return persianJs(new Intl.NumberFormat('en-US', {style : "decimal" }).format(text)).englishNumber()
+    },
+    setCookie: function(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    },
+    getCookie: function(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     },
 }
 
