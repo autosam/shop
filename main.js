@@ -79,33 +79,18 @@ let main = {
             let quantity = order.getAttribute('data-orders');
             let productId = order.getAttribute('data-product-id');
 
+            // orderListElm.innerHTML += `
+            //     <div class="checkout-list-item">
+            //         ${name}: ${quantity} عدد
+            //     </div>
+            // `
             orderListElm.innerHTML += `
                 <div class="checkout-list-item">
-                    ${name}: ${quantity} عدد
+                    <div class="checkout-product-card">
+                    ${order.querySelector(".product-info").innerHTML}
+                    </div>
                 </div>
-            `
-            
-            return;
-            $.ajax({
-                url: 'https://api.omegarelectrice.com/order.php',
-                type: 'POST',
-                data: JSON.stringify({
-                    user: main.username,
-                    product: productId,
-                    quantity,
-                    type,
-                }),
-                dataType: "json", 
-                success: function(response) {
-                    console.log(response);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle the error response here
-                    console.log("Error: " + textStatus + " - " + errorThrown);
-                    console.log("Status: " + jqXHR.status + " - " + jqXHR.statusText);
-                    console.log("Content: " + jqXHR.responseText);
-                },
-            });
+            `;
         });
 
         $(main.dom.orderCheckoutScreen).slideDown();
