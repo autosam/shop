@@ -47,6 +47,8 @@ let main = {
         // pages
         this.refreshPages();
         this.switchPage('page-order');
+
+        document.body.style.display = '';
     },
     handleAppBar: function(){
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
@@ -207,7 +209,7 @@ let main = {
         .then(history => {
             let listContainer = document.querySelector('.users-last-orders-list');
             listContainer.innerHTML = '';
-            history.reverse().forEach(order => {
+            history.reverse().slice(0, 64).forEach(order => {
                 let product = productManager.getProductById(order.product);
                 if(!product) return;
 
@@ -285,6 +287,7 @@ let main = {
         [...document.querySelectorAll('[data-cloneable]')].forEach(cloneable => {
             let name = cloneable.dataset.cloneable;
             main.dom.cloneable[name] = cloneable;
+            cloneable.removeAttribute('data-cloneable');
         });
     },
 
@@ -309,7 +312,7 @@ let main = {
             } else {
                 $(element).hide();
             }
-        })
+        });
     },
     refreshPages: function () {
         main.dom.pages = {};

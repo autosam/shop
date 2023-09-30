@@ -14,7 +14,7 @@
     <title>Test</title>
 </head>
 
-<body>
+<body style="display: none;">
     <!-- header -->
     <div class="header-wrapper">
         <div class="page-header">
@@ -109,8 +109,10 @@
     </div>
 
     <!-- checkout card -->
-    <div id="order-checkout-card" class="order-checkout-card">
-        <button class="btn">ثبت سفارش</button>
+    <div data-page-dependant="page-order">
+        <div style="display: none;" id="order-checkout-card" class="order-checkout-card">
+            <button class="btn">ثبت سفارش</button>
+        </div>
     </div>
 
     <!-- checkout finalize screen -->
