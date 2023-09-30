@@ -355,7 +355,7 @@ let initializers = {
         this.user_page();
     },
     user_page: function(){
-        document.querySelector('#change-username').onclick = function(){
+        document.querySelector('#change-username-btn').onclick = function(){
             main.openWelcomeScreen();
         }
     }
