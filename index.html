@@ -27,7 +27,7 @@
             <!--         <i class="fa-solid fa-arrow-left back-icon"></i> -->
         </div>
         <!-- toolbar -->
-        <div class="page-toolbar top-divider-border">
+        <div class="page-toolbar top-divider-border" data-page-dependant="page-order">
             <div class="category-selector-container">
 
             </div>
@@ -47,31 +47,65 @@
     </div>
 
     <!-- page content -->
-    <div class="page-content">
-        <!-- search toolbar -->
-        <div class="top-toolbar hidden">
-            <div class="product-search-wrapper">
-                <i class="product-search-icon fa-solid fa-search"></i>
-                <input class="product-search-input"></input>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- order page -->
+            <div id="page-order" class="page">
+                <!-- search toolbar -->
+                <div class="top-toolbar hidden">
+                    <div class="product-search-wrapper">
+                        <i class="product-search-icon fa-solid fa-search"></i>
+                        <input class="product-search-input"></input>
+                    </div>
+                </div>
+                <!-- order success -->
+                <div style="display: none;" class="order-success badge-green"> 
+                    <i class="fa-solid fa-check-circle"></i>
+                    سفارش شما ثبت شد!
+                    <div>
+                        <small>
+                            همکاران ما در کوتاه ترین زمان ممکن با شما تماس خواهند گرفت.
+                        </small>
+                    </div>
+                    <div style="display: nonee; text-align: left;width: 100%;font-size: 0.7rem;">
+                        <hr>
+                        کد رهگیری:
+                        <span class="order-tracking-code badge-green"></span>
+                    </div>
+                </div>
+                <!-- products list -->
+                <div class="category-list"></div>
+            </div>
+            
+            <!-- search page -->
+            <div id="page-search" class="page">
+                <input></input>
+            </div>
+
+            <!-- user page -->
+            <div id="page-user" class="page page-generic">
+                <div class="user-box portlet-white-a">
+                    <div>
+                        <i class="fa-regular fa-user-circle"></i>
+                        <span id="username">
+                            %username%
+                        </span>
+                    </div>
+                    <button class="btn generic" id="change-username">
+                        خروج از حساب
+                        <i class="fa-regular fa-sign-out"></i>
+                    </button>
+                </div>
+
+                <div class="user-last-orders-box portlet-white-a">
+                    <span> سفارش های اخیر: </span>
+                    <div class="users-last-orders-list">
+
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- order success -->
-        <div style="display: none;" class="order-success badge-green"> 
-            <i class="fa-solid fa-check-circle"></i>
-            سفارش شما ثبت شد!
-            <div>
-                <small>
-                    همکاران ما در کوتاه ترین زمان ممکن با شما تماس خواهند گرفت.
-                </small>
-            </div>
-            <div style="display: nonee; text-align: left;width: 100%;font-size: 0.7rem;">
-                <hr>
-                کد رهگیری:
-                <span class="order-tracking-code badge-green">uzFixWdJ</span>
-            </div>
-        </div>
-        <!-- products list -->
-        <div class="category-list"></div>
+
     </div>
 
     <!-- checkout card -->
@@ -131,11 +165,11 @@
             <i class="fa-regular fa-home"></i>
             <span>خانه</span>
         </div>
-        <div class="app-bar-item">
+        <div data-target="page-search" class="app-bar-item">
             <i class="fa-regular fa-magnifying-glass"></i>
             <span>جستجو</span>
         </div>
-        <div id="page-order" class="app-bar-item">
+        <div data-target="page-order" id="app-bar-order" class="app-bar-item">
             <i class="fa-regular fa-shopping-cart"></i>
             <span>ثبت سفارش</span>
         </div>
@@ -143,7 +177,7 @@
             <i class="fa-regular fa-list"></i>
             <span>گزینه</span>
         </div>
-        <div id="app-bar-user" class="app-bar-item">
+        <div data-target="page-user" id="app-bar-user" class="app-bar-item">
             <i class="fa-regular fa-user"></i>
             <span>کاربر</span>
         </div>

@@ -16,6 +16,8 @@ let main = {
 
         barsIcon: document.querySelector('.bars-icon'),
         hamburgerMenu: document.querySelector('.hamburger-menu'),
+
+        pages: {},
     },
     init: function(){
         productManager.init();
@@ -35,6 +37,13 @@ let main = {
 
         // appbar
         this.handleAppBar();
+
+        // initializers
+        initializers.init();
+
+        // pages
+        this.refreshPages();
+        this.switchPage('page-user');
     },
     handleAppBar: function(){
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
@@ -48,13 +57,15 @@ let main = {
                     this.classList.add('active');
                     this.querySelector('i').classList.add('fa-solid');
                     this.querySelector('i').classList.remove('fa-regular');
+                    
+                    main.switchPage(this.getAttribute('data-target'));
                 }
             });
 
-        document.querySelector('#app-bar-user').onclick = function(){
-            main.openWelcomeScreen();
-        }
-        document.querySelector('#page-order').click();
+        // document.querySelector('#app-bar-user').onclick = function(){
+        //     main.openWelcomeScreen();
+        // }
+        document.querySelector('#app-bar-order').click();
     },
     handleHamburgerMenu: function(){
         console.log(main.dom.hamburgerMenu)
@@ -109,13 +120,15 @@ let main = {
     setUsername: function(username){
         main.username = username;
         utils.setCookie('username', username, 100);
+        document.querySelector('.user-box #username').textContent = username;
     },
     handleUser: function(){
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
         else 
-            main.username = username;
+            main.setUsername(username);
     },
     openWelcomeScreen: function(){
         document.querySelector('#welcome-screen .btn').onclick = function(){
@@ -222,6 +235,75 @@ let main = {
             // productManager.onScroll();
         }, utils.randomInt(1, 500));
     },
+
+    switchPage: function (pageName) {
+        for (let currentPageName in main.dom.pages) {
+            let page = main.dom.pages[currentPageName];
+            if (currentPageName == pageName) {
+                page.classList.remove('hidden');
+                page.classList.add('swipe-from-left');
+            }
+            else {
+                page.classList.add('hidden', 'swipe-from-left');
+                page.classList.remove('swipe-from-left');
+            }
+            window.scrollTo(0, 0);
+        }
+        document.body.setAttribute('data-current-page', pageName);
+
+        [...document.querySelectorAll('[data-page-dependant]')].forEach(element => {
+            if(element.dataset.pageDependant == pageName){
+                $(element).show();
+            } else {
+                $(element).hide();
+            }
+        })
+    },
+    refreshPages: function () {
+        main.dom.pages = {};
+        // getting pages
+        [...document.querySelectorAll('.page')].forEach(page => {
+            main.dom.pages[page.getAttribute('id')] = page;
+        });
+    },
+    createPageFromTemplate: function (template, o) {
+        let cloneableTemplate = document.querySelector("#" + template);
+
+        let page = cloneableTemplate.cloneNode(true);
+        page.classList.remove('cloneable', 'page-template');
+        page.classList.add('page');
+
+        if (o) {
+            page.querySelector('h1').innerHTML = o.title || '';
+            page.querySelector('p').innerHTML = o.body || '';
+            page.setAttribute('id', o.id || `page-${utils.generateRandomChars(20)}`);
+            if (o.visible) {
+                page.classList.remove('hidden');
+            } else {
+                page.classList.add('hidden');
+            }
+
+            if (o.onback) {
+                page.querySelector('.back-btn').onclick = o.onback;
+            }
+        }
+
+        main.dom.pageContent.appendChild(page);
+        // this.refreshPages();
+
+        return page;
+    }
+}
+
+let initializers = {
+    init: function(){
+        this.user_page();
+    },
+    user_page: function(){
+        document.querySelector('#change-username').onclick = function(){
+            main.openWelcomeScreen();
+        }
+    }
 }
 
 let productManager = {
@@ -266,7 +348,7 @@ let productManager = {
             categorySelector.setAttribute('id', 'cat-selector-' + categoryId);
             categorySelector.setAttribute('cat-id', categoryId);
             categorySelector.onclick = () => {
-                window.scrollTo(0, category.offsetTop - main.dom.headerWrapper.offsetHeight - 10);
+                window.scrollTo(0, category.offsetTop - main.dom.headerWrapper.offsetHeight + 120);
                 // categorySelector.activate();
                 categorySelector.classList.add('target-selector');
             }

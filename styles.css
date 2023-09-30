@@ -52,8 +52,24 @@ body {
     background-size: 10px 10px; */
 }
 
+.page-content-wrapper {
+    /* margin-bottom: 70px; */
+    overflow-x:hidden;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center; */
+    /* align-items: center; */
+    /* background-color: rgb(43, 43, 43); */
+    width: 100%;
+}
+
 .page-content {
     margin-bottom: 70px;
+}
+
+.page-generic {
+    padding: 10px;
 }
 
 .header-wrapper {
@@ -994,4 +1010,46 @@ hr {
     color: #3e9500;
     background: #46ff002b;
     border: 1px solid #46ff002b;
+}
+
+.portlet-white-a {
+    background: white;
+    border: 1px solid #00000024;
+    padding: 10px;
+    color: #313131;
+    border-radius: 10px;
+}
+
+.portlet-white-a + .portlet-white-a {
+    margin-top: 5px;
+}
+
+.swipe-from-left {
+    animation: swipe-from-left 0.2s ease-out;
+}
+@keyframes swipe-from-left {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.page {
+    position: relative;
+    z-index: 2;
+}
+
+/* pages */
+#page-user .user-box {
+    font-size: large;
+    display: flex;
+    justify-content: space-between;
+}
+
+#page-user .user-box #change-username {
+    font-size: small;
 }
