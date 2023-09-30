@@ -111,7 +111,6 @@ let main = {
         utils.setCookie('username', username, 100);
     },
     handleUser: function(){
-        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
