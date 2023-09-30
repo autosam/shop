@@ -1000,16 +1000,34 @@ hr {
     border-bottom: 1px solid #00000026;
 }
 
+/* badges */
 .badge-red {
     color: red;
     background: #ff00002b;
     border: 1px solid #ff00002b;
 }
-
 .badge-green {
     color: #3e9500;
     background: #46ff002b;
     border: 1px solid #46ff002b;
+}
+.badge-blue {
+    color: #002895;
+    background: #0044ff2b;
+    border: 1px solid #0044ff2b;
+}
+.badge-gray {
+    color: #727272;
+    background: #bebebe2b;
+    border: 1px solid #bebebe2b;
+}
+.badge-orange {
+    color: #f16100;
+    background: #f160002b;
+    border: 1px solid #f160002b;
+}
+.badge + .badge {
+    margin-right: 5px;
 }
 
 .portlet-white-a {
@@ -1052,4 +1070,20 @@ hr {
 
 #page-user .user-box #change-username {
     font-size: small;
+}
+
+.order-history-item .order-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-history-item .order-info .badge {
+    /* background-color: rgb(201, 201, 201); */
+    padding: 0px 10px;
+    border-radius: 10px;
+    font-size: smaller;
+}
+
+.users-last-orders-list {
+    margin-top: 10px;
 }

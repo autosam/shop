@@ -18,6 +18,7 @@ let main = {
         hamburgerMenu: document.querySelector('.hamburger-menu'),
 
         pages: {},
+        cloneable: {},
     },
     init: function(){
         productManager.init();
@@ -41,9 +42,11 @@ let main = {
         // initializers
         initializers.init();
 
+        this.refreshCloneables();
+
         // pages
         this.refreshPages();
-        this.switchPage('page-user');
+        this.switchPage('page-order');
     },
     handleAppBar: function(){
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
@@ -121,9 +124,11 @@ let main = {
         main.username = username;
         utils.setCookie('username', username, 100);
         document.querySelector('.user-box #username').textContent = username;
+        main.populateUserOrderHistory();
     },
     handleUser: function(){
-        return;
+        // main.populateUserOrderHistory();
+        // return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -167,10 +172,13 @@ let main = {
                 main.closeCheckoutScreen();
                 productManager.trashOrdered(); 
                 $('.order-success').show();
+                $('.finalize-order-failed').hide();
                 document.querySelector('.order-tracking-code').textContent = res.setId;
                 window.scrollTo(0,0);
+                main.populateUserOrderHistory()
             })
             .catch(e => {
+                $('.order-success').hide();
                 $('.finalize-order-failed').show();
             })
             .finally(() => {
@@ -188,6 +196,42 @@ let main = {
         setTimeout(() => {
             productManager.loadProductList(`https://api.omegarelectrice.com/json/products.json?tmp=${new Date().getTime()}`);
         }, 0);
+    },
+    populateUserOrderHistory: function(){
+        if(!productManager.list){
+            return setTimeout(() => main.populateUserOrderHistory(), 100);
+        }
+        // https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}
+        fetch(`https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}`)
+        .then(response => response.json())
+        .then(history => {
+            let listContainer = document.querySelector('.users-last-orders-list');
+            listContainer.innerHTML = '';
+            history.reverse().forEach(order => {
+                let product = productManager.getProductById(order.product);
+                if(!product) return;
+
+                // name
+                let name = `${product.title}`;
+                for(let key in product.tags){
+                    if(key == 'box_amount') continue;
+                    name += ` <div class="tag"> <i class="fa-solid fa-tag"></i> ${productManager.tagIdToText(key)}: ${utils.persianNum(product.tags[key])}</div> `;
+                }
+
+                // processed
+                let processed = '<span id="state" class="badge badge-blue"> در حال بررسی </span>';
+                if(order.processed == 1) processed = '<span id="state" class="badge badge-green"> تایید شده </span>';
+                else if(order.processed == -1) processed = '<span id="state" class="badge badge-red"> رد شده </span>';
+
+                let item = main.dom.cloneable.orderHistoryItem.cloneNode(true);
+                    item.querySelector('#product').innerHTML = name + '<hr>';
+                    item.querySelector('#quantity').innerHTML = utils.persianNum(order.quantity);
+                    item.querySelector('#type').innerHTML = order.type == 'box' ? "جعبه" : "عدد";
+                    item.querySelector('#state').outerHTML = processed;
+                    item.querySelector('#set-id').outerHTML = order.setId;
+                    listContainer.appendChild(item);
+            })
+        })
     },
     scrollByPercent: function (percent) {
         let totalHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
@@ -234,6 +278,14 @@ let main = {
             setTimeout(() => productManager.onScroll());
             // productManager.onScroll();
         }, utils.randomInt(1, 500));
+    },
+
+    refreshCloneables: function(){
+        main.dom.cloneable = {};
+        [...document.querySelectorAll('[data-cloneable]')].forEach(cloneable => {
+            let name = cloneable.dataset.cloneable;
+            main.dom.cloneable[name] = cloneable;
+        });
     },
 
     switchPage: function (pageName) {
@@ -535,6 +587,7 @@ let productManager = {
         try {
             let response = await fetch(path);
             list = await response.json();
+            productManager.list = list;
         } catch(e) {
             main.dom.categoryList.innerHTML = document.querySelector('#load-error').outerHTML;
             main.dom.categoryList.querySelector('#retry-btn').onclick = function(){
@@ -599,6 +652,24 @@ let productManager = {
             });
         })
     },
+    getProductById: function(id){
+        for(let i = 0; i < this.list.length; i++){
+            let product = this.list[i];
+            if(product.id == id){
+                return product;
+            }
+        }
+        return false;
+    },
+    tagIdToText: function(id){
+        switch(id){
+            case "meter": return "متراژ";
+            case "amper": return "آمپر";
+            case "watt": return "وات";
+            case "box_amount": return "تعداد در کارتن";
+            case "custom": return "تگ";
+        }
+    }
 }
 
 let utils = {

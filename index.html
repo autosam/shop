@@ -186,11 +186,11 @@
     <!-- cloneables -->
     <div id="cloneables" class="hidden">
         <!-- cloneable category selector -->
-        <div id="cloneable-category-selector" class="toolbar-category-selector tap-effect hidden">
+        <div data-cloneable="categorySelector" id="cloneable-category-selector" class="toolbar-category-selector tap-effect hidden">
             دسته
         </div>
         <!-- cloneable product card -->
-        <div id="cloneable-product" data-orders="0" class="product-card">
+        <div data-cloneable="product" id="cloneable-product" data-orders="0" class="product-card">
             <img class="product-image" src="resources/img/placeholder_img.png"></img>
             <div class="product-info">
                 <span class="product-title">محصول تست</span>
@@ -235,7 +235,7 @@
             </div> -->
         </div>
         <!-- cloneable product card placeholder -->
-        <div id="cloneable-product-placeholder" class="product-card">
+        <div data-cloneable="productPlaceholder" id="cloneable-product-placeholder" class="product-card">
             <div class="product-image content-placeholder"></div>
             <div class="product-info">
                 <span class="product-title content-placeholder" style="height: 1rem; width: 50%; "></span>
@@ -245,13 +245,13 @@
         </div>
 
         <!-- cloneable category -->
-        <div id="cloneable-category" class="category hidden">
+        <div data-cloneable="category" id="cloneable-category" class="category hidden">
             <span class="category-title">نام دسته</span>
             <div class="product-list"></div>
         </div>
 
         <!-- cloneable tag -->
-        <span id="cloneable-tag" class="tag">
+        <span data-cloneable="tag" id="cloneable-tag" class="tag">
             <i class="tag-icon"></i>
             <span class="tag-divider">|</span>
             <span class="tag-text">تگ</span>
@@ -277,6 +277,26 @@
                 </button>
             </div>
 
+        </div>
+
+        <!-- cloneable order history item -->
+        <div data-cloneable="orderHistoryItem" id="cloneable-order-history-item" class="order-history-item portlet-white-a">
+            <div>
+                <div id="product"> </div>
+            </div>
+            <div class="order-info">
+                <div>
+                    <span id="quantity">  </span>
+                    <span id="type">  </span>
+                </div>
+                <div>
+                    <span id="state"></span>
+                    <span class="badge badge-orange">
+                        کد سفارش:
+                        <span id="set-id"></span>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 
