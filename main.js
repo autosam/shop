@@ -108,9 +108,10 @@ let main = {
     },
     setUsername: function(username){
         main.username = username;
-        utils.setCookie('username', username);
+        utils.setCookie('username', username, 100);
     },
     handleUser: function(){
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -140,14 +141,29 @@ let main = {
             main.openCheckoutScreen();
         }
         document.querySelector("#order-checkout-screen .finalize-order-btn").onclick = function(){
-            (async function(){
-                main.loadingStart();
-                await productManager.checkout();
-                main.loadingEnd();
+            // (async function(){
+            //     main.loadingStart();
+            //     await productManager.checkout();
+            //     main.loadingEnd();
+            //     main.closeCheckoutScreen();
+            //     productManager.trashOrdered();
+            // })();
+
+            main.loadingStart();
+            productManager.checkout()
+            .then(res => {
                 main.closeCheckoutScreen();
-                productManager.trashOrdered();
-            })();
-            
+                productManager.trashOrdered(); 
+                $('.order-success').show();
+                document.querySelector('.order-tracking-code').textContent = res.setId;
+                window.scrollTo(0,0);
+            })
+            .catch(e => {
+                $('.finalize-order-failed').show();
+            })
+            .finally(() => {
+                main.loadingEnd();
+            });
         }
     },
     loadingStart: function(){
@@ -234,6 +250,7 @@ let productManager = {
         if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
         if(text) tag.querySelector('.tag-text').innerHTML = text;
         if(important) tag.classList.add('tag-important');
+        tag.setAttribute('id', '');
         product.querySelector('.product-tags').appendChild(tag);
         return tag;
     },
@@ -488,7 +505,7 @@ let productManager = {
                     dataType: "json", 
                     success: function(response) {
                         console.log(response);
-                        resolve(response);
+                        resolve({...response, setId});
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         // Handle the error response here

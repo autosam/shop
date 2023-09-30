@@ -242,6 +242,7 @@ body {
     height: 0px;
     width: 0px;
     transition: none;
+    z-index: -9999;
 }
 
 .hamburger-menu-inner {
@@ -413,13 +414,26 @@ body {
     /* border-bottom: 1px solid white; */
     width: calc(100% - 40px);
     align-items: stretch;
-    margin: 0px 20px;
+    /* margin: 0px 20px; */
+    height: 78%;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.finalize-order-failed {
+    margin: 10px 20px;
+    padding: 15px 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .finalize-order-actions {
     bottom: 3%;
     position: absolute;
     width: 100%;
+    border-top: 1px solid var(--seperatorClr);
+    padding-top: 20px;
+    background: white;
 }
 
 .finalize-order-btn {
@@ -439,6 +453,18 @@ body {
     opacity: 0.5;
     pointer-events: none;
     position: relative;
+}
+
+.order-success {
+    margin: 10px 10px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.order-success .order-tracking-code {
+    padding: 0px 6px;
+    font-weight: bold;
 }
 
 .loading-overlay {
@@ -484,15 +510,22 @@ body {
     box-shadow: 0px 7px 15px #0000000e;
     border-right: 10px solid rgb(255 102 0);
     outline: 1px solid rgb(227 227 227);
+    margin: 5px 20px 00px 20px;
 }
 
+
+.checkout-product-card {
+    display: flex;
+    flex-direction: column;
+}
 .checkout-product-card .product-price {
     margin-right: auto;
 }
-.checkout-product-card .divider {
-    display: none;
+.checkout-product-card .product-description, .checkout-product-card .product-price small {
+    /* margin-right: auto; */
+    font-weight: normal;
 }
-.checkout-product-card > .product-additional > div:nth-child(2) {
+.checkout-product-card > .product-additional > div:nth-child(2), .checkout-product-card .divider {
     display: none;
 }
 
@@ -944,4 +977,21 @@ input {
     background-color: rgb(241, 241, 241);
     font-family: "sans";
     padding: 0px 10px;
+}
+
+hr {
+    border: 0px;
+    border-bottom: 1px solid #00000026;
+}
+
+.badge-red {
+    color: red;
+    background: #ff00002b;
+    border: 1px solid #ff00002b;
+}
+
+.badge-green {
+    color: #3e9500;
+    background: #46ff002b;
+    border: 1px solid #46ff002b;
 }

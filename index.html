@@ -55,6 +55,21 @@
                 <input class="product-search-input"></input>
             </div>
         </div>
+        <!-- order success -->
+        <div style="display: none;" class="order-success badge-green"> 
+            <i class="fa-solid fa-check-circle"></i>
+            سفارش شما ثبت شد!
+            <div>
+                <small>
+                    همکاران ما در کوتاه ترین زمان ممکن با شما تماس خواهند گرفت.
+                </small>
+            </div>
+            <div style="display: nonee; text-align: left;width: 100%;font-size: 0.7rem;">
+                <hr>
+                کد رهگیری:
+                <span class="order-tracking-code badge-green">uzFixWdJ</span>
+            </div>
+        </div>
         <!-- products list -->
         <div class="category-list"></div>
     </div>
@@ -69,14 +84,21 @@
         <div class="finalize-order-top">
             <div class="finalize-order-header-text">
                 <i class="fa-regular fa-bag-shopping"></i>
-                <span>سبد خرید</span>
+                <span> سبد خرید </span>
             </div>
             <div onclick="main.closeCheckoutScreen()" class="collapse-btn"> 
                 <i class="fa-solid fa-times"></i> 
                 <span> لغو سفارش </span>
             </div>
         </div>
-        <div class="finalize-order-list">orderlist</div>
+        <div style="display: none;" class="finalize-order-failed badge-red"> 
+            <i class="fa-solid fa-info-circle"></i>
+            مشکلی در هنگام نهایی سازی سفارش پیش آمده،
+            <div>
+                لطفا دوباره تلاش کنید
+            </div>
+        </div>
+        <div class="finalize-order-list"></div>
         <div class="finalize-order-actions">
             <button class="finalize-order-btn">
                 <i class="fa-regular fa-shopping-cart"></i>
