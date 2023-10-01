@@ -42,6 +42,7 @@ let main = {
         // initializers
         initializers.init();
 
+        // cloneables
         this.refreshCloneables();
 
         // pages
@@ -133,8 +134,7 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleUser: function(){
-        // main.populateUserOrderHistory();
-        // return;
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -362,11 +362,18 @@ let main = {
 
 let initializers = {
     init: function(){
+        this.order_page();
         this.user_page();
     },
     user_page: function(){
         document.querySelector('#change-username-btn').onclick = function(){
             main.openWelcomeScreen();
+        }
+    },
+    order_page: function(){
+        // search
+        document.querySelector('.product-search-wrapper input').oninput = function(){
+            productManager.uiSearch(this.value);
         }
     }
 }
@@ -665,6 +672,63 @@ let productManager = {
             });
         })
     },
+    uiSearch: function(str){
+        [...document.querySelectorAll('.category, .product-card, .category-title')].forEach(el => {
+            el.classList.remove('search-hidden');
+        });
+        $('.search-not-found').hide();
+
+        str = utils.convertNumFaToEn(str.trim());
+        if(!str) return;
+
+        [...document.querySelectorAll('.category-title')].forEach(el => {
+            el.classList.add('search-hidden');
+        })
+        
+        let hasMatch = false;
+
+        let categories = document.querySelectorAll('.category');
+        [...categories].forEach(category => {
+            let hasItem = false;
+
+            let products = category.querySelectorAll('.product-card');
+            [...products].forEach(productDom => {
+                // let product = productManager.getProductById(productDom.dataset.productId);
+                // let fullName = product.title
+                let name = productDom.querySelector('.product-title').textContent.trim();
+                productDom.querySelectorAll('.tag-text').forEach(tag => {
+                    name += " " + tag.textContent;
+                });
+                let result = search(str, name);
+                if(result){
+                    hasItem = true;
+                    hasMatch = true;
+                } else {
+                    productDom.classList.add('search-hidden');
+                }
+            })
+
+            if(!hasItem){
+                category.classList.add('search-hidden');
+            }
+        })
+
+        if(!hasMatch){
+            $('.search-not-found').show();
+        }
+
+        function search(a, b){ // searching for a in b
+            let aSplit = a.split(' '),
+                bSplit = b.split(' ');
+            
+            for(let i = 0; i < aSplit.length; i++){
+                let found = bSplit.indexOf(aSplit[i]) != -1;
+                if(!found) return false;
+            }
+
+            return true;
+        }
+    },
     getProductById: function(id){
         for(let i = 0; i < this.list.length; i++){
             let product = this.list[i];
@@ -702,6 +766,32 @@ let utils = {
     },
     persianNum: function(text){
         return persianJs(new Intl.NumberFormat('en-US', {style : "decimal" }).format(text)).englishNumber()
+    },
+    convertNumFaToEn: function(text){
+        return text
+            .replaceAll('1', '۱')
+            .replaceAll('2', '۲')
+            .replaceAll('3', '۳')
+            .replaceAll('4', '۴')
+            .replaceAll('5', '۵')
+            .replaceAll('6', '۶')
+            .replaceAll('7', '۷')
+            .replaceAll('8', '۸')
+            .replaceAll('9', '۹')
+            .replaceAll('0', '۰');
+    },
+    convertNumEnToFa: function(text){
+        return text
+            .replaceAll('۱', '1')
+            .replaceAll('۲', '2')
+            .replaceAll('۳', '3')
+            .replaceAll('۴', '4')
+            .replaceAll('۵', '5')
+            .replaceAll('۶', '6')
+            .replaceAll('۷', '7')
+            .replaceAll('۸', '8')
+            .replaceAll('۹', '9')
+            .replaceAll('۰', '0');
     },
     setCookie: function(cname, cvalue, exdays) {
         const d = new Date();

@@ -683,6 +683,16 @@ body {
     margin: 10px;
 }
 
+.search-not-found {
+    text-align: center;
+    color: rgb(156, 156, 156);
+    margin-top: 20px;
+}
+
+.search-not-found > div {
+    margin-top: 15px;
+}
+
 .category .category-title {
     background: #ffffff;
     text-align: center;
@@ -934,7 +944,7 @@ body {
     box-shadow: 0 3px 5px #00000026;
 }
 
-.hidden {
+.search-hidden, .hidden {
     display: none !important;
 }
 
