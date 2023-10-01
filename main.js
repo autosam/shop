@@ -155,7 +155,7 @@ let main = {
         $(main.dom.appBar).fadeOut('fast');
 
         if (navigator.userAgent.indexOf('gonative') > -1) {
-            median.statusbar.set({
+            gonative.statusbar.set({
                 'style':'light',
                 'color':'F16100',
                 'overlay':false,
@@ -168,7 +168,7 @@ let main = {
         $(main.dom.appBar).slideDown('fast');
 
         if (navigator.userAgent.indexOf('gonative') > -1) {
-            median.statusbar.set({
+            gonative.statusbar.set({
                 'style':'dark',
                 'color':'FFFFFF',
                 'overlay':false,
