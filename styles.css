@@ -643,6 +643,7 @@ body {
 
 .product-actions-container {
     text-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .product-card:not(.ordered) .add {
@@ -674,6 +675,7 @@ body {
     color: #202020;
     background: #ffffff;
     border: 1px solid var(--seperatorClr);
+    height: 50px;
     /* border: none; */
 }
 
@@ -1069,6 +1071,9 @@ hr {
     background: #46ff002b;
     border: 1px solid #46ff002b;
 }
+.badge-green hr {
+    border-bottom: 1px solid #3e9500;
+}
 .badge-blue {
     color: #002895;
     background: #0044ff2b;
@@ -1084,6 +1089,9 @@ hr {
     background: #f160002b;
     border: 1px solid #f160002b;
 }
+.badge hr {
+    opacity: 0.2;
+}
 .badge + .badge {
     margin-right: 5px;
 }
@@ -1091,6 +1099,7 @@ hr {
 .portlet-white-a {
     background: white;
     border: 1px solid #00000024;
+    border: 1px solid var(--seperatorClr);
     padding: 10px;
     color: #313131;
     border-radius: 10px;    
@@ -1146,4 +1155,10 @@ hr {
 
 .users-last-orders-list {
     margin-top: 10px;
+}
+.no-order-history {
+    margin-top: 15px;
+    text-align: center;
+    color: #b5b5b5;
+    border-radius: 500px;
 }

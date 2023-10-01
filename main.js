@@ -63,6 +63,10 @@ let main = {
                     this.querySelector('i').classList.add('fa-solid');
                     this.querySelector('i').classList.remove('fa-regular');
                     
+                    if(item.id == 'app-bar-user' && document.body.dataset.currentPage != 'page-user'){
+                        main.populateUserOrderHistory();
+                    }
+
                     main.switchPage(this.getAttribute('data-target'));
                 }
             });
@@ -203,11 +207,17 @@ let main = {
         if(!productManager.list){
             return setTimeout(() => main.populateUserOrderHistory(), 100);
         }
+        let listContainer = document.querySelector('.users-last-orders-list');
+        listContainer.innerHTML = '<i class="fa-duotone fa-spinner-third fa-spin"></i>';
+        $(".no-order-history").hide();
         // https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}
         fetch(`https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}`)
         .then(response => response.json())
         .then(history => {
-            let listContainer = document.querySelector('.users-last-orders-list');
+            if(!history.length){ // no order history
+                $(".no-order-history").show();
+            }
+
             listContainer.innerHTML = '';
             history.reverse().slice(0, 64).forEach(order => {
                 let product = productManager.getProductById(order.product);
