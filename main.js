@@ -157,9 +157,8 @@ let main = {
         if (navigator.userAgent.indexOf('gonative') > -1) {
             gonative.statusbar.set({
                 'style':'light',
-                'color':'orange',
-                'overlay':true,
-                'blur': true // optional - iOS only 
+                'color':'f16100',
+                'overlay':false,
             });
         }
           
@@ -170,10 +169,9 @@ let main = {
 
         if (navigator.userAgent.indexOf('gonative') > -1) {
             gonative.statusbar.set({
-                'style':'light',
+                'style':'dark',
                 'color':'white',
-                'overlay':true,
-                'blur': true // optional - iOS only 
+                'overlay':false,
             });
         }
     },
