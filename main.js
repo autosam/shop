@@ -153,10 +153,29 @@ let main = {
 
         $('#welcome-screen').show();
         $(main.dom.appBar).fadeOut('fast');
+
+        if (navigator.userAgent.indexOf('gonative') > -1) {
+            gonative.statusbar.set({
+                'style':'light',
+                'color':'orange',
+                'overlay':true,
+                'blur': true // optional - iOS only 
+            });
+        }
+          
     },
     closeWelcomeScreen: function(){
         $('#welcome-screen').slideUp('fast');
         $(main.dom.appBar).slideDown('fast');
+
+        if (navigator.userAgent.indexOf('gonative') > -1) {
+            gonative.statusbar.set({
+                'style':'light',
+                'color':'white',
+                'overlay':true,
+                'blur': true // optional - iOS only 
+            });
+        }
     },
     handleCheckout: function(){
         // productManager.checkout();
