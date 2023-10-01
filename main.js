@@ -158,7 +158,6 @@ let main = {
             gonative.statusbar.set({
                 'style':'light',
                 'color':'f16100',
-                'overlay':false,
             });
         }
           
@@ -170,8 +169,7 @@ let main = {
         if (navigator.userAgent.indexOf('gonative') > -1) {
             gonative.statusbar.set({
                 'style':'dark',
-                'color':'white',
-                'overlay':false,
+                'color':'FFFFFF',
             });
         }
     },
