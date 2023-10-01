@@ -154,8 +154,8 @@ let main = {
         $('#welcome-screen').show();
         $(main.dom.appBar).fadeOut('fast');
 
-        if (navigator.userAgent.indexOf('gonative') > -1) {
-            gonative.statusbar.set({
+        if (navigator.userAgent.indexOf('median') > -1) {
+            median.statusbar.set({
                 'style':'light',
                 'color':'f16100',
             });
@@ -166,8 +166,8 @@ let main = {
         $('#welcome-screen').slideUp('fast');
         $(main.dom.appBar).slideDown('fast');
 
-        if (navigator.userAgent.indexOf('gonative') > -1) {
-            gonative.statusbar.set({
+        if (navigator.userAgent.indexOf('median') > -1) {
+            median.statusbar.set({
                 'style':'dark',
                 'color':'FFFFFF',
             });
