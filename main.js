@@ -157,7 +157,8 @@ let main = {
         if (navigator.userAgent.indexOf('median') > -1) {
             median.statusbar.set({
                 'style':'light',
-                'color':'f16100',
+                'color':'F16100',
+                'overlay':false,
             });
         }
           
@@ -170,6 +171,7 @@ let main = {
             median.statusbar.set({
                 'style':'dark',
                 'color':'FFFFFF',
+                'overlay':false,
             });
         }
     },
