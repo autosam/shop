@@ -332,7 +332,14 @@ let main = {
             }
             window.scrollTo(0, 0);
         }
+
         document.body.setAttribute('data-current-page', pageName);
+
+        if(pageName == 'page-home'){
+            main.dom.headerWrapper.classList.add('no-box-shadow');
+        } else {
+            main.dom.headerWrapper.classList.remove('no-box-shadow');
+        }
 
         [...document.querySelectorAll('[data-page-dependant]')].forEach(element => {
             if(element.dataset.pageDependant == pageName){
