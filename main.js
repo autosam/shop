@@ -75,7 +75,7 @@ let main = {
         // document.querySelector('#app-bar-user').onclick = function(){
         //     main.openWelcomeScreen();
         // }
-        document.querySelector('#app-bar-order').click();
+        document.querySelector('#app-bar-home').click();
     },
     handleHamburgerMenu: function(){
         console.log(main.dom.hamburgerMenu)
@@ -134,7 +134,7 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleUser: function(){
-        // return;
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -142,13 +142,14 @@ let main = {
             main.setUsername(username);
     },
     openWelcomeScreen: function(){
-        document.querySelector('#welcome-screen .btn').onclick = function(){
+        document.querySelector('#welcome-screen #user-register-btn').onclick = function(){
             let username = document.querySelector('#welcome-screen input').value;
             if(!username){
                 return;
             }
             main.setUsername(username);
             main.closeWelcomeScreen();
+            document.querySelector('#app-bar-home').click();
         }
 
         $('#welcome-screen').show();

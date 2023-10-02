@@ -23,7 +23,7 @@
 
 
             <!-- <img src="resources/img/logo-top-hq-s.png" class="logo-top__"></img> -->
-            <img src="resources/img/logo-full-color-transparent.png" class="logo-top"></img>
+            <img src="resources/img/logo-color-transparent-min.png" class="logo-top"></img>
 
             <!--         <i class="fa-solid fa-arrow-left back-icon"></i> -->
         </div>
@@ -180,9 +180,12 @@
         <!-- <h2>خوش آمدید!</h2> -->
         <div class="user-register-container">
             <img src="resources/img/logo-full-color-transparent.png"></img>
-            <span>لطفا نام و نام خانوادگی خود را وارد کنید:</span>
-            <input></input>
-            <button class="btn generic">ورود</button>
+            <!-- <span style="text-align: center;">ورود به امگا الکتریک</span> -->
+            <div class="form-container">
+                <input id="user-register-name" placeholder="نام و نام خانوادگی"></input>
+                <input id="user-register-phone" placeholder="شماره همراه"></input>
+                <button id="user-register-btn" class="btn generic">ورود</button>
+            </div>
         </div>
     </div>
 
@@ -195,7 +198,7 @@
 
     <!-- bottom app bar -->
     <div class="app-bar">
-        <div data-target="page-home" class="app-bar-item">
+        <div data-target="page-home" id="app-bar-home" class="app-bar-item">
             <i class="fa-regular fa-home"></i>
             <span>خانه</span>
         </div>
