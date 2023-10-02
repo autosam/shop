@@ -11,7 +11,7 @@
     
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"> -->
     <link rel="stylesheet" href="styles.css">
-    <title>Test</title>
+    <title>وب اپلیکیشن امگا الکتریک</title>
 </head>
 
 <body style="display: none;">
@@ -22,7 +22,8 @@
             <!-- <label>لیست محصولات</label> -->
 
 
-            <img src="resources/img/logo-top-hq-s.png" class="logo-top__"></img>
+            <!-- <img src="resources/img/logo-top-hq-s.png" class="logo-top__"></img> -->
+            <img src="resources/img/logo-full-color-transparent.png" class="logo-top"></img>
 
             <!--         <i class="fa-solid fa-arrow-left back-icon"></i> -->
         </div>
@@ -49,6 +50,34 @@
     <!-- page content -->
     <div class="page-content-wrapper">
         <div class="page-content">
+            <!-- home page -->
+            <div id="page-home" class="page">
+
+                <div class="quick-icons-container">
+                    <div id="qi-products-list" class="quick-icon">
+                        <i class="fa-solid fa-images"></i>
+                        <div class="quick-icon-text"> لیست محصولات </div>
+                    </div>
+                    <div id="qi-order" class="quick-icon">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        <div class="quick-icon-text"> ثبت سفارش </div>
+                    </div>
+                    <div id="qi-order-history" class="quick-icon">
+                        <i class="fa-solid fa-history"></i>
+                        <div class="quick-icon-text"> سفارش های اخیر </div>
+                    </div>
+                    <div id="qi-contact" class="quick-icon">
+                        <i class="fa-solid fa-contact-book"></i>
+                        <div class="quick-icon-text"> تماس با ما </div>
+                    </div>
+                </div>
+
+                <div class="banner">
+                    <span> به اپلیکیشن </span>
+                    <img style="filter:grayscale() invert() brightness(1.3); width: 50px; margin: 0px 10px;" src="/resources/img/logo-full-color-transparent.png"></img>
+                    <span> خوش آمدید! </span>
+                </div>
+            </div>
             <!-- order page -->
             <div id="page-order" class="page">
                 <!-- search toolbar -->
@@ -80,11 +109,6 @@
                 </div>
                 <!-- products list -->
                 <div class="category-list"></div>
-            </div>
-            
-            <!-- search page -->
-            <div id="page-search" class="page">
-                <input></input>
             </div>
 
             <!-- user page -->
@@ -171,7 +195,7 @@
 
     <!-- bottom app bar -->
     <div class="app-bar">
-        <div class="app-bar-item">
+        <div data-target="page-home" class="app-bar-item">
             <i class="fa-regular fa-home"></i>
             <span>خانه</span>
         </div>

@@ -47,7 +47,7 @@ let main = {
 
         // pages
         this.refreshPages();
-        this.switchPage('page-order');
+        this.switchPage('page-home');
 
         document.body.style.display = '';
     },
@@ -134,7 +134,7 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleUser: function(){
-        // return;
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -379,8 +379,17 @@ let main = {
 
 let initializers = {
     init: function(){
+        this.home_page();
         this.order_page();
         this.user_page();
+    },
+    home_page: function(){
+        $("#qi-order").click(() => {
+            document.querySelector('#app-bar-order').click()
+        });
+        $("#qi-order-history").click(() => {
+            document.querySelector('#app-bar-user').click()
+        });
     },
     user_page: function(){
         document.querySelector('#change-username-btn').onclick = function(){
