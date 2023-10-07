@@ -1283,6 +1283,7 @@ hr {
     margin-top: 10px;
     font-size: 0.6rem;
     color: #f16100;
+
     /* text-shadow: 0px 0px 4px #00000045; */
     /* background: #ff893a; */
     /* padding: 2px 10px; */
@@ -1335,10 +1336,17 @@ hr {
 
 .banner-info hr {
     width: 100%;
+    margin: 8px 0px;
 }
 
-.banner-info h1 {
+.banner-info .banner-header {
     font-size: small;
+    font-weight: bold;
+}
+
+.banner-info .btn {
+    margin-right: auto;
+    padding: 5px 15px;
 }
 
 .banner .banner-image {
