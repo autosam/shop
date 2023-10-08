@@ -134,7 +134,7 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleUser: function(){
-        return;
+        // return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
