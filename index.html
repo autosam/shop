@@ -78,25 +78,16 @@
                     </div>
                 </div>
 
-                <div class="banner bshadow-1">
-                    <div class="banner-inner">
-                        <div class="banner-image-container">
-                            <img class="banner-image" src="https://omegarelectrice.com/wp-content/uploads/2023/01/%D9%85%D9%82%D8%A7%D9%84%D9%87.jpg"></img>
-                        </div>
-                        
-                        <div class="banner-info">
-                            <span class="banner-header"> تایتل بنر تست </span>
-                            <span class="banner-body"> متن تست متن تست متن تست متن تست متن تستمتن تست متن تست متن تست متن تست متن تست </span>
-                            <hr>
-                            <button class="btn generic-o">
-                                بیشتر
-                                <i class="fa-solid fa-angle-left fa-xs"></i>
-                            </button>
-                        </div>
+                <div style="height: 250px;" class="image-slideshow bshadow-1">
+                    <div class="image-slideshow-container">
+                        <img class="slide-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50hnwfx3suGC7Nhg1mTRdd1iPkFXI4eJBN8IrkAtu-w&s"></img>
+                        <img class="slide-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlXRLHzsJQbkZzwackkDx3uY2aje4cFHwF2u4ESUvy90WT1tM_YJrvCTwgkdGdoJlUoH8&usqp=CAU"></img>
+                        <img class="slide-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLpPwfJjBy3_sct9dtRjFkNeiw4ZYjHsx_RdJi5ADH5Lbm1j1AmrPtNOhtotNzefPVdfY&usqp=CAU"></img>
+                        <img class="slide-image" src="https://omegarelectrice.com/wp-content/uploads/2023/01/%D9%85%D9%82%D8%A7%D9%84%D9%87.jpg"></img>
                     </div>
                 </div>
 
-                <div class="banner bshadow-1">
+                <!-- <div class="banner bshadow-1">
                     <div class="banner-inner">
                         <div class="banner-image-container">
                             <img class="banner-image" src="https://omegarelectrice.com/wp-content/uploads/2023/01/م2-1.jpg"></img>
@@ -112,7 +103,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
             <!-- order page -->
@@ -178,9 +169,10 @@
     </div>
 
     <!-- checkout card -->
-    <div data-page-dependant="page-order">
+    <div data-page-dependant="page-order|page-home" style="position: sticky; z-index: 10;">
         <div style="display: none;" id="order-checkout-card" class="order-checkout-card">
             <button class="btn">ثبت سفارش</button>
+            <span class="order-checkout-cancel"> <i class="fa-solid fa-times fa-2x"></i> </span>
         </div>
     </div>
 
@@ -363,7 +355,40 @@
                 </div>
             </div>
         </div>
+
+        <!-- cloneable main page special product container -->
+        <div data-cloneable="special-product-wrapper" class="special-product-wrapper bshadow-1">
+            <div class="special-product-wrapper-title">
+                <i style="color: orangered" class="fa-duotone fa-sparkles"></i>
+                محصولات شگفت انگیز
+            </div>
+            <div class="special-products-container"></div>
+        </div>
+
+        <div data-cloneable="vertical-product" class="vertical-product bshadow-1">
+            <img class="vertical-product-image" src="resources/product-images/1.png"></img>
+            <hr>
+            <div class="vertical-product-title">Title</div>
+            <div class="vertical-product-info">
+                <hr>
+                <div class="vertical-product-tag-container hidden">Tag</div>
+                <div class="vertical-product-price">price</div>
+                <!-- <hr> -->
+                <div class="vertical-product-actions-container">
+                    <button class="vertical-product-add-btn btn generic-o">
+                        <i class="fa-regular fa-shopping-cart"></i>
+                        اضافه به سبد خرید
+                    </button>
+                    <!-- <button class="vertical-product-add-btn btn generic">
+                        <i class="fa-solid fa-plus"></i>
+                        یک کارتن
+                    </button> -->
+                </div>
+            </div>
+        </div>
+        
     </div>
+    
 
     <script src="libs/jquery.min.js"></script>
     <script src="libs/persian.min.js"></script>
