@@ -21,7 +21,7 @@
 }
 
 @media screen and (max-width: 768px){
-    ::-webkit-scrollbar {
+    .category-selector-container::-webkit-scrollbar {
         -webkit-appearance: none;
         height: 0px;
     }
@@ -652,6 +652,9 @@ body {
 
 .bshadow-1 {
     box-shadow: 0px 10px 14px -4px rgb(229 229 229);
+}
+.bshadow-2 {
+    box-shadow: 0px 2px 6px -1px rgb(211, 211, 211);
 }
 
 .product-card + .product-card {
@@ -1495,32 +1498,48 @@ hr {
 }
 
 /* special products container */
-.special-product-wrapper {
+/* .special-product-wrapper {
     background-color: white;
-    /* background: linear-gradient(45deg, orange, transparent); */
     margin: 15px;
     padding: 20px;
     border-radius: 15px;
-    /* padding-bottom: 0px; */
     background-color: rgb(255, 255, 255)
+} */
+
+.special-product-wrapper {
+    /* background-color: white; */
+    /* background: linear-gradient(45deg, orange, transparent); */
+    margin: 15px;
+    padding: 10px 0px;
+    border-radius: 15px;
+    /* padding-bottom: 0px; */
+    /* background-color: rgb(255, 255, 255); */
+}
+
+.special-product-wrapper + .special-product-wrapper {
+    padding-top: 0px;
+    margin-top: -10px;
 }
 
 .special-product-wrapper-title {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     /* margin: 0px -10px; */
-    /* color: white; */
+    color: #f16100;
+    text-shadow: 0px 0px 5px #ff660073;
+    padding-right: 5px;
 }
 
 .special-products-container {
     width: calc(100%);
     height: 100%;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     display: flex;
     overflow: auto;
     margin-right: -20px;
-    padding: 0px 20px;
+    padding: 15px 20px;
     /* height: 300px; */
+    /* padding-bottom: 0px; */
 }
 
 .vertical-product-title {
@@ -1540,7 +1559,7 @@ hr {
 .vertical-product {
     background-color: white;
     padding: 5px;
-    border: 1px solid var(--seperatorClr);
+    /* border: 1px solid var(--seperatorClr); */
     border-radius: 10px;
     width: 150px;
     height: 230px;
@@ -1550,6 +1569,7 @@ hr {
     flex-direction: column;
     flex-grow: 1;
     height: auto;
+    max-width: 410px;
 }
 
 .vertical-product .vertical-product-image {
@@ -1562,7 +1582,7 @@ hr {
 }
 
 .vertical-product + .vertical-product {
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .vertical-product-tag-container {
