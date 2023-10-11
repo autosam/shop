@@ -161,7 +161,7 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleUser: function(){
-        return;
+        // return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -569,7 +569,7 @@ let main = {
                 }
 
                 if(scrollDelta > 10){
-                    main.dom.headerWrapper.style.top = '-70px';
+                    main.dom.headerWrapper.style.top = '-71px';
                 }
                 if(scrollDelta < -10){
                     main.dom.headerWrapper.style.top = '0px';
