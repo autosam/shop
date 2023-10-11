@@ -32,7 +32,7 @@ let main = {
         this.handleCheckout();
 
         // hamburger menu
-        this.handleHamburgerMenu();
+        // this.handleHamburgerMenu();
 
         // user
         this.handleUser();
