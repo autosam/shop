@@ -22,8 +22,11 @@ let main = {
         cloneable: {},
     },
     init: function(){
-        productManager.init();
         $(main.dom.orderCheckoutCard).hide();
+
+        addEventListener("scroll", (event) => {
+            main.onScroll();
+        });
 
         // this.test();
         this.refreshProducts();
@@ -330,8 +333,8 @@ let main = {
                     productManager.addProduct(o);
                 }
             }
-            setTimeout(() => productManager.onScroll());
-            // productManager.onScroll();
+            setTimeout(() => main.onScroll());
+            // main.onScroll();
         }, utils.randomInt(1, 500));
     },
 
@@ -483,9 +486,12 @@ let main = {
         }
 
         document.body.setAttribute('data-current-page', pageName);
+        main.currentPage = pageName;
 
         if(pageName == 'page-home'){
             main.dom.headerWrapper.classList.add('no-box-shadow');
+            // productManager.clearProductList();
+            // main.refreshProducts();
         } else {
             main.dom.headerWrapper.classList.remove('no-box-shadow');
         }
@@ -535,7 +541,44 @@ let main = {
         // this.refreshPages();
 
         return page;
-    }
+    },
+    onScroll: function(){
+        // scroll delta
+        let scrollDelta;
+        if(this.scrollYLast === undefined){
+            this.scrollYLast = window.scrollY;
+        } else {
+            scrollDelta = window.scrollY - this.scrollYLast;
+            this.scrollYLast = window.scrollY;
+        }
+
+        switch(main.currentPage){
+            case 'page-order':
+                // category selector update
+                let activeCategory = null;
+                let categories = $('.category:not(.hidden)');
+                Array.from(categories).forEach((category, index) => {
+                    let clientY = category.getBoundingClientRect().y - main.dom.headerWrapper.offsetHeight - 20;
+                    if(clientY < 0)
+                    activeCategory = category;
+                });
+                if(activeCategory){
+                    let activeCategoryId = activeCategory.getAttribute('cat-id');
+                    let selector = main.dom.headerWrapper.querySelector(`#cat-selector-${activeCategoryId}`);
+                    selector.activate();
+                }
+
+                if(scrollDelta > 10){
+                    main.dom.headerWrapper.style.top = '-70px';
+                }
+                if(scrollDelta < -10){
+                    main.dom.headerWrapper.style.top = '0px';
+                }
+                break;
+            default:
+                main.dom.headerWrapper.style.top = '0px';
+        }
+    },
 }
 
 let initializers = {
@@ -570,25 +613,6 @@ let initializers = {
 }
 
 let productManager = {
-    init: function(){
-        addEventListener("scroll", (event) => {
-            productManager.onScroll();
-        });
-    },
-    onScroll: function(){
-        let activeCategory = null;
-        let categories = $('.category:not(.hidden)');
-        Array.from(categories).forEach((category, index) => {
-            let clientY = category.getBoundingClientRect().y - main.dom.headerWrapper.offsetHeight - 20;
-            if(clientY < 0)
-            activeCategory = category;
-        });
-        if(activeCategory){
-            let activeCategoryId = activeCategory.getAttribute('cat-id');
-            let selector = main.dom.headerWrapper.querySelector(`#cat-selector-${activeCategoryId}`);
-            selector.activate();
-        }
-    },
     createTag: function(icon, text, product, important){
         let tag = main.dom.cloneableTag.cloneNode(true);
         if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
@@ -781,10 +805,13 @@ let productManager = {
     },
     clearProductList: function(){
         main.dom.categoryList.innerHTML = '';
+        main.dom.categorySelectorContainer.innerHTML = '';
     },
     onProductsLoaded: function(){
-        document.querySelector('#featured-placeholder').remove();
-        main.createSpecialContainers();
+        if(document.querySelector('#featured-placeholder')){
+            document.querySelector('#featured-placeholder').remove();
+            main.createSpecialContainers();
+        }
     },
     async loadProductList(path){
         let list, categories = [];
@@ -802,10 +829,12 @@ let productManager = {
             list = await response.json();
             productManager.list = list;
         } catch(e) {
-            main.dom.categoryList.innerHTML = document.querySelector('#load-error').outerHTML;
-            main.dom.categoryList.querySelector('#retry-btn').onclick = function(){
-                main.refreshProducts();
-            }
+            setTimeout(() => {
+                main.dom.categoryList.innerHTML = document.querySelector('#load-error').outerHTML;
+                main.dom.categoryList.querySelector('#retry-btn').onclick = function(){
+                    main.refreshProducts();
+                }
+            }, 1000);
             return;
         }
 
@@ -824,7 +853,7 @@ let productManager = {
             let product = this.addProduct({...productDefinition, category});
         });
 
-        productManager.onScroll();
+        main.onScroll();
 
         this.onProductsLoaded();
     },
