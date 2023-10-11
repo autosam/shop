@@ -53,6 +53,14 @@ let main = {
         this.refreshPages();
         this.switchPage('page-home');
 
+        setTimeout(() => {
+            window.scrollTo({
+                left: 0, 
+                top: 0,
+                behavior: 'instant',
+            });
+        }, 32);
+
         document.body.style.display = '';
     },
     handleAppBar: function(){
@@ -109,7 +117,7 @@ let main = {
             order.querySelectorAll('.tag-text').forEach(tag => {
                 name += " - " + tag.textContent;
             });
-            let type = order.getAttribute('data-order-type');
+            let type = order.getAttribute('data-order-type') == 'box' ? "جعبه" : "عدد";
             let quantity = order.getAttribute('data-orders');
             let productId = order.getAttribute('data-product-id');
 
@@ -121,7 +129,16 @@ let main = {
             orderListElm.innerHTML += `
                 <div class="checkout-list-item">
                     <div class="checkout-product-card">
-                    ${order.querySelector(".product-info").innerHTML}
+                        <div class="product-info">
+                            ${order.querySelector(".product-title").innerHTML}
+                            ${order.querySelector(".product-tags").innerHTML}
+                            <hr>
+                            <div class="checkout-info">
+                                <div class=checkout-product-quantity> × ${utils.persianNum(quantity)} ${type} </div>
+                                <span> ${order.querySelector(".product-price").innerHTML} </span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             `;
@@ -251,8 +268,9 @@ let main = {
                 // name
                 let name = `${product.title}`;
                 for(let key in product.tags){
-                    if(key == 'box_amount') continue;
-                    name += ` <div class="tag"> <i class="fa-solid fa-tag"></i> ${productManager.tagIdToText(key)}: ${utils.persianNum(product.tags[key])}</div> `;
+                    let tagText = productManager.tagIdToText(key)
+                    if(key == 'box_amount' || !tagText) continue;
+                    name += ` <div class="tag"> <i class="fa-solid fa-tag"></i> ${tagText}: ${utils.persianNum(product.tags[key])}</div> `;
                 }
 
                 // processed
@@ -456,7 +474,12 @@ let main = {
                 page.classList.add('hidden', 'swipe-from-left');
                 page.classList.remove('swipe-from-left');
             }
-            // if(!noScroll) window.scrollTo(0, 0);
+            if(!noScroll) window.scrollTo({
+                left: 0, 
+                top: 0,
+                behavior: 'instant',
+            });
+            
         }
 
         document.body.setAttribute('data-current-page', pageName);
@@ -760,6 +783,7 @@ let productManager = {
         main.dom.categoryList.innerHTML = '';
     },
     onProductsLoaded: function(){
+        document.querySelector('#featured-placeholder').remove();
         main.createSpecialContainers();
     },
     async loadProductList(path){
@@ -916,6 +940,7 @@ let productManager = {
             case "watt": return "وات";
             case "box_amount": return "تعداد در کارتن";
             case "custom": return "تگ";
+            default: return '';
         }
     }
 }
