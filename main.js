@@ -137,7 +137,7 @@ let main = {
                             ${order.querySelector(".product-tags").innerHTML}
                             <hr>
                             <div class="checkout-info">
-                                <div class=checkout-product-quantity> × ${utils.persianNum(quantity)} ${type} </div>
+                                <div class="checkout-product-quantity badge-orange"> × ${utils.persianNum(quantity)} ${type} </div>
                                 <span> ${order.querySelector(".product-price").innerHTML} </span>
                             </div>
                         </div>
@@ -161,7 +161,7 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleUser: function(){
-        // return;
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -345,25 +345,91 @@ let main = {
                 let activeSlideIndex = 0;
                 let lastActiveSlideIndex = images.length - 1;
 
-                function changeToActiveSlide(){
-                    // images[lastActiveSlideIndex].style.opacity = 0;
-                    // images[activeSlideIndex].style.opacity = 1;
-                    images[lastActiveSlideIndex].classList.remove('slide-image-anim-in');
-                    images[lastActiveSlideIndex].classList.add('slide-image-anim-out');
+                let defaultPoint = element.querySelector('.image-slideshow-point');
+                for(let i = 0; i < images.length - 1; i++){
+                    let nPoint = defaultPoint.cloneNode(true);
+                    element.querySelector('.image-slideshow-pointer-container').appendChild(nPoint);
+                }
+                let points = [...element.querySelectorAll('.image-slideshow-point')];
 
-                    images[activeSlideIndex].classList.remove('slide-image-anim-out');
-                    images[activeSlideIndex].classList.add('slide-image-anim-in');
+                function changeToActiveSlide(dir){
+                    let addition = '';
+                    if(dir){
+                        addition = '-inv';
+                    }
+
+                    function removeAllAnimations(){
+                        ['slide-image-anim-in', 'slide-image-anim-out', 'slide-image-anim-in-inv', 'slide-image-anim-out-inv'].forEach(anim => {
+                            images.forEach(img => {
+                                img.classList.remove(anim);
+                            })
+                        })
+                    }
+
+                    points.forEach((p, i) => {
+                        if(i == activeSlideIndex){
+                            p.classList.add('active');
+                        } else {
+                            p.classList.remove('active');
+                        }
+                    })
+
+                    removeAllAnimations();
+
+                    images[lastActiveSlideIndex].classList.add('slide-image-anim-out' + addition);
+                    images[activeSlideIndex].classList.add('slide-image-anim-in' + addition);
                 }
 
                 changeToActiveSlide();
 
-                setInterval(() => {
+                let isTouching = false,
+                    autoSlideDelay = 0;
+
+                let autoSlideFn = () => {
+                    if(isTouching) return;
+                    if(autoSlideDelay > 0){
+                        autoSlideDelay--;
+                        return;
+                    }
                     lastActiveSlideIndex = activeSlideIndex;
                     activeSlideIndex++;
                     if(activeSlideIndex >= images.length) activeSlideIndex = 0;
                     changeToActiveSlide();
-                }, 3000);
+                }
+
+                let autoSlideInterval = setInterval(autoSlideFn, 3000);
+
+                // touch handling
+                let touchstartX = 0;
+                let touchendX = 0;
+
+                function checkDirection() {
+                    lastActiveSlideIndex = activeSlideIndex;
+                    if (touchendX < touchstartX) {
+                        activeSlideIndex--;
+                        if(activeSlideIndex < 0) activeSlideIndex = images.length - 1;
+                        changeToActiveSlide(true);
+                    }
+                    if (touchendX > touchstartX) {
+                        activeSlideIndex++;
+                        if(activeSlideIndex >= images.length) activeSlideIndex = 0;
+                        changeToActiveSlide(false);
+                    }
+                }
+                document.addEventListener('touchstart', e => {
+                    if(e.changedTouches[0].target.closest('.image-slideshow') !== element) return;
+                    isTouching = true;
+                    autoSlideDelay = 1;
+                    touchstartX = e.changedTouches[0].screenX;
+                })
+                document.addEventListener('touchend', e => {
+                    isTouching = false;
+                    if(e.changedTouches[0].target.closest('.image-slideshow') !== element) return;
+                    touchendX = e.changedTouches[0].screenX
+                    checkDirection();
+                })
             });
+        
     },
 
     createSpecialContainers: function(title, arrProductIds){
@@ -569,7 +635,7 @@ let main = {
                 }
 
                 if(scrollDelta > 10){
-                    main.dom.headerWrapper.style.top = '-71px';
+                    main.dom.headerWrapper.style.top = '-72px';
                 }
                 if(scrollDelta < -10){
                     main.dom.headerWrapper.style.top = '0px';
