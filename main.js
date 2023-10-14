@@ -56,6 +56,8 @@ let main = {
         this.refreshPages();
         this.switchPage('page-home');
 
+        this.handleAppDLReminder();
+
         setTimeout(() => {
             window.scrollTo({
                 left: 0, 
@@ -159,6 +161,11 @@ let main = {
         utils.setCookie('username', username, 100);
         document.querySelector('.user-box #username').textContent = username;
         main.populateUserOrderHistory();
+    },
+    handleAppDLReminder: function(){
+        document.querySelector('.dl-app-reminder i').onclick = function(){
+            document.querySelector('.dl-app-reminder').classList.add('hidden');
+        }
     },
     handleUser: function(){
         return;
@@ -634,8 +641,13 @@ let main = {
                     selector.activate();
                 }
 
+                let topDelta = -72;
+                if(!document.querySelector('.dl-app-reminder').classList.contains('hidden')){
+                    topDelta -= 60;
+                }
+
                 if(scrollDelta > 10){
-                    main.dom.headerWrapper.style.top = '-72px';
+                    main.dom.headerWrapper.style.top = `${topDelta}px`;
                 }
                 if(scrollDelta < -10){
                     main.dom.headerWrapper.style.top = '0px';

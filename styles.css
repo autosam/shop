@@ -314,6 +314,7 @@ body {
 }
 
 .app-bar-item > i {
+    font-size: medium;
 }
 .app-bar-item > span {
     font-size: x-small;
@@ -699,7 +700,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.1s;
+    /* transition: all 0.1s; */
     border-bottom: 0px solid rgb(255 255 255);
     max-width: 600px;
     width: 100%;
@@ -858,6 +859,7 @@ body {
     padding-right: 20px;
     color: var(--textBlack);
     background: #fcfcfc;
+    background-color: #F5F5F5;
     border: 1px solid var(--seperatorClr);
     height: 50px;
     /* border: none; */
@@ -1023,13 +1025,13 @@ body {
 .generic-quantity-selector .plus-btn {
     border-right: 1px solid #f16100;
     /* background: linear-gradient(45deg, #f16100, #ff893a); */
-    background: #ff6600;
+    /* background: #ff6600; */
     color: white;
 }
 .generic-quantity-selector .plus-btn {
     border-right: 1px solid #f16100;
     /* background: linear-gradient(45deg, #f16100, #ff893a); */
-    background: #ffffff;
+    background-color: #ffffff;
     color: #ff6600;
     text-shadow: 0px 0px 2px #ff6600;
 }
@@ -1803,4 +1805,41 @@ hr {
 
 #page-home {
     background-color: white;
+}
+
+.dl-app-reminder {
+    background: #ff6600;
+    /* background-color: #ffc39b; */
+    margin: -10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 0px 20px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: bold;
+}
+
+.dl-app-reminder .btn {
+    border: 1px solid white;
+    padding: 5px 20px;
+    border-radius: 100px;
+}
+
+.dl-app-reminder img {
+    width: 30px;
+    /* border: 1px solid white; */
+    border-radius: 10px;
+    /* filter: grayscale() brightness(1) contrast(2); */
+    outline: 1px solid rgb(255, 255, 255);
+    /* padding: 10px; */
+}
+
+.dl-app-reminder .inner-div {
+    display: flex;
+    align-items: center;
+    color: white;
 }
