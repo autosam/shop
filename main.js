@@ -22,11 +22,8 @@ let main = {
         cloneable: {},
     },
     init: function(){
-        $(main.dom.orderCheckoutCard).hide();
-
-        addEventListener("scroll", (event) => {
-            main.onScroll();
-        });
+        // events
+        this.handleEvents();
 
         // this.test();
         this.refreshProducts();
@@ -56,6 +53,7 @@ let main = {
         this.refreshPages();
         this.switchPage('page-home');
 
+        // app download reminder
         this.handleAppDLReminder();
 
         setTimeout(() => {
@@ -67,6 +65,18 @@ let main = {
         }, 32);
 
         document.body.style.display = '';
+    },
+    handleEvents: function(){
+        addEventListener("scroll", (event) => {
+            main.onScroll();
+        });
+
+        history.pushState(null, null, window.top.location.pathname + window.top.location.search);
+        window.addEventListener('popstate', (e) => {
+            e.preventDefault();
+            // Insert Your Logic Here, You Can Do Whatever You Want
+            history.pushState(null, null, window.top.location.pathname + window.top.location.search);
+        });
     },
     handleAppBar: function(){
         let items = Array.from(document.querySelectorAll('.app-bar-item'));
@@ -172,7 +182,7 @@ let main = {
         }
     },
     handleUser: function(){
-        // return;
+        return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();

@@ -1033,7 +1033,7 @@ body {
     /* background: linear-gradient(45deg, #f16100, #ff893a); */
     background-color: #ffffff;
     color: #ff6600;
-    text-shadow: 0px 0px 2px #ff6600;
+    /* text-shadow: 0px 0px 2px #ff6600; */
 }
 
 .generic-quantity-selector .minus-btn {
@@ -1397,20 +1397,15 @@ hr {
     border-radius: 500px;
 }
 
-.quick-icons-container {
+/* .quick-icons-container {
     display: flex;
     justify-content: space-between;
-    /* flex-wrap: wrap; */
-    /* margin: 10px; */
     text-align: center;
-    /* border-radius: 10px; */
-    /* padding-right: 20px; */
-    /* padding-left: 20px; */
     background-color: rgb(255,255,255);
-    padding: 10px;
+    padding: 20px 10px;
     z-index: 11;
     position: relative;
-}
+} */
 
 .seperator-border-bottom {
     border-bottom: 1px solid var(--seperatorClr);
@@ -1420,12 +1415,16 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-shrink: 0;
+    flex-basis: 25%;
+    min-width: min-content;
+    cursor: pointer;
 }
 
 .quick-icon i {
     background: linear-gradient(0deg, #f16100, #ff893a);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0px 2px 10px #f16100;
     width: 30px;
     height: 30px;
@@ -1439,18 +1438,36 @@ hr {
 
 .quick-icon-text {
     margin-top: 10px;
-    font-size: 0.65rem;
-    color: #f16100;
+    font-size: 0.7rem;
+    /* color: #f16100; */
 
     /* text-shadow: 0px 0px 4px #00000045; */
     /* background: #ff893a; */
     /* padding: 2px 10px; */
     /* border-radius: 100px; */
     /* box-shadow: inset 0px 3px 6px 0px #ff0000; */
-    font-weight: bolder;
+    /* font-weight: bolder; */
     width: 76px;
     /* display: none; */
     /* color: var(--textBlack); */
+}
+.quick-icons-container {
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    width: calc(100% - 40px);
+    margin-left: 0px;
+    margin-top: 0px;
+    padding: 20px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.quick-icons-container + .quick-icons-container {
+    padding-top: 10px;
 }
 
 .banner {
@@ -1686,7 +1703,7 @@ hr {
 .vertical-product {
     background-color: white;
     padding: 5px;
-    /* border: 1px solid var(--seperatorClr); */
+    border: 1px solid var(--seperatorClr);
     border-radius: 10px;
     width: 150px;
     height: 230px;
@@ -1843,4 +1860,8 @@ hr {
     display: flex;
     align-items: center;
     color: white;
+}
+
+.pointer {
+    cursor: pointer;
 }
