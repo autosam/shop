@@ -73,8 +73,9 @@ let main = {
 
         history.pushState(null, null, window.top.location.pathname + window.top.location.search);
         window.addEventListener('popstate', (e) => {
-            if(main.history.length)
-                e.preventDefault();
+            if(!main.history.length) return;
+
+            e.preventDefault();
 
             main.goBackHistory();
 
