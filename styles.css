@@ -1865,3 +1865,19 @@ hr {
 .pointer {
     cursor: pointer;
 }
+
+.order-count-overlay {
+    position: absolute;
+    top: 7px;
+    left: calc(50% + 2px);
+    background: #ff6600;
+    width: 15px;
+    height: 15px;
+    line-height: 18px;
+    text-align: center;
+    color: white;
+    border-radius: 1000px;
+    font-size: 0.6rem;
+    font-weight: bold;
+    border: 1px solid white;
+}

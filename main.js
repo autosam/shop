@@ -917,6 +917,7 @@ let productManager = {
         this.handleCheckoutCard();
     },
     handleCheckoutCard: function(){
+        let orderCountOverlay = document.querySelector('.order-count-overlay');
         let allOrders = main.dom.categoryList.getElementsByClassName('ordered');
         if(allOrders.length){ // has orders
             document.body.classList.add('has-order');
@@ -924,11 +925,12 @@ let productManager = {
             // if($(product).is(":last-child"))
             //     main.scrollByPercent(20);
             
-            let fullCheckoutPrice = 0;
+            let fullCheckoutPrice = 0, fullOrderCount = 0;
             Array.from(allOrders).forEach(product => {
                 let price = parseInt(product.getAttribute('data-price'));
                 let orderType = product.getAttribute('data-order-type');
                 let orderCount = product.getAttribute('data-orders');
+                fullOrderCount += parseInt(orderCount);
                 let productCheckoutPrice;
                 if(orderType == "box"){
                     let boxQuantity = product.getAttribute('data-box-quantity');
@@ -939,9 +941,14 @@ let productManager = {
                 fullCheckoutPrice += productCheckoutPrice;
             });
             document.querySelector("#order-checkout-card > button").textContent = `ثبت سفارش (${utils.persianNum(fullCheckoutPrice)} تومان)`
+
+            
+            orderCountOverlay.textContent = utils.persianNum(fullOrderCount.toString());
+            $(orderCountOverlay).show();
         } else { // no orders
             document.body.classList.remove('has-order');
             $(main.dom.orderCheckoutCard).slideUp('fast');
+            $(orderCountOverlay).hide();
         }
     },
     clearProductList: function(){
