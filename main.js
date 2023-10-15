@@ -73,7 +73,8 @@ let main = {
 
         history.pushState(null, null, window.top.location.pathname + window.top.location.search);
         window.addEventListener('popstate', (e) => {
-            e.preventDefault();
+            if(main.history.length)
+                e.preventDefault();
 
             main.goBackHistory();
 
@@ -684,16 +685,21 @@ let main = {
     freezeHistory: false,
     pushHistory: function(name, param){
         if(this.freezeHistory) return false;
-        this.history.push({
-            name, param
-        });
-        console.log(this.history);
-    },
+        
+        let last = this.history[this.history.length - 1];
+        let current = {name, param};
+        if(JSON.stringify(current) == JSON.stringify(last)){
+            return false;
+        }
+
+        // this.history.push(current);
+        this.history = [last, current];
+    },  
     popHistory: function(){
-        console.log("popped", this.history);
         return this.history.pop();
     },
     goBackHistory: function(){
+        if(this.freezeHistory) return false;
         let snapshot = this.popHistory();
         if(!snapshot) return false;
         this.freezeHistory = true;
@@ -711,6 +717,7 @@ let main = {
                 break;
         }
         this.freezeHistory = false;
+        return true;
     },
 }
 
