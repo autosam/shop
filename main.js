@@ -74,7 +74,9 @@ let main = {
         history.pushState(null, null, window.top.location.pathname + window.top.location.search);
         window.addEventListener('popstate', (e) => {
             e.preventDefault();
-            // Insert Your Logic Here, You Can Do Whatever You Want
+
+            main.goBackHistory();
+
             history.pushState(null, null, window.top.location.pathname + window.top.location.search);
         });
     },
@@ -161,6 +163,8 @@ let main = {
 
         $(main.dom.orderCheckoutScreen).slideDown();
         $(main.dom.appBar).fadeOut('fast');
+
+        main.pushHistory('open_checkout_screen');
     },
     closeCheckoutScreen: function(){
         $(main.dom.orderCheckoutScreen).slideUp('fast');
@@ -572,6 +576,11 @@ let main = {
             
         }
 
+        // history
+        let prevPage = document.body.getAttribute('data-current-page');
+        if(prevPage)
+            main.pushHistory("switch_page", prevPage);
+
         document.body.setAttribute('data-current-page', pageName);
         main.currentPage = pageName;
 
@@ -670,6 +679,38 @@ let main = {
             default:
                 main.dom.headerWrapper.style.top = '0px';
         }
+    },
+    history: [],
+    freezeHistory: false,
+    pushHistory: function(name, param){
+        if(this.freezeHistory) return false;
+        this.history.push({
+            name, param
+        });
+        console.log(this.history);
+    },
+    popHistory: function(){
+        console.log("popped", this.history);
+        return this.history.pop();
+    },
+    goBackHistory: function(){
+        let snapshot = this.popHistory();
+        if(!snapshot) return false;
+        this.freezeHistory = true;
+        switch(snapshot.name){
+            case "switch_page":
+                let dataTarget = document.querySelector(`[data-target="${snapshot.param}"]`);
+                if(dataTarget){
+                    dataTarget.click();
+                } else {
+                    main.switchPage(snapshot.param);
+                }
+                break;
+            case "open_checkout_screen":
+                main.closeCheckoutScreen();
+                break;
+        }
+        this.freezeHistory = false;
     },
 }
 
