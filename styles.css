@@ -1537,7 +1537,8 @@ hr {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-    margin: 10px;
+    margin: 15px;
+    margin-top: 10px;
 }
 .slide-image {
     --padding: 0px;
@@ -1877,7 +1878,7 @@ hr {
     text-align: center;
     color: white;
     border-radius: 1000px;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: bold;
     border: 1px solid white;
 }
