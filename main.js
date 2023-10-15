@@ -163,12 +163,16 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
+        if (navigator.userAgent.indexOf('gonative') == -1) {
+            document.querySelector('.dl-app-reminder').classList.remove('hidden');
+        }
+
         document.querySelector('.dl-app-reminder i').onclick = function(){
             document.querySelector('.dl-app-reminder').classList.add('hidden');
         }
     },
     handleUser: function(){
-        return;
+        // return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -404,7 +408,7 @@ let main = {
                     changeToActiveSlide();
                 }
 
-                let autoSlideInterval = setInterval(autoSlideFn, 3000);
+                let autoSlideInterval = setInterval(autoSlideFn, 4000);
 
                 // touch handling
                 let touchstartX = 0;

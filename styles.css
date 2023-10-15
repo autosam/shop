@@ -1593,7 +1593,7 @@ hr {
 .image-slideshow-pointer-container {
     z-index: 3;
     background: #00000045;
-    /* background: linear-gradient(45deg, rgba(255, 255, 255, 0.486), rgba(255, 255, 255, 0.295)); */
+    /* background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15)); */
     /* background: rgb(255 102 0 / 53%); */
     /* background: linear-gradient(-45deg, rgba(255, 102, 0, 0.671), rgba(255, 102, 0, 0.315)); */
     /* box-shadow: 0px 1px 3px #00000079; */
@@ -1615,12 +1615,13 @@ hr {
     height: 6px;
     border-radius: 100px;
     opacity: 0.4;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
 }
 
 .image-slideshow-point.active {
     opacity: 1;
     /* outline: 5px solid rgba(255, 255, 255, 0.219); */
+    width: 18px;
 }
 
 /* special products container */
