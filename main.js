@@ -56,6 +56,9 @@ let main = {
         // app download reminder
         this.handleAppDLReminder();
 
+        // user history
+        this.populateUserOrderHistory();
+
         setTimeout(() => {
             window.scrollTo({
                 left: 0, 
@@ -188,7 +191,7 @@ let main = {
         }
     },
     handleUser: function(){
-        return;
+        // return;
         let username = utils.getCookie('username');
         if(!username)
             this.openWelcomeScreen();
@@ -253,7 +256,7 @@ let main = {
                 $('.finalize-order-failed').hide();
                 document.querySelector('.order-tracking-code').textContent = res.setId;
                 window.scrollTo(0,0);
-                main.populateUserOrderHistory()
+                main.populateUserOrderHistory();
             })
             .catch(e => {
                 $('.order-success').hide();
@@ -279,7 +282,11 @@ let main = {
         if(!productManager.list){
             return setTimeout(() => main.populateUserOrderHistory(), 100);
         }
-        let listContainer = document.querySelector('.users-last-orders-list');
+
+        $('.order-history-reminder').addClass('section-hidden');
+
+        let listContainer = document.querySelector('.users-last-orders-list'),
+            homeOrderHistoryContainer = document.querySelector('#page-home .order-history-reminder .container');
         listContainer.innerHTML = '<i class="fa-duotone fa-spinner-third fa-spin"></i>';
         $(".no-order-history").hide();
         // https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}
@@ -291,6 +298,8 @@ let main = {
             }
 
             listContainer.innerHTML = '';
+            homeOrderHistoryContainer.innerHTML = '';
+            let pendingIndex = 3;
             history.reverse().slice(0, 64).forEach(order => {
                 let product = productManager.getProductById(order.product);
                 if(!product) return;
@@ -309,13 +318,23 @@ let main = {
                 else if(order.processed == -1) processed = '<span id="state" class="badge badge-red"> رد شده </span>';
 
                 let item = main.dom.cloneable.orderHistoryItem.cloneNode(true);
+                    item.removeAttribute('id');
                     item.querySelector('#product').innerHTML = name + '<hr>';
                     item.querySelector('#quantity').innerHTML = utils.persianNum(order.quantity);
                     item.querySelector('#type').innerHTML = order.type == 'box' ? "جعبه" : "عدد";
                     item.querySelector('#state').outerHTML = processed;
                     item.querySelector('#set-id').outerHTML = order.setId;
                     listContainer.appendChild(item);
+
+                if(pendingIndex > 0 && order.processed == 0){
+                    pendingIndex--;
+                    homeOrderHistoryContainer.appendChild(item.cloneNode(true));
+                }
             })
+
+            if(homeOrderHistoryContainer.innerHTML){
+                $('.order-history-reminder').removeClass('section-hidden');
+            }
         })
     },
     scrollByPercent: function (percent) {
@@ -656,7 +675,7 @@ let main = {
                 let activeCategory = null;
                 let categories = $('.category:not(.hidden)');
                 Array.from(categories).forEach((category, index) => {
-                    let clientY = category.getBoundingClientRect().y - main.dom.headerWrapper.offsetHeight - 20;
+                    let clientY = category.getBoundingClientRect().y - main.dom.headerWrapper.offsetHeight - parseInt(main.dom.headerWrapper.style.top) - 20;
                     if(clientY < 0)
                     activeCategory = category;
                 });
@@ -730,10 +749,13 @@ let initializers = {
     },
     home_page: function(){
         $("#qi-order").click(() => {
-            document.querySelector('#app-bar-order').click()
+            document.querySelector('#app-bar-order').click();
         });
         $("#qi-order-history").click(() => {
-            document.querySelector('#app-bar-user').click()
+            document.querySelector('#app-bar-user').click();
+        });
+        $(".order-history-reminder .btn-see-more").click(() => {
+            document.querySelector('#app-bar-user').click();
         });
     },
     user_page: function(){
@@ -828,6 +850,7 @@ let productManager = {
             if(o.description) description.textContent = o.description; else $(description).hide();
             if(o.price) price.textContent = o.price;
             if(o.image) image.src = o.image;
+            else product.setAttribute('data-no-image', true);
             if(o.tags){
                 if(o.tags.meter){
                     this.createTag('fa-ruler', `متراژ ${utils.persianNum(o.tags.meter)}`, product);
