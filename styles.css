@@ -431,7 +431,7 @@ body {
     border-top-right-radius: 0px;
 }
 
-.has-order #page-order, .has-order #page-home {
+.has-order #page-order, .has-order #page-homex {
     margin-bottom: 170px;
 }
 
@@ -1914,4 +1914,110 @@ hr {
     font-size: 0.55rem;
     font-weight: bold;
     border: 1px solid white;
+}
+
+.has-order .floating-help-btn {
+    /* display: none; */
+    opacity: 0;
+}
+
+/* .floating-help-btn {
+    transition: opacity 0.5s;
+    position: fixed;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    background: #202C59;
+    bottom: 80px;
+    right: 20px;
+    border-radius: 9000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 3px 4px #202C59;
+} */
+
+.floating-help-btn {
+    transition: opacity 0.5s;
+    position: fixed;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(0deg, #f16100, #ff893a);
+    bottom: 80px;
+    right: 20px;
+    border-radius: 9000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 3px 4px #ff893a;
+    /* mix-blend-mode: multiply; */
+    animation: pulse-outline 1s infinite;
+    animation-fill-mode: both;
+    outline-color: #ff893a;
+    outline-style: solid;
+}
+
+.floating-help-btn > i {
+    color: #ffffff;
+    font-size: 1.3rem;
+    text-shadow: 0px 3px 6px #f16100;
+}
+
+@keyframes pulse-outline {  
+    0% {
+        outline-width: 0px;
+    }
+    50% {
+        outline-width: 7px;
+        outline-color: transparent;
+    }
+    100% {
+        outline-width: 0px;
+        outline-color: transparent;
+    }
+}
+
+.overlay-contact-info > div {
+    height: 50px;
+    line-height: 50px;
+    /* background: #00000014; */
+    margin: 10px 0px;
+    padding-right: 20px;
+    /* border-radius: 100px; */
+}
+.overlay-contact-info > div i {
+    margin-left: 10px;
+    scale: 1.2;
+}
+.overlay-contact-info {
+    padding: 0px 10px;
+}
+
+/* modal */
+.modal-wrapper {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+.modal-background {
+    background: #00000045;
+    width: 100%;
+    height: 100%;
+}
+.modal-background.align-bottom {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.modal-foreground {
+    /* min-height: 100px; */
+    width: 100%;
+    background: white;
+    box-shadow: 0px 0px 10px #0000002b;
+}
+.modal-wrapper a {
+    all: unset;
 }

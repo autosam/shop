@@ -1,3 +1,5 @@
+const ENV = window.location.port == 5500 ? 'dev' : 'prod';
+
 let main = {
     username: 'کاربر تست',
     placeholderImg: 'resources/img/placeholder_img.png',
@@ -59,6 +61,9 @@ let main = {
         // user history
         this.populateUserOrderHistory();
 
+        // user helper
+        this.handleUserHelper();
+
         setTimeout(() => {
             window.scrollTo({
                 left: 0, 
@@ -68,6 +73,73 @@ let main = {
         }, 32);
 
         document.body.style.display = '';
+    },
+    createModal: function(content){
+        let modal = main.dom.cloneable['modal'].cloneNode(true);
+            document.body.appendChild(modal);
+        
+        let background = modal.querySelector('.modal-background'),
+            foreground = modal.querySelector('.modal-foreground');
+
+        if(content){
+            content.style.display = '';
+            $(foreground).append(content);
+        }
+
+        let fnClose = function(){
+            $(foreground).slideUp('fast', () => {
+                $(background).fadeOut('fast', () => modal.remove());
+            })
+        }
+
+        background.onclick = function(e){
+            if(e.target === background)
+                main.goBackHistory();
+        }
+        modal.close = fnClose;
+        
+        // modal.classList.add('in-element-fadeIn');
+        $(foreground).hide();
+        $(background).hide();
+        $(background).fadeIn('fast', () => {
+            $(foreground).slideDown('fast');
+        });
+
+        main.pushHistory('open_modal', modal);
+
+        return modal;
+    },
+    handleUserHelper: function(){
+        let userHelperFab = document.querySelector('.floating-help-btn'),
+            icon = document.querySelector('.floating-help-btn i');
+
+        userHelperFab.onclick = () => {
+            main.createModal(document.querySelector('.overlay-contact-info').cloneNode(true));
+        }
+
+        let userHelperIcons = [
+            'fa-solid fa-user-headset',
+            'fa-solid fa-message',
+            'fa-solid fa-message-question',
+            'fa-solid fa-message-heart',
+        ];
+
+        let currentIndex = -1;
+        function nextIcon(){
+            currentIndex++;
+            if(currentIndex >= userHelperIcons.length) currentIndex = 0;
+            icon.className = 'fa-solid ' + userHelperIcons[currentIndex];
+
+            icon.style.animation = '';
+            icon.offsetWidth;
+            icon.style.animation = 'in-element-fadeIn 0.3s';
+
+            setTimeout(() => {
+                nextIcon();
+            }, 1000);
+        }
+
+        nextIcon();
     },
     handleEvents: function(){
         addEventListener("scroll", (event) => {
@@ -182,6 +254,8 @@ let main = {
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
+        if(ENV == 'dev') return;
+
         if (navigator.userAgent.indexOf('gonative') == -1) {
             document.querySelector('.dl-app-reminder').classList.remove('hidden');
         }
@@ -734,6 +808,9 @@ let main = {
                 break;
             case "open_checkout_screen":
                 main.closeCheckoutScreen();
+                break;
+            case "open_modal":
+                snapshot.param.close();
                 break;
         }
         this.freezeHistory = false;
