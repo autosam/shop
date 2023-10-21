@@ -5,6 +5,7 @@ let main = {
     placeholderImg: 'resources/img/placeholder_img.png',
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
+        header: document.querySelector(".page-header"),
         appBar: document.querySelector('.app-bar'),
         loadingOverlay: document.querySelector('.loading-overlay'),
         categoryList: document.querySelector(".category-list"),
@@ -102,8 +103,8 @@ let main = {
         $(foreground).hide();
         $(background).hide();
         $(background).fadeIn('fast', () => {
-            $(foreground).slideDown('fast');
         });
+        $(foreground).slideDown('fast');
 
         main.pushHistory('open_modal', modal);
 
@@ -127,7 +128,22 @@ let main = {
         let currentIndex = -1;
         function nextIcon(){
             currentIndex++;
-            if(currentIndex >= userHelperIcons.length) currentIndex = 0;
+            if(currentIndex >= userHelperIcons.length) {
+                icon.className = 'fhb-text';
+                setTimeout(() => {
+                    nextIcon();
+                }, 1000);
+                icon.innerHTML = `
+                    <div>تماس</div>
+                    <div>با ما</div>
+                `
+                currentIndex = -1;
+                icon.style.animation = '';
+                icon.offsetWidth;
+                icon.style.animation = 'in-element-fadeIn 0.3s';
+                return;
+            }
+            icon.innerHTML = '';
             icon.className = 'fa-solid ' + userHelperIcons[currentIndex];
 
             icon.style.animation = '';
@@ -760,6 +776,7 @@ let main = {
                 }
 
                 let topDelta = -72;
+                    topDelta = -main.dom.header.clientHeight - 2;
                 if(!document.querySelector('.dl-app-reminder').classList.contains('hidden')){
                     topDelta -= 60;
                 }
