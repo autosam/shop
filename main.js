@@ -439,28 +439,33 @@ let main = {
                 if(maxIndex <= 0) continue;
                 maxIndex--;
 
-                let persianDate = new Date(orderSets[set].meta.date).toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
-                let timeAgo = PersianTools.timeAgo(persianDate);
+                // let persianDateFull = new Date(orderSets[set].meta.date).toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
+                // let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
+                // let timeAgo = PersianTools.timeAgo(persianDateFull);
 
-                // let orderedItemNames = [];
-                // let orderedItemCounts = [];
-                // orderSets[set].list.forEach(product => {
-                //     let index = orderedItemNames.indexOf(product.title);
-                //     if(index == -1){
-                //         orderedItemNames.push(product.title);
-                //         orderedItemCounts.push(1);
-                //     } else {
-                //         orderedItemCounts[index]++;
-                //     }
-                // })
-                // orderedItemNames = orderedItemNames.map((item, i) => {
-                //     return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
-                // })
-                // if(orderedItemNames.length > 2){
-                //     orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
-                // } else {
-                //     orderedItemNames = orderedItemNames.slice(0, 2).join('');
-                // }
+                let persianDateFull = '%date%';
+                let persianDate = '%date%';
+                let timeAgo = '%time%';
+
+                let orderedItemNames = [];
+                let orderedItemCounts = [];
+                orderSets[set].list.forEach(product => {
+                    let index = orderedItemNames.indexOf(product.title);
+                    if(index == -1){
+                        orderedItemNames.push(product.title);
+                        orderedItemCounts.push(1);
+                    } else {
+                        orderedItemCounts[index]++;
+                    }
+                })
+                orderedItemNames = orderedItemNames.map((item, i) => {
+                    return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
+                })
+                if(orderedItemNames.length > 2){
+                    orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
+                } else {
+                    orderedItemNames = orderedItemNames.slice(0, 2).join('');
+                }
                 
                 let setCard = main.dom.cloneable.orderHistoryItem.cloneNode(true);
                     setCard.querySelector('.badge-orange').remove();
@@ -474,9 +479,13 @@ let main = {
                             
                         </div>
 
+                        <div class="" style="margin-top: 10px">
+                            ${orderedItemNames}
+                        </div>
+
                         <div class="gray-color" style="margin-top: 10px">
                             <span>
-                                <i class="fa-regular fa-calendar"></i> ${new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR')} 
+                                <i class="fa-regular fa-calendar"></i> ${persianDate} 
                             </span>
 
                             <span style="margin: 0px 3px;"></span>
@@ -486,7 +495,7 @@ let main = {
                             </span>
 
                             <span style="margin: 0px 3px;"></span>
-
+                    
                             <span> 
                                 <i class="fa-regular fa-clock-rotate-left"></i>
                                 ${utils.convertNumFaToEn(timeAgo)} 
