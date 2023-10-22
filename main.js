@@ -391,10 +391,12 @@ let main = {
             }
 
             listContainer.innerHTML = '';
+            homeOrderHistoryContainer.innerHTML = '';
 
             let orderSets = {};
 
             // user page detailed order history
+            let pendingIndex = 3;
             history.reverse().slice(0, 64).forEach(order => {
                 let product = productManager.getProductById(order.product);
                 if(!product) return;
@@ -425,13 +427,13 @@ let main = {
                     item.querySelector('#set-id').outerHTML = order.setId;
                     listContainer.appendChild(item);
 
-                // if(pendingIndex > 0 && order.processed == 0){
-                //     pendingIndex--;
-                //     homeOrderHistoryContainer.appendChild(item.cloneNode(true));
-                // }
+                if(pendingIndex > 0 && order.processed == 0){
+                    pendingIndex--;
+                    homeOrderHistoryContainer.appendChild(item.cloneNode(true));
+                }
             })
-            // new Date("2023-10-01 11:46:10").toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
 
+/* 
             // home order history
             let maxIndex = 3;
             homeOrderHistoryContainer.innerHTML = '';
@@ -513,6 +515,7 @@ let main = {
                 if(orderSets[set].meta.processed != 0)
                     setCard.querySelector('.cancel-order').remove();
             }
+             */
 
             if(homeOrderHistoryContainer.innerHTML){
                 $('.order-history-reminder').removeClass('section-hidden');
