@@ -962,6 +962,25 @@ body {
     color: white;
     border: 1px solid #ff6600;
 }
+.btn.red {
+    background-color: #ff6060;
+    color: white;
+    font-weight: bold;
+}
+.btn.red:hover {
+    background-color: #ff2525;
+}
+.btn:disabled {
+    background-color: lightgray !important;
+    color: gray !important;
+    pointer-events: none !important;
+}
+.gray-color {
+    color: gray;
+}
+.lightgray-color {
+    color: lightgray;
+}
 
 .product-additional {
     display: flex;
@@ -1394,9 +1413,10 @@ hr {
 .order-history-item .order-info {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 }
 
-.order-history-item .order-info .badge {
+.order-history-item .badge {
     /* background-color: rgb(201, 201, 201); */
     padding: 0px 10px;
     border-radius: 10px;

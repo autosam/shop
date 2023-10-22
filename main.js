@@ -377,9 +377,12 @@ let main = {
 
         let listContainer = document.querySelector('.users-last-orders-list'),
             homeOrderHistoryContainer = document.querySelector('#page-home .order-history-reminder .container');
+        
+        // loading icon
         listContainer.innerHTML = '<i class="fa-duotone fa-spinner-third fa-spin"></i>';
         $(".no-order-history").hide();
-        // https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}
+
+        // fetching data
         fetch(`https://api.omegarelectrice.com/user/orderHistory.php?username=${main.username}`)
         .then(response => response.json())
         .then(history => {
@@ -388,8 +391,10 @@ let main = {
             }
 
             listContainer.innerHTML = '';
-            homeOrderHistoryContainer.innerHTML = '';
-            let pendingIndex = 3;
+
+            let orderSets = {};
+
+            // user page detailed order history
             history.reverse().slice(0, 64).forEach(order => {
                 let product = productManager.getProductById(order.product);
                 if(!product) return;
@@ -407,6 +412,10 @@ let main = {
                 if(order.processed == 1) processed = '<span id="state" class="badge badge-green"> تایید شده </span>';
                 else if(order.processed == -1) processed = '<span id="state" class="badge badge-red"> رد شده </span>';
 
+                // order set
+                if(!orderSets[order.setId]) orderSets[order.setId] = {meta: {processedStr: processed, processed: order.processed, date: order.timestamp}, list: []};
+                orderSets[order.setId].list.push(product);
+
                 let item = main.dom.cloneable.orderHistoryItem.cloneNode(true);
                     item.removeAttribute('id');
                     item.querySelector('#product').innerHTML = name + '<hr>';
@@ -416,11 +425,89 @@ let main = {
                     item.querySelector('#set-id').outerHTML = order.setId;
                     listContainer.appendChild(item);
 
-                if(pendingIndex > 0 && order.processed == 0){
-                    pendingIndex--;
-                    homeOrderHistoryContainer.appendChild(item.cloneNode(true));
-                }
+                // if(pendingIndex > 0 && order.processed == 0){
+                //     pendingIndex--;
+                //     homeOrderHistoryContainer.appendChild(item.cloneNode(true));
+                // }
             })
+            // new Date("2023-10-01 11:46:10").toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
+
+            // home order history
+            let maxIndex = 3;
+            homeOrderHistoryContainer.innerHTML = '';
+            for(let set in orderSets){
+                if(maxIndex <= 0) continue;
+                maxIndex--;
+
+                let persianDate = new Date(orderSets[set].meta.date).toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
+                let timeAgo = PersianTools.timeAgo(persianDate);
+
+                let orderedItemNames = [];
+                let orderedItemCounts = [];
+                orderSets[set].list.forEach(product => {
+                    let index = orderedItemNames.indexOf(product.title);
+                    if(index == -1){
+                        orderedItemNames.push(product.title);
+                        orderedItemCounts.push(1);
+                    } else {
+                        orderedItemCounts[index]++;
+                    }
+                })
+                orderedItemNames = orderedItemNames.map((item, i) => {
+                    return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
+                })
+                if(orderedItemNames.length > 2){
+                    orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
+                } else {
+                    orderedItemNames = orderedItemNames.slice(0, 2).join('');
+                }
+                
+                let setCard = main.dom.cloneable.orderHistoryItem.cloneNode(true);
+                    setCard.querySelector('.badge-orange').remove();
+                    setCard.removeAttribute('id');
+                    // setCard.querySelector('#product').innerHTML = `تعداد آیتم های سفارشی: ${orderSets[set].list.length} <hr>`;
+                    setCard.querySelector('#product').innerHTML = `
+                        <div class="flex-space-around">
+                            <div>
+                                <b>کد سفارش:</b> <span class="badge badge-orange"> ${set} </span>
+                            </div>
+                            
+                        </div>
+
+                        <div class="" style="margin-top: 10px">
+                            ${orderedItemNames}
+                        </div>
+
+                        <div class="gray-color" style="margin-top: 10px">
+                            <span>
+                                <i class="fa-regular fa-calendar"></i> ${new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR')} 
+                            </span>
+
+                            <span style="margin: 0px 3px;"></span>
+
+                            <span>
+                                <i class="fa-regular fa-shipping-fast"></i> ${utils.convertNumFaToEn(orderSets[set].list.length)} محصول
+                            </span>
+
+                            <span style="margin: 0px 3px;"></span>
+
+                            <span> 
+                                <i class="fa-regular fa-clock-rotate-left"></i>
+                                ${utils.convertNumFaToEn(timeAgo)} 
+                            </span>
+                        </div>
+                        <hr>
+                    `;
+                    setCard.querySelector('#quantity').innerHTML = `<button style="font-size: x-small;padding: 4px 10px;border-radius: 5px;" class="btn red cancel-order">  <i style="margin-left: 3px" class="fa-solid fa-times"></i> لغو سفارش </button>`;
+                    // setCard.querySelector('#type').innerHTML = timeAgo;
+                    setCard.querySelector('#state').outerHTML = orderSets[set].meta.processedStr;
+                    // setCard.querySelector('#set-id').outerHTML = set;
+                    // setCard.setAttribute('data-order-date', order.timestamp);
+                    homeOrderHistoryContainer.appendChild(setCard);
+                
+                if(orderSets[set].meta.processed != 0)
+                    setCard.querySelector('.cancel-order').remove();
+            }
 
             if(homeOrderHistoryContainer.innerHTML){
                 $('.order-history-reminder').removeClass('section-hidden');
@@ -1259,6 +1346,7 @@ let utils = {
     },
     convertNumFaToEn: function(text){
         return text
+            .toString()
             .replaceAll('1', '۱')
             .replaceAll('2', '۲')
             .replaceAll('3', '۳')
@@ -1272,6 +1360,7 @@ let utils = {
     },
     convertNumEnToFa: function(text){
         return text
+            .toString()
             .replaceAll('۱', '1')
             .replaceAll('۲', '2')
             .replaceAll('۳', '3')
