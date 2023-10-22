@@ -444,8 +444,8 @@ let main = {
                 // let timeAgo = PersianTools.timeAgo(persianDateFull);
 
                 let persianDateFull = '%date%';
-                let persianDate = '%date%';
-                let timeAgo = '%time%';
+                let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
+                let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
 
                 let orderedItemNames = [];
                 let orderedItemCounts = [];
@@ -489,16 +489,16 @@ let main = {
                             </span>
 
                             <span style="margin: 0px 3px;"></span>
-
-                            <span>
-                                <i class="fa-regular fa-shipping-fast"></i> ${utils.convertNumFaToEn(orderSets[set].list.length)} محصول
+                    
+                            <span> 
+                                <i class="fa-regular fa-clock"></i>
+                                ${utils.convertNumFaToEn(timeAgo)} 
                             </span>
 
                             <span style="margin: 0px 3px;"></span>
-                    
-                            <span> 
-                                <i class="fa-regular fa-clock-rotate-left"></i>
-                                ${utils.convertNumFaToEn(timeAgo)} 
+
+                            <span>
+                                <i class="fa-regular fa-shipping-fast"></i> ${utils.convertNumFaToEn(orderSets[set].list.length)} محصول
                             </span>
                         </div>
                         <hr>
