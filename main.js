@@ -442,25 +442,25 @@ let main = {
                 let persianDate = new Date(orderSets[set].meta.date).toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
                 let timeAgo = PersianTools.timeAgo(persianDate);
 
-                let orderedItemNames = [];
-                let orderedItemCounts = [];
-                orderSets[set].list.forEach(product => {
-                    let index = orderedItemNames.indexOf(product.title);
-                    if(index == -1){
-                        orderedItemNames.push(product.title);
-                        orderedItemCounts.push(1);
-                    } else {
-                        orderedItemCounts[index]++;
-                    }
-                })
-                orderedItemNames = orderedItemNames.map((item, i) => {
-                    return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
-                })
-                if(orderedItemNames.length > 2){
-                    orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
-                } else {
-                    orderedItemNames = orderedItemNames.slice(0, 2).join('');
-                }
+                // let orderedItemNames = [];
+                // let orderedItemCounts = [];
+                // orderSets[set].list.forEach(product => {
+                //     let index = orderedItemNames.indexOf(product.title);
+                //     if(index == -1){
+                //         orderedItemNames.push(product.title);
+                //         orderedItemCounts.push(1);
+                //     } else {
+                //         orderedItemCounts[index]++;
+                //     }
+                // })
+                // orderedItemNames = orderedItemNames.map((item, i) => {
+                //     return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
+                // })
+                // if(orderedItemNames.length > 2){
+                //     orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
+                // } else {
+                //     orderedItemNames = orderedItemNames.slice(0, 2).join('');
+                // }
                 
                 let setCard = main.dom.cloneable.orderHistoryItem.cloneNode(true);
                     setCard.querySelector('.badge-orange').remove();
@@ -472,10 +472,6 @@ let main = {
                                 <b>کد سفارش:</b> <span class="badge badge-orange"> ${set} </span>
                             </div>
                             
-                        </div>
-
-                        <div class="" style="margin-top: 10px">
-                            ${orderedItemNames}
                         </div>
 
                         <div class="gray-color" style="margin-top: 10px">
