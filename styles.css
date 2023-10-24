@@ -152,7 +152,7 @@ body {
 
 .page-header .logo-top-new {
     width: 50px;
-    width: 76px;
+    width: 70px;
     z-index: 100;
 
     /* margin-left: auto;
@@ -160,7 +160,7 @@ body {
 }
 
 .page-header {
-    height: 70px;
+    height: 55px;
 }
 
 .page-header .logo-topx {
@@ -176,6 +176,14 @@ body {
 .header-icons {
     margin-left: 5px;
     display: none;
+}
+
+.nav-back {
+    position: absolute;
+    right: 10px;
+    font-size: 1.3rem;
+    color: rgb(97, 97, 97);
+    padding: 10px;
 }
 
 .header-icons i {
@@ -2066,4 +2074,7 @@ hr {
     text-align: center;
     font-weight: bold;
     font-style: normal;
+}
+.width-100p {
+    width: 100%;
 }

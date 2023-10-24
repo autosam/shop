@@ -7,6 +7,7 @@ let main = {
         headerWrapper: document.querySelector(".header-wrapper"),
         header: document.querySelector(".page-header"),
         appBar: document.querySelector('.app-bar'),
+        navBackBtn: document.querySelector('.nav-back'),
         loadingOverlay: document.querySelector('.loading-overlay'),
         categoryList: document.querySelector(".category-list"),
         categorySelectorContainer: document.querySelector(".category-selector-container"),
@@ -769,6 +770,10 @@ let main = {
             if (currentPageName == pageName) {
                 page.classList.remove('hidden');
                 page.classList.add('swipe-from-left');
+                if(page.hasAttribute('data-needs-nav-back'))
+                    $(main.dom.navBackBtn).fadeIn('fast');
+                else 
+                    $(main.dom.navBackBtn).fadeOut('fast');
             }
             else {
                 page.classList.add('hidden', 'swipe-from-left');
@@ -801,7 +806,16 @@ let main = {
         [...document.querySelectorAll('[data-page-dependant]')].forEach(element => {
             let dependantPageNames = element.dataset.pageDependant.split('|');
             for(let i = 0; i < dependantPageNames.length; i++){
-                if(dependantPageNames[i] == pageName){
+                
+                if(dependantPageNames[i][0] == '!'){
+                    dependantPageNames[i] = dependantPageNames[i].replace('!', '');
+                    var reverse = true;
+                }
+
+                let result = dependantPageNames[i] == pageName;
+                if(reverse) result = !result;
+
+                if(result){
                     $(element).show();
                     break;
                 } else {
@@ -942,6 +956,10 @@ let initializers = {
         });
         $("#qi-order-history").click(() => {
             document.querySelector('#app-bar-user').click();
+        });
+        $("#qi-product-prices").click(() => {
+            console.log('hfqio');
+            main.switchPage('page-product-prices');
         });
         $(".order-history-reminder .btn-see-more").click(() => {
             document.querySelector('#app-bar-user').click();

@@ -29,12 +29,14 @@
         <div class="page-header">
             <!-- <i class="fa-solid fa-bars bars-icon"></i> -->
             <!-- <label>لیست محصولات</label> -->
+            <i class="fa-regular fa-angle-right nav-back" -data-page-dependant="!page-home|!page-user|!page-order" onclick="main.goBackHistory()"></i>
 
 
             <!-- <img src="resources/img/logo-top-hq-s.png" class="logo-top__"></img> -->
             <!-- <img src="resources/img/logo-color-transparent-min.png" class="logo-top"></img> -->
 
-            <img src="resources/img/logo-full-clr.png" class="logo-top-new"></img>
+            <!-- <img src="resources/img/logo-full-clr.png" class="logo-top-new"></img> -->
+            <img src="resources/img/svg/logo-full-clr-sml.svg" class="logo-top-new"></img>
 
             <!-- <img src="resources/img/logo-omega-only.png" class="logo-top-back"></img> -->
 
@@ -63,7 +65,7 @@
     </div>
 
     <!-- hamburger menu -->
-    <div class="hamburger-menu soft-hidden">
+    <div class="hamburger-menu soft-hidden hidden">
         <div class="hamburger-menu-inner">
             <button class="btn generic">ثبت سفارش محصولات</button>
             <button class="btn generic">لیست قیمت</button>
@@ -81,7 +83,7 @@
             <div id="page-home" class="page">
 
                 <div class="quick-icons-container">
-                    <div id="qi-products-list" class="quick-icon">
+                    <div id="qi-product-prices" class="quick-icon">
                         <i class="fa-solid fa-list"></i>
                         <div class="quick-icon-text"> لیست قیمت </div>
                     </div>
@@ -172,6 +174,7 @@
                 </div> -->
 
             </div>
+
             <!-- order page -->
             <div id="page-order" class="page">
                 <!-- search not found -->
@@ -223,6 +226,17 @@
                     <div class="users-last-orders-list">
 
                     </div>
+                </div>
+            </div>
+
+            <!-- price list page -->
+            <div id="page-product-prices" class="page page-generic" data-needs-nav-back>
+                <div>
+                    <img class="width-100p" src="resources/materials/price-list/1.jpeg"></img>
+                    <img class="width-100p" src="resources/materials/price-list/2.jpeg"></img>
+                    <img class="width-100p" src="resources/materials/price-list/3.jpeg"></img>
+                    <img class="width-100p" src="resources/materials/price-list/4.jpeg"></img>
+                    <img class="width-100p" src="resources/materials/price-list/5.jpeg"></img>
                 </div>
             </div>
         </div>
