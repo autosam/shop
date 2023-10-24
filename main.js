@@ -446,8 +446,10 @@ let main = {
                 // let timeAgo = PersianTools.timeAgo(persianDateFull);
 
                 let persianDateFull = '%date%';
-                let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
-                let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
+                // let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
+                // let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
+                let persianDate = 'date';
+                let timeAgo = 'timeago';
 
                 let orderedItemNames = [];
                 let orderedItemCounts = [];
