@@ -427,13 +427,13 @@ let main = {
                     item.querySelector('#set-id').outerHTML = order.setId;
                     listContainer.appendChild(item);
 
-                if(pendingIndex > 0 && order.processed == 0){
-                    pendingIndex--;
-                    homeOrderHistoryContainer.appendChild(item.cloneNode(true));
-                }
+                // if(pendingIndex > 0 && order.processed == 0){
+                //     pendingIndex--;
+                //     homeOrderHistoryContainer.appendChild(item.cloneNode(true));
+                // }
             })
 
-/* 
+ 
             // home order history
             let maxIndex = 3;
             homeOrderHistoryContainer.innerHTML = '';
@@ -515,7 +515,6 @@ let main = {
                 if(orderSets[set].meta.processed != 0)
                     setCard.querySelector('.cancel-order').remove();
             }
-             */
 
             if(homeOrderHistoryContainer.innerHTML){
                 $('.order-history-reminder').removeClass('section-hidden');
