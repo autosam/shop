@@ -247,12 +247,6 @@
     <div class="floating-help-btn">
         <i class="fa-solid fa-message-"></i>
     </div>
-    <div style="display: none;" class="overlay-contact-info">
-        <div class="seperator-border-bottom"> <a href="tel:09352588282" target="_blank"> <i class="fa-regular fa-phone"></i> تماس تلفنی </a> </div>
-        <div class="seperator-border-bottom"> <a href="https://www.instagram.com/omegar_electric" target="_blank"> <i class="fa-brands fa-instagram"></i> صفحه اینستاگرام </a> </div>
-        <div class=""> <a href="https://wa.me/qr/N3SL3WJ6MJ5VC1" target="_blank"> <i class="fa-brands fa-whatsapp"></i> چت در واتس اپ </a> </div>
-        <!-- <div class="seperator-border-bottom"> <a href="/" target="_blank"> <i class="fa-solid fa-phone"></i> پشتیبانی </a> </div> -->
-    </div>
 
     <!-- checkout card -->
     <div data-page-dependant="page-order" style="position: sticky; z-index: 10;">
@@ -304,13 +298,6 @@
         </div>
     </div>
 
-    <!-- loading overlay -->
-    <div class="loading-overlay" style="display: none;">
-        <div>
-            <i class="fa-duotone fa-spinner-third fa-spin"></i>
-        </div>
-    </div>
-
     <!-- bottom app bar -->
     <div class="app-bar">
         <div data-target="page-home" id="app-bar-home" class="app-bar-item">
@@ -335,6 +322,33 @@
         <div data-target="page-user" id="app-bar-user" class="app-bar-item">
             <i class="fa-regular fa-user"></i>
             <span>کاربر</span>
+        </div>
+    </div>
+
+    <!-- modals / overlays -->
+    <!-- loading overlay -->
+    <div class="loading-overlay" style="display: none;">
+        <div>
+            <i class="fa-duotone fa-spinner-third fa-spin"></i>
+        </div>
+    </div>
+    <!-- contact -->
+    <div style="display: none;" class="overlay-contact-info">
+        <div class="seperator-border-bottom"> <a href="tel:09352588282" target="_blank"> <i class="fa-regular fa-phone"></i> تماس تلفنی </a> </div>
+        <div class="seperator-border-bottom"> <a href="https://www.instagram.com/omegar_electric" target="_blank"> <i class="fa-brands fa-instagram"></i> صفحه اینستاگرام </a> </div>
+        <div class=""> <a href="https://wa.me/qr/N3SL3WJ6MJ5VC1" target="_blank"> <i class="fa-brands fa-whatsapp"></i> چت در واتس اپ </a> </div>
+        <!-- <div class="seperator-border-bottom"> <a href="/" target="_blank"> <i class="fa-solid fa-phone"></i> پشتیبانی </a> </div> -->
+    </div>
+    <!-- cancel order -->
+    <div style="display: none;" class="overlay-cancel-order">
+        <div class="modal-inner">
+            <h1>درخواست لغو سفارش</h1>
+            <p>آیا از انجام این کار مطمئن هستید؟ سفارش شما پس از بررسی کارشناسان ما لغو خواهد شد.</p>
+            <hr>
+            <div class="modal-btn-group">
+                <button class="btn transparent back-btn"> بازگشت </button>
+                <button class="btn red cancel-order-btn"> درخواست لغو سفارش </button>
+            </div>
         </div>
     </div>
 
@@ -456,9 +470,9 @@
         <!-- cloneable order history set title -->
         <div data-cloneable="orderHistoryTitle" class="order-history-title portlet-white-a">
             <div class="set-title gray-color">
-                تاریخ سفارش
+                %set%
             </div>
-            <button class="btn red">
+            <button class="btn red cancel-order-btn">
                 لغو سفارش
             </button>
         </div>

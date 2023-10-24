@@ -421,6 +421,13 @@ let main = {
                     if(order.processed != 0){
                         title.querySelector('.btn.red').disabled = true;
                         title.querySelector('.btn.red').textContent = order.processed == 1 ? "تایید شد" : "رد شد";
+                    } else {
+                        title.querySelector('.cancel-order-btn').onclick = () => {
+                            let modal = main.createModal(document.querySelector('.overlay-cancel-order').cloneNode(true));
+                                modal.querySelector('.back-btn').onclick = function(){
+                                    main.goBackHistory();
+                                }
+                        }
                     }
 
                     listContainer.appendChild(title);

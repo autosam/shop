@@ -652,7 +652,7 @@ body {
 
 .loading-overlay i {
     color: rgb(0, 0, 0);
-    font-size: 50px;
+    font-size: 20px;
 }
 
 .checkout-list {
@@ -977,6 +977,13 @@ body {
 }
 .btn.red:hover {
     background-color: #ff2525;
+}
+.btn.transparent {
+    color: var(--textBlack);
+    background-color: transparent;
+}
+.btn.transparent:hover {
+    background-color: lightgray;
 }
 .btn:disabled {
     background-color: lightgray !important;
@@ -2080,6 +2087,33 @@ hr {
 }
 .modal-wrapper a {
     all: unset;
+}
+.modal-btn-group {
+    /* padding: 10px; */
+    height: 40px;
+    display: flex;
+}
+.modal-btn-group .btn {
+    flex-grow: 1;
+}
+.modal-inner {
+    display: flex;
+    flex-direction: column;
+    margin: 25px;
+}
+.modal-inner h1 {
+    font-size: large;
+    margin: 0px;
+    margin-bottom: 8px;
+}
+.modal-inner p {
+    margin: 0px;
+    margin-bottom: 6px;
+    /* text-align: justify; */
+}
+.modal-inner hr {
+    width: 100%;
+    margin: 12px 0px;
 }
 /* 
     #FF893A
