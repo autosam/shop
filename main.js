@@ -373,7 +373,7 @@ let main = {
             return setTimeout(() => main.populateUserOrderHistory(), 100);
         }
 
-        $('.order-history-reminder').addClass('section-hidden');
+        // $('.order-history-reminder').addClass('section-hidden');
 
         let listContainer = document.querySelector('.users-last-orders-list'),
             homeOrderHistoryContainer = document.querySelector('#page-home .order-history-reminder .container');
@@ -446,10 +446,8 @@ let main = {
                 // let timeAgo = PersianTools.timeAgo(persianDateFull);
 
                 let persianDateFull = '%date%';
-                // let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
-                // let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
-                let persianDate = 'date';
-                let timeAgo = 'timeago';
+                let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
+                let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
 
                 let orderedItemNames = [];
                 let orderedItemCounts = [];
