@@ -397,10 +397,35 @@ let main = {
             let orderSets = {};
 
             // user page detailed order history
-            let pendingIndex = 3;
+            let pendingIndex = 3, lastSetId = null;
             history.reverse().slice(0, 64).forEach(order => {
                 let product = productManager.getProductById(order.product);
                 if(!product) return;
+
+                // set category
+                if(order.setId !== lastSetId){
+                    let title = main.dom.cloneable.orderHistoryTitle.cloneNode(true);
+
+                    let date = new Date(order.timestamp).toLocaleDateString('fa-IR');
+                    let time = new Date(order.timestamp).toLocaleTimeString('fa-IR');
+
+                    title.querySelector('.set-title').innerHTML = ` 
+                        <span style="margin-left: 10px"> <i class="fa-regular fa-calendar"></i> ${date} </span>
+                        <span> <i class="fa-regular fa-clock"></i> ${time} </span>
+                    `;
+
+                    if(lastSetId !== null){
+                        title.style.marginTop = '20px';
+                    }
+
+                    if(order.processed != 0){
+                        title.querySelector('.btn.red').disabled = true;
+                        title.querySelector('.btn.red').textContent = order.processed == 1 ? "تایید شد" : "رد شد";
+                    }
+
+                    listContainer.appendChild(title);
+                }
+                lastSetId = order.setId;
 
                 // name
                 let name = `${product.title}`;
@@ -420,7 +445,6 @@ let main = {
                 orderSets[order.setId].list.push(product);
 
                 let item = main.dom.cloneable.orderHistoryItem.cloneNode(true);
-                    item.removeAttribute('id');
                     item.querySelector('#product').innerHTML = name + '<hr>';
                     item.querySelector('#quantity').innerHTML = utils.persianNum(order.quantity);
                     item.querySelector('#type').innerHTML = order.type == 'box' ? "جعبه" : "عدد";

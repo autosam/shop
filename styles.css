@@ -1431,6 +1431,24 @@ hr {
     font-size: smaller;
 }
 
+.order-history-title {
+    padding: 10px;
+    background: #f7f7f7;
+    margin: 5px 0px;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.set-title {
+    /* font-weight: bold; */
+}
+.order-history-title .btn.red {
+    font-weight: normal;
+    padding: 3px 15px;
+}
+
 .users-last-orders-list {
     margin-top: 10px;
 }
