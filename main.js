@@ -438,10 +438,21 @@ let main = {
                                     main.goBackHistory();
                                 }
                                 modal.querySelector('.cancel-order-btn').onclick = function(){
-                                    let list = listContainer.querySelectorAll(`[data-set-id="${order.setId}"]`);
-                                    [...list].forEach(order => {
+                                    let list = [...listContainer.querySelectorAll(`[data-set-id="${order.setId}"]`)];
+                                    list.forEach((order, i) => {
                                         main.setOrderState(order.dataset.orderId, -2);
+                                        if(i == list.length - 1)
+                                            main.populateUserOrderHistory();
                                     });
+                                    main.goBackHistory();
+                                    setTimeout(() => {
+                                        main.createModal($(`
+                                            <div class="modal-inner">
+                                                <h1> درخواست شما ثبت شد! </h1>
+                                                <p> همکاران ما در صورت نیاز با شما تماس خواهند گرفت. </p>
+                                            </div>
+                                        `)[0]);
+                                    }, 100);
                                 }
                         }
                     }
