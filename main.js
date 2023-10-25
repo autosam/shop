@@ -437,6 +437,12 @@ let main = {
                                 modal.querySelector('.back-btn').onclick = function(){
                                     main.goBackHistory();
                                 }
+                                modal.querySelector('.cancel-order-btn').onclick = function(){
+                                    let list = listContainer.querySelectorAll(`[data-set-id="${order.setId}"]`);
+                                    [...list].forEach(order => {
+                                        main.setOrderState(order.dataset.orderId, -2);
+                                    });
+                                }
                         }
                     }
 
@@ -453,9 +459,6 @@ let main = {
                 }
 
                 // processed
-                // let processed = '<span id="state" class="badge badge-blue"> در حال بررسی </span>';
-                // if(order.processed == 1) processed = '<span id="state" class="badge badge-green"> تایید شده </span>';
-                // else if(order.processed == -1) processed = '<span id="state" class="badge badge-red"> رد شده </span>';
                 let processed = productManager.transState(order.processed).badge;
 
                 // order set
@@ -468,6 +471,8 @@ let main = {
                     item.querySelector('#type').innerHTML = order.type == 'box' ? "جعبه" : "عدد";
                     item.querySelector('#state').outerHTML = processed;
                     item.querySelector('#set-id').outerHTML = order.setId;
+                    item.setAttribute('data-set-id' , order.setId);
+                    item.setAttribute('data-order-id', order.order_id);
                     listContainer.appendChild(item);
 
                 if(pendingIndex > 0 && order.processed == 0){
@@ -1013,6 +1018,15 @@ let main = {
         this.freezeHistory = false;
         return true;
     },
+    setOrderState: function(orderId, state){
+        fetch(`https://api.omegarelectrice.com/orderState.php?order_id=${orderId}&state=${state}`)
+        .then(response => response.json)
+        .then(json => {
+            
+        }).catch(e => {
+            console.log(e);
+        });
+    }
 }
 
 let initializers = {
