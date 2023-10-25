@@ -26,6 +26,9 @@ let main = {
         cloneable: {},
     },
     init: function(){
+        // order states
+        productManager.getOrderStates();
+
         // events
         this.handleEvents();
 
@@ -122,8 +125,8 @@ let main = {
         let userHelperIcons = [
             'fa-solid fa-user-headset',
             'fa-solid fa-message',
-            'fa-solid fa-message-question',
-            'fa-solid fa-message-heart',
+            // 'fa-solid fa-message-question',
+            // 'fa-solid fa-message-heart',
         ];
 
         let currentIndex = -1;
@@ -365,6 +368,13 @@ let main = {
         $(main.dom.loadingOverlay).fadeOut();
     },
     refreshProducts: function(){
+        if(!productManager.orderStates || productManager.orderStates == -1) {
+            setTimeout(() => this.refreshProducts(), 200);
+            if(productManager.orderStates == -1){
+                productManager.getOrderStates();
+            }
+            return;
+        }
         setTimeout(() => {
             productManager.loadProductList(`https://api.omegarelectrice.com/json/products.json?tmp=${new Date().getTime()}`);
         }, 0);
@@ -420,7 +430,7 @@ let main = {
 
                     if(order.processed != 0){
                         title.querySelector('.btn.red').disabled = true;
-                        title.querySelector('.btn.red').textContent = order.processed == 1 ? "تایید شد" : "رد شد";
+                        title.querySelector('.btn.red').textContent = productManager.transState(order.processed).description;
                     } else {
                         title.querySelector('.cancel-order-btn').onclick = () => {
                             let modal = main.createModal(document.querySelector('.overlay-cancel-order').cloneNode(true));
@@ -443,9 +453,10 @@ let main = {
                 }
 
                 // processed
-                let processed = '<span id="state" class="badge badge-blue"> در حال بررسی </span>';
-                if(order.processed == 1) processed = '<span id="state" class="badge badge-green"> تایید شده </span>';
-                else if(order.processed == -1) processed = '<span id="state" class="badge badge-red"> رد شده </span>';
+                // let processed = '<span id="state" class="badge badge-blue"> در حال بررسی </span>';
+                // if(order.processed == 1) processed = '<span id="state" class="badge badge-green"> تایید شده </span>';
+                // else if(order.processed == -1) processed = '<span id="state" class="badge badge-red"> رد شده </span>';
+                let processed = productManager.transState(order.processed).badge;
 
                 // order set
                 if(!orderSets[order.setId]) orderSets[order.setId] = {meta: {processedStr: processed, processed: order.processed, date: order.timestamp}, list: []};
@@ -694,7 +705,19 @@ let main = {
             });
         
     },
-
+    
+    hardCodedSpecials: {
+        'پیشنهاد شگفت انگیز': {
+            title: 'پـــیــــشــــنــــهــــاد <br>  شــــــــــگـــــفـــــــت  <br>  انــــــــــــگـــــــیـــــــز',
+            background: "linear-gradient(45deg, rgb(53 129 80), rgb(68, 175, 105))",
+            icon: 'fa-duotone fa-sparkles'
+        },
+        'تازه ها': {
+            title: 'تــــــــازه ها',
+            background: "#E40066",
+            icon: 'fa-solid fa-zap'
+        }
+    },
     createSpecialContainers: function(title, arrProductIds){
         let specialContainers = [], specialProducts = [];
         
@@ -710,8 +733,25 @@ let main = {
         if(!specialContainers.length) return;
 
         specialContainers.forEach(containerName => {
+            let special = this.hardCodedSpecials[containerName];
+
+            if(!special){
+                special = {
+                    title: containerName,
+                    background: "orange",
+                    icon: 'fa-solid fa-zap',
+                }
+            }
+
             let container = main.dom.cloneable['special-product-wrapper'].cloneNode(true);
-                container.querySelector('.special-product-wrapper-title').innerHTML = `<i style="color: orangered" class="fa-duotone fa-sparkles"></i> ` + containerName;
+                container.querySelector('.special-products-container').style.background = special.background;
+            
+            let title = container.querySelector('.special-product-wrapper-title');
+                title.innerHTML = `<i class="${special.icon} special-title-icon-anim"></i> ${special.title} <i style="animation-delay: 0s; animation-direction: alternate-reverse" class="${special.icon} special-title-icon-anim"></i> `
+                
+                // creating icons
+                // title.innerHTML += `<i class="fa-duotone fa-sparkles special-title-icons"></i>`
+                
                 main.dom.pages['page-home'].appendChild(container);
 
             specialProducts.forEach(item => {
@@ -1014,6 +1054,7 @@ let initializers = {
 }
 
 let productManager = {
+    orderStates: null,
     createTag: function(icon, text, product, important){
         let tag = main.dom.cloneableTag.cloneNode(true);
         if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
@@ -1380,7 +1421,51 @@ let productManager = {
             case "custom": return "تگ";
             default: return '';
         }
-    }
+    },
+    getOrderStates: function(){
+        return fetch("https://cdn.omegarelectrice.com/metadata/order-states.json")
+            .then(res => res.json())
+            .then(json => {
+                let states = {};
+                json.forEach(entry => {
+                    states[entry.code] = {description: entry.description, ident: entry.state};
+                });
+                this.orderStates = states;
+            })
+            .catch(e => {
+                console.log(e);
+                this.orderStates = -1;
+            });
+    },
+    transState: function(code){
+        function getStateDescription(){
+            let state = productManager.orderStates[code];
+            if(!state){
+                return 'نامشخص';
+            }
+            return state.description;
+        }
+
+        function getBadgeClass(){
+            switch(code.toString()){
+                case '0':
+                    return 'badge-blue';
+                case '-1':
+                    return 'badge-red';
+                case '1':
+                    return 'badge-green';
+                default:
+                    return 'badge-gray';
+            }
+        }
+
+        let description = getStateDescription();
+
+        return {
+            description,
+            badge: `<span id="state" class="badge ${getBadgeClass()}"> ${description} </span>`,
+        }
+    },
 }
 
 let utils = {
