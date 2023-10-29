@@ -101,19 +101,19 @@
                     </div>
                 </div>
                 <div class="quick-icons-container">
-                    <div id="qi-products-list" class="quick-icon">
+                    <div id="qi-catalogue" class="quick-icon">
                         <i class="fa-solid fa-images"></i>
                         <div class="quick-icon-text"> کاتالوگ </div>
                     </div>
-                    <div id="qi-order" class="quick-icon">
-                        <i class="fa-solid fa-question-circle"></i>
-                        <div class="quick-icon-text"> تست </div>
+                    <div id="qi-messages" class="quick-icon">
+                        <i class="fa-solid fa-message"></i>
+                        <div class="quick-icon-text"> پیام ها </div>
                     </div>
-                    <div id="qi-order-history" class="quick-icon">
-                        <i class="fa-solid fa-question-circle"></i>
-                        <div class="quick-icon-text"> تست </div>
+                    <div id="qi-about" class="quick-icon">
+                        <i class="fa-solid fa-info-circle"></i>
+                        <div class="quick-icon-text"> درباره ما </div>
                     </div>
-                    <div id="qi-contact" class="quick-icon">
+                    <div id="qi-null" class="quick-icon">
                         <i class="fa-solid fa-question-circle"></i>
                         <div class="quick-icon-text"> تست </div>
                     </div>
@@ -136,8 +136,8 @@
                 <div class="order-history-reminder section-wrapper section-hidden">
                     <div class="flex-space-around">
                         <div class="caption">
-                            <i class="fa-solid fa-history"></i>
-                             سفارش‌های اخیر 
+                            <i class="fa-solid fa-shipping-fast"></i>
+                            سفارش‌های فعال 
                         </div>
                         <span class="btn-see-more">
                             نمایش همه <i class="fa-solid fa-angle-left"></i>
@@ -219,7 +219,7 @@
                 </div>
 
                 <div class="user-last-orders-box portlet-white-a">
-                    <span> سفارش های اخیر: </span>
+                    <span> <i class="fa-solid fa-history"></i> سفارش‌های اخیر: </span>
                     <div style="display: none;" class="no-order-history">
                         شما تاکنون هیچ سفارشی ثبت نکرده اید
                     </div>
@@ -244,7 +244,7 @@
     </div>
 
     <!-- floating contact button -->
-    <div class="floating-help-btn">
+    <div data-page-dependant="page-home" class="floating-help-btn">
         <i class="fa-solid fa-message-"></i>
     </div>
 

@@ -20,6 +20,12 @@
     font-weight: 900;
 }
 
+@font-face {
+    font-family: "Bold";
+    src: url("resources/fonts/SnappWeb2.0-Bold.ttf");
+    font-weight: 900;
+}
+
 @media screen and (max-width: 768px){
     .category-selector-container::-webkit-scrollbar {
         -webkit-appearance: none;
@@ -1524,7 +1530,7 @@ hr {
     display: flex;
     flex-flow: row wrap;
     -webkit-box-pack: start;
-    justify-content: flex-start;
+    justify-content: space-around;
     -webkit-box-align: stretch;
     align-items: stretch;
     width: calc(100% - 40px);
@@ -1742,6 +1748,7 @@ hr {
     color: #f16100;
     text-shadow: 0px 0px 5px #ff660073;
     padding-right: 5px;
+    text-align: center;
 }
 
 .section-wrapper .container {
@@ -1799,6 +1806,7 @@ hr {
     text-align: left;
     position: relative;
     flex-direction: column;
+    font-family: "Bold";
 }
 
 .vertical-product-title {
@@ -1829,6 +1837,7 @@ hr {
     flex-grow: 1;
     height: auto;
     max-width: 410px;
+    height: 300px;
 }
 
 .vertical-product .vertical-product-image {
@@ -1998,10 +2007,9 @@ hr {
     border: 1px solid white;
 }
 
-.has-order .floating-help-btn {
-    /* display: none; */
+/* .has-order .floating-help-btn {
     opacity: 0;
-}
+} */
 
 /* .floating-help-btn {
     transition: opacity 0.5s;

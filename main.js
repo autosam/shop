@@ -124,7 +124,7 @@ let main = {
 
         let userHelperIcons = [
             'fa-solid fa-user-headset',
-            'fa-solid fa-message',
+            // 'fa-solid fa-message',
             // 'fa-solid fa-message-question',
             // 'fa-solid fa-message-heart',
         ];
@@ -231,7 +231,7 @@ let main = {
             order.querySelectorAll('.tag-text').forEach(tag => {
                 name += " - " + tag.textContent;
             });
-            let type = order.getAttribute('data-order-type') == 'box' ? "جعبه" : "عدد";
+            let type = order.getAttribute('data-order-type') == 'box' ? "کارتن" : "عدد";
             let quantity = order.getAttribute('data-orders');
             let productId = order.getAttribute('data-product-id');
 
@@ -479,7 +479,7 @@ let main = {
                 let item = main.dom.cloneable.orderHistoryItem.cloneNode(true);
                     item.querySelector('#product').innerHTML = name + '<hr>';
                     item.querySelector('#quantity').innerHTML = utils.persianNum(order.quantity);
-                    item.querySelector('#type').innerHTML = order.type == 'box' ? "جعبه" : "عدد";
+                    item.querySelector('#type').innerHTML = order.type == 'box' ? "کارتن" : "عدد";
                     item.querySelector('#state').outerHTML = processed;
                     item.querySelector('#set-id').outerHTML = order.setId;
                     item.setAttribute('data-set-id' , order.setId);
@@ -725,7 +725,7 @@ let main = {
     hardCodedSpecials: {
         'پیشنهاد شگفت انگیز': {
             title: 'پـــیــــشــــنــــهــــاد <br>  شــــــــــگـــــفـــــــت  <br>  انــــــــــــگـــــــیـــــــز',
-            background: "linear-gradient(45deg, rgb(53 129 80), rgb(68, 175, 105))",
+            background: "linear-gradient(45deg, orange, #ff893a)",
             icon: 'fa-duotone fa-sparkles'
         },
         'تازه ها': {
@@ -774,6 +774,8 @@ let main = {
                 if(item.tags['home_special'] != containerName) return;
 
                 let itemDom = document.querySelector(`[data-product-id="${item.id}"]`);
+
+                if(!itemDom) return;
 
                 let product = main.dom.cloneable['vertical-product'].cloneNode(true);
                     product.querySelector('.vertical-product-image').src = item.image || main.placeholderImg;
@@ -890,6 +892,10 @@ let main = {
             main.dom.headerWrapper.classList.remove('no-box-shadow');
         }
 
+        if(pageName == 'page-order'){
+            document.querySelector('.toolbar-category-selector').activate();
+        }
+
         [...document.querySelectorAll('[data-page-dependant]')].forEach(element => {
             let dependantPageNames = element.dataset.pageDependant.split('|');
             for(let i = 0; i < dependantPageNames.length; i++){
@@ -970,6 +976,7 @@ let main = {
                     let selector = main.dom.headerWrapper.querySelector(`#cat-selector-${activeCategoryId}`);
                     selector.activate();
                 }
+                // break;
 
                 let topDelta = -72;
                     topDelta = -main.dom.header.clientHeight - 2;
@@ -1054,8 +1061,10 @@ let initializers = {
             document.querySelector('#app-bar-user').click();
         });
         $("#qi-product-prices").click(() => {
-            console.log('hfqio');
             main.switchPage('page-product-prices');
+        });
+        $("#qi-contact").click(() => {
+            document.querySelector(".floating-help-btn").click();
         });
         $(".order-history-reminder .btn-see-more").click(() => {
             document.querySelector('#app-bar-user').click();
@@ -1090,19 +1099,34 @@ let productManager = {
         return tag;
     },
     addCategory: function(o){
-        let categoryId = utils.generateRandomChars();
+        let existingCategorySelector = document.querySelector(`.toolbar-category-selector[title="${o.title}"]`);
 
+        let categoryId = utils.generateRandomChars();
         let category = main.dom.cloneableCategory.cloneNode(true);
             category.setAttribute('id', 'cat-' + categoryId);
             category.setAttribute('cat-id', categoryId);
 
+        if(existingCategorySelector){
+            category.setAttribute('id', existingCategorySelector.getAttribute('id'));
+            category.setAttribute('cat-id', existingCategorySelector.getAttribute('cat-id'));
+        }
+
         let title = category.querySelector('.category-title');
 
-        let categorySelector = main.dom.cloneableCategorySelector.cloneNode(true);
+        let categorySelector;
+        
+        if(!existingCategorySelector){
+            categorySelector = main.dom.cloneableCategorySelector.cloneNode(true);
             categorySelector.setAttribute('id', 'cat-selector-' + categoryId);
             categorySelector.setAttribute('cat-id', categoryId);
+            categorySelector.setAttribute('title', o.title);
             categorySelector.onclick = () => {
-                window.scrollTo(0, category.offsetTop - main.dom.headerWrapper.offsetHeight + 120);
+                let targetY = category.offsetTop - main.dom.headerWrapper.offsetHeight + 200;
+                if(window.scrollY < targetY) {
+                    targetY += 77;
+                }
+
+                window.scrollTo(0, targetY);
                 // categorySelector.activate();
                 categorySelector.classList.add('target-selector');
             }
@@ -1115,16 +1139,21 @@ let productManager = {
                 categorySelector.classList.remove('target-selector');
                 main.dom.categorySelectorContainer.scrollTo({left: categorySelector.offsetLeft - window.innerWidth / 2, behavior: 'smooth'});
             }
+        } else {
+            categorySelector = existingCategorySelector;
+        }
+
 
         if(o){
             if(o.title) {
-                title.textContent = o.title;
+                title.textContent = o.sub;
                 categorySelector.textContent = o.title;
             }
         }
 
         main.dom.categoryList.appendChild(category);
-        main.dom.categorySelectorContainer.appendChild(categorySelector);
+        if(!existingCategorySelector)
+            main.dom.categorySelectorContainer.appendChild(categorySelector);
 
         return {container: category, toolbarSelector: categorySelector};
     },
@@ -1134,7 +1163,7 @@ let productManager = {
         });
     },
     addProduct: function(o){
-        if(!o.category) return false;
+        if(!o.category || (!o.boxSell && !o.singleSell)) return false;
 
         let product = main.dom.cloneableProduct.cloneNode(true);
             product.classList.remove('hidden');
@@ -1178,6 +1207,10 @@ let productManager = {
             if(o.id){
                 product.setAttribute('data-product-id', o.id);
             }
+            if(!o.boxSell)
+                addBoxButton.classList.add('hidden');
+            if(!o.singleSell)
+                addSingleButton.classList.add('hidden');
         }
 
         product.setAttribute('data-price', price.textContent);
@@ -1318,11 +1351,11 @@ let productManager = {
         list.forEach(productDefinition => {
             if(!productDefinition.category) return false;
 
-            let category = categories[productDefinition.category];
+            let category = categories[productDefinition.subCategory];
 
             if(!category){
-                category = this.addCategory({title: productDefinition.category});
-                categories[productDefinition.category] = category;
+                category = this.addCategory({title: productDefinition.category, sub: productDefinition.subCategory});
+                categories[productDefinition.subCategory] = category;
             }
 
             let product = this.addProduct({...productDefinition, category});
