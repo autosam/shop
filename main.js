@@ -729,7 +729,7 @@ let main = {
             title: 'پـــیــــشــــنــــهــــاد <br>  شــــــــــگـــــــفـــــــت  <br>  انــــــــــــگـــــــیــــــــــــز',
             background: "#ff893a",
             icon: 'fa-duotone fa-sparkles',
-            img: '/resources/materials/salesbox_banner_01.png',
+            img: 'resources/materials/salesbox_banner_01.png',
         },
         'تازه ها': {
             title: 'تــــــــازه ها',
