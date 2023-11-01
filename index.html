@@ -370,12 +370,16 @@
         <div data-cloneable="product" id="cloneable-product" data-orders="0" class="product-card bshadow-1">
             <img class="product-image" src="resources/img/placeholder_img.png"></img>
             <div class="product-info">
-                <span class="product-title">محصول تست</span>
+                <span class="product-title">کالا</span>
                 <span class="product-description"></span>
                 <span class="product-tags"></span>
                 <span class="divider"></span>
                 <div class="product-additional">
-                    <span class="product-price">0</span>
+                    <div class="product-price-container">
+                        <span class="product-off-price">0</span>
+                        <span class="product-price">0</span>
+                        <div class="product-off-percent-badge pulse-outline">۲۵٪-</div>
+                    </div>
                     <div class="product-actions-container">
                         <button class="btn action add-single">
                             <i class="fa-solid fa-plus"></i>
@@ -401,6 +405,7 @@
                     </div>
                 </div>
             </div>
+            <i class="trash-order fa-solid fa-trash"></i>
         </div>
         <!-- cloneable product card placeholder -->
         <div data-cloneable="productPlaceholder" id="cloneable-product-placeholder" class="product-card">
@@ -493,8 +498,11 @@
             <div class="vertical-product-title">Title</div>
             <div class="vertical-product-info">
                 <hr style="opacity: 0.5;">
-                <div class="vertical-product-tag-container hidden">Tag</div>
-                <div class="vertical-product-price">price</div>
+                <div class="vertical-product-tag-container hidden">tag</div>
+                <div class="vertical-product-price-container">
+                    <div class="vertical-product-off-price">offprice</div>
+                    <div class="vertical-product-price">price</div>
+                </div>
                 <!-- <hr> -->
                 <div class="vertical-product-actions-container">
                     <button class="vertical-product-add-btn btn generic-o">

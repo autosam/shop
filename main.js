@@ -464,9 +464,11 @@ let main = {
                 // name
                 let name = `${product.title}`;
                 for(let key in product.tags){
-                    let tagText = productManager.tagIdToText(key)
-                    if(key == 'box_amount' || !tagText) continue;
-                    name += ` <div class="tag"> <i class="fa-solid fa-tag"></i> ${tagText}: ${utils.persianNum(product.tags[key])}</div> `;
+                    let tagTitle = productManager.tagIdToText(key);
+                    let tagValue = utils.persianNum(product.tags[key]);
+                    if(isNaN(product.tags[key])) tagValue = product.tags[key];
+                    if(key == 'box_amount' || !tagTitle) continue;
+                    name += ` <div class="tag"> <i class="fa-solid fa-tag"></i> ${tagTitle}: ${tagValue}</div> `;
                 }
 
                 // processed
@@ -724,9 +726,10 @@ let main = {
     
     hardCodedSpecials: {
         'پیشنهاد شگفت انگیز': {
-            title: 'پـــیــــشــــنــــهــــاد <br>  شــــــــــگـــــفـــــــت  <br>  انــــــــــــگـــــــیـــــــز',
-            background: "linear-gradient(45deg, orange, #ff893a)",
-            icon: 'fa-duotone fa-sparkles'
+            title: 'پـــیــــشــــنــــهــــاد <br>  شــــــــــگـــــــفـــــــت  <br>  انــــــــــــگـــــــیــــــــــــز',
+            background: "#ff893a",
+            icon: 'fa-duotone fa-sparkles',
+            img: '/resources/materials/salesbox_banner_01.png',
         },
         'تازه ها': {
             title: 'تــــــــازه ها',
@@ -764,6 +767,16 @@ let main = {
             
             let title = container.querySelector('.special-product-wrapper-title');
                 title.innerHTML = `<i class="${special.icon} special-title-icon-anim"></i> ${special.title} <i style="animation-delay: 0s; animation-direction: alternate-reverse" class="${special.icon} special-title-icon-anim"></i> `
+                if(special.img){
+                    title.classList.add('has-image');
+                    title.innerHTML += `
+                    <div class="special-wrapper-img-container">
+                        <img class="special-wrapper-img" src="${special.img}">
+                        
+                        </img>
+                    </div>
+                    `;
+                }
                 
                 // creating icons
                 // title.innerHTML += `<i class="fa-duotone fa-sparkles special-title-icons"></i>`
@@ -782,7 +795,16 @@ let main = {
                     product.querySelector('.vertical-product-title').textContent = itemDom.querySelector('.product-title').innerHTML;
                     product.querySelector('.vertical-product-tag-container').innerHTML = itemDom.querySelector('.product-tags').innerHTML;
                     product.querySelector('.vertical-product-price').innerHTML = itemDom.querySelector('.product-price').innerHTML;
-    
+                    if(itemDom.querySelector('.product-off-price')){
+                        product.querySelector('.vertical-product-off-price').innerHTML = itemDom.querySelector('.product-off-price').innerHTML;
+                        let offBadge = itemDom.querySelector('.product-off-percent-badge').cloneNode(true);
+                            // offBadge.innerHTML += ' تخفیف ';
+                            offBadge.innerHTML = (offBadge.innerHTML).replace('-', '') + ' تخفیف ';
+                        product.appendChild(offBadge);
+                    }
+                    else {
+                        product.querySelector('.vertical-product-off-price').classList.add('hidden');
+                    }
                     product.querySelector('.vertical-product-add-btn').onclick = function(){
                         itemDom.querySelector('.btn.action.add-box').click();
                         main.switchPage('page-order', true);
@@ -1171,6 +1193,7 @@ let productManager = {
 
         let addBoxButton = product.querySelector('.btn.action.add-box'),
             addSingleButton = product.querySelector('.btn.action.add-single'),
+            trashOrderButton = product.querySelector('.trash-order'),
             quantitySelector = product.querySelector('.generic-quantity-selector'),
             orderCount = product.querySelector('.product-order-count'),
             title = product.querySelector('.product-title'),
@@ -1178,10 +1201,12 @@ let productManager = {
             price = product.querySelector('.product-price'),
             image = product.querySelector('.product-image');
 
+        let currentPrice;
+
         if(o){
             if(o.title) title.textContent = o.title;
             if(o.description) description.textContent = o.description; else $(description).hide();
-            if(o.price) price.textContent = o.price;
+            if(o.price) currentPrice = o.offPrice || o.price;
             if(o.image) image.src = o.image;
             else product.setAttribute('data-no-image', true);
             if(o.tags){
@@ -1211,12 +1236,21 @@ let productManager = {
                 addBoxButton.classList.add('hidden');
             if(!o.singleSell)
                 addSingleButton.classList.add('hidden');
+            if(!o.offPrice) {
+                product.querySelector('.product-off-price').remove();
+                product.querySelector('.product-off-percent-badge').remove();
+            }
+            else {
+                product.querySelector('.product-off-price').textContent = utils.persianNum(o.price);
+                let offPercent = Math.ceil((o.offPrice) / o.price * 100);
+                product.querySelector('.product-off-percent-badge').textContent = `${utils.persianNum(offPercent)}٪-`;
+            }
         }
 
         product.setAttribute('data-price', price.textContent);
 
         if(o.price >= 0){
-            price.innerHTML = utils.persianNum(price.textContent) + ' <small>تومان</small>';
+            price.innerHTML = utils.persianNum(currentPrice) + ' <small>تومان</small>';
         }
         else {
             price.innerHTML = `<span style="color: gray"> ناموجود </span>`;
@@ -1237,6 +1271,9 @@ let productManager = {
         }
         quantitySelector.querySelector('.minus-btn').onclick = function(){
             productManager.changeOrderCount(product, -1);
+        }
+        trashOrderButton.onclick = function(){
+            productManager.changeOrderCount(product, -99999);
         }
         this.changeOrderCount(product, -1);
 
