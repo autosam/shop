@@ -734,7 +734,8 @@ let main = {
         'تازه ها': {
             title: 'تــــــــازه ها',
             background: "#E40066",
-            icon: 'fa-solid fa-zap'
+            icon: 'fa-solid fa-zap',
+            // img: 'resources/materials/newsbox_banner_01.png',
         }
     },
     createSpecialContainers: function(title, arrProductIds){
@@ -914,7 +915,7 @@ let main = {
             main.dom.headerWrapper.classList.remove('no-box-shadow');
         }
 
-        if(pageName == 'page-order'){
+        if(pageName == 'page-order' && document.querySelector('.toolbar-category-selector')){
             document.querySelector('.toolbar-category-selector').activate();
         }
 
