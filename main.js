@@ -1243,7 +1243,7 @@ let productManager = {
             }
         }
 
-        product.setAttribute('data-price', price.textContent);
+        product.setAttribute('data-price', o.offPrice || o.price);
 
         if(o.price >= 0){
             price.innerHTML = utils.persianNum(currentPrice) + ' <small>تومان</small>';
@@ -1271,7 +1271,7 @@ let productManager = {
         trashOrderButton.onclick = function(){
             productManager.changeOrderCount(product, -99999);
         }
-        this.changeOrderCount(product, -1);
+        this.changeOrderCount(product, -1, true);
 
         o.category.container.querySelector('.product-list').appendChild(product);
         o.category.container.classList.remove('hidden');
@@ -1285,7 +1285,7 @@ let productManager = {
             product.setAttribute('id', 'plchldr' + utils.generateRandomChars());
             main.dom.categoryList.appendChild(product);
     },
-    changeOrderCount: function(product, changeNum){
+    changeOrderCount: function(product, changeNum, noSave){
         // return;
         // let orderCountElement = product.querySelector('.product-order-count');
         let orderType = product.getAttribute('data-order-type');
@@ -1307,7 +1307,38 @@ let productManager = {
 
         product.setAttribute('data-orders', orderCount);
 
+        if(!noSave)
+            this.saveCart();
+
         this.handleCheckoutCard();
+    },
+    saveCart: function(){
+        let cart = [];
+
+        let allOrders = [...document.querySelectorAll('.product-card.ordered')];
+            allOrders.forEach(order => {
+                cart.push({
+                    productId: order.dataset.productId,
+                    quantity: order.dataset.orders,
+                    type: order.dataset.orderType
+                })
+            })
+        
+        utils.setCookie('cart', JSON.stringify(cart), 7);
+    },
+    loadCart: function(){
+        let cookie = utils.getCookie('cart');
+        if(!cookie) return;
+        let cart = JSON.parse(cookie);
+        
+        cart.forEach(order => {
+            let product = document.querySelector(`.product-card[data-product-id="${order.productId}"]`);
+            if(!product) return;
+            product.dataset.orders = order.quantity;
+            product.dataset.orderType = order.type;
+            productManager.changeOrderCount(product, 0, true);
+            console.log(product, 'done');
+        })
     },
     handleCheckoutCard: function(){
         let orderCountOverlay = document.querySelector('.order-count-overlay');
@@ -1353,6 +1384,7 @@ let productManager = {
             document.querySelector('#featured-placeholder').remove();
             main.createSpecialContainers();
         }
+        this.loadCart();
     },
     async loadProductList(path){
         let list, categories = [];
