@@ -739,7 +739,6 @@ let main = {
         }
     },
     createSpecialContainers: function(title, arrProductIds){
-        return;
         let specialContainers = [], specialProducts = [];
         
         productManager.list.forEach(item => {
