@@ -770,13 +770,7 @@ let main = {
                 title.innerHTML = `<i class="${special.icon} special-title-icon-anim"></i> ${special.title} <i style="animation-delay: 0s; animation-direction: alternate-reverse" class="${special.icon} special-title-icon-anim"></i> `
                 if(special.img){
                     title.classList.add('has-image');
-                    title.innerHTML += `
-                    <div class="special-wrapper-img-container">
-                        <img class="special-wrapper-img" src="${special.img}">
-                        
-                        </img>
-                    </div>
-                    `;
+                    title.innerHTML += `<div class="special-wrapper-img-container"><img class="special-wrapper-img" src="${special.img}"></img></div>`;
                 }
                 
                 // creating icons
