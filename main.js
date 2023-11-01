@@ -1237,7 +1237,8 @@ let productManager = {
             }
             else {
                 product.querySelector('.product-off-price').textContent = utils.persianNum(o.price);
-                let offPercent = Math.ceil((o.offPrice) / o.price * 100);
+                let offPercent = Math.ceil((o.price - o.offPrice) / o.price * 100);
+                console.log(offPercent);
                 product.querySelector('.product-off-percent-badge').textContent = `${utils.persianNum(offPercent)}٪-`;
             }
         }
