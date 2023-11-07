@@ -1001,11 +1001,22 @@ h1.generic-page-header {
     overflow: hidden;
 }
 
-.category-title-img {
+/* .category-title-img {
     width: 100px;
     position: absolute;
     top: -29%;
     left: -11px;
+    scale: 2;
+    opacity: 0.25;
+    filter: grayscale(1);
+    mix-blend-mode: color-burn;
+} */
+
+.category-title-img {
+    width: 12vh;
+    position: absolute;
+    top: -29%;
+    left: -1vh;
     scale: 2;
     opacity: 0.25;
     filter: grayscale(1);
