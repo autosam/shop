@@ -53,6 +53,7 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 body {
@@ -204,6 +205,7 @@ h1.generic-page-header {
     right: 10px;
     font-size: 1.3rem;
     color: rgb(97, 97, 97);
+    color: var(--textBlack);
     padding: 10px;
 }
 
@@ -292,8 +294,9 @@ h1.generic-page-header {
     margin-right: -10px;
     padding-right: 10px;
     padding-left: 10px;
-    margin-top: -1px;
+    margin-top: -11px;
     padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .toolbar-category-selector {
@@ -994,7 +997,20 @@ h1.generic-page-header {
     background-color: #ffc59ea9;
     color: #ff6600;
     /* text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.192); */
-    
+    position: relative;
+    overflow: hidden;
+}
+
+.category-title-img {
+    width: 100px;
+    position: absolute;
+    top: -29%;
+    left: -11px;
+    scale: 2;
+    opacity: 0.25;
+    filter: grayscale(1);
+    /* left: calc(50% - 50px); */
+    mix-blend-mode: color-burn;
 }
 
 .category {

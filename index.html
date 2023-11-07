@@ -29,7 +29,7 @@
         <div class="page-header">
             <!-- <i class="fa-solid fa-bars bars-icon"></i> -->
             <!-- <label>لیست محصولات</label> -->
-            <i class="fa-regular fa-angle-right nav-back" -data-page-dependant="!page-home|!page-user|!page-order" onclick="main.goBackHistory()"></i>
+            <i class="fa-regular fa-arrow-right nav-back" -data-page-dependant="!page-home|!page-user|!page-order" onclick="main.goBackHistory()"></i>
 
 
             <!-- <img src="resources/img/logo-top-hq-s.png" class="logo-top__"></img> -->
@@ -115,7 +115,7 @@
                     </div>
                     <div id="qi-null" class="quick-icon">
                         <i class="fa-solid fa-question-circle"></i>
-                        <div class="quick-icon-text"> تست </div>
+                        <div class="quick-icon-text"> به زودی ... </div>
                     </div>
                 </div>
 
@@ -267,6 +267,13 @@
                 <div class="messages-container"></div>
                 <div class="messages-no-message hidden">
                     در حال حاضر هیچ پیامی ندارید
+                </div>
+            </div>
+
+            <!-- about page -->
+            <div id="page-about" class="page page-generic" data-needs-nav-back>
+                <div>
+                    <img style="width: calc(100% + 40px);margin: -20px;margin-top: -10px;" src="resources/materials/catalogue/کاتالوگ امگا 1402_page-0012.jpg"></img>
                 </div>
             </div>
         </div>
@@ -449,7 +456,7 @@
 
         <!-- cloneable category -->
         <div data-cloneable="category" id="cloneable-category" class="category hidden">
-            <span class="category-title">نام دسته</span>
+            <span class="category-title"></span>
             <div class="product-list"></div>
         </div>
 
@@ -523,7 +530,7 @@
         </div>
 
         <div data-cloneable="vertical-product" class="vertical-product bshadow-11">
-            <img class="vertical-product-image" src="resources/product-images/1.png"></img>
+            <img class="vertical-product-image bshadow-1" src="resources/product-images/1.png"></img>
             <hr style="opacity: 0.5;">
             <div class="vertical-product-title">Title</div>
             <div class="vertical-product-info">

@@ -740,7 +740,7 @@ let main = {
             imgClass: 'special-img-clr-orange',
         },
         'تازه ها': {
-            title: 'تــــــــازه ها',
+            title: ' تــــــــــــــــــازه هـــا ',
             background: "#E40066",
             icon: 'fa-solid fa-zap',
             img: 'resources/materials/newsbox_banner_01.png',
@@ -914,12 +914,13 @@ let main = {
             main.dom.headerWrapper.classList.add('no-box-shadow');
             // productManager.clearProductList();
             // main.refreshProducts();
+            main.history = [];
         } else {
             main.dom.headerWrapper.classList.remove('no-box-shadow');
         }
 
-        if(pageName == 'page-order' && document.querySelector('.toolbar-category-selector')){
-            document.querySelector('.toolbar-category-selector').activate();
+        if(pageName == 'page-order' && document.querySelector('.category-selector-container .toolbar-category-selector')){
+            document.querySelector('.category-selector-container .toolbar-category-selector').activate();
         }
 
         [...document.querySelectorAll('[data-page-dependant]')].forEach(element => {
@@ -935,7 +936,8 @@ let main = {
                 if(reverse) result = !result;
 
                 if(result){
-                    $(element).show();
+                    // $(element).show();
+                    $(element).fadeIn('fast');
                     break;
                 } else {
                     $(element).hide();
@@ -1096,6 +1098,9 @@ let initializers = {
         $("#qi-messages").click(() => {
             main.switchPage('page-messages');
         });
+        $("#qi-about").click(() => {
+            main.switchPage('page-about');
+        });
         $("#qi-contact").click(() => {
             document.querySelector(".floating-help-btn").click();
         });
@@ -1151,6 +1156,7 @@ let productManager = {
 
         let categorySelector;
         
+        // toolbar selector
         if(!existingCategorySelector){
             categorySelector = main.dom.cloneableCategorySelector.cloneNode(true);
             categorySelector.setAttribute('id', 'cat-selector-' + categoryId);
@@ -1182,7 +1188,9 @@ let productManager = {
 
         if(o){
             if(o.title) {
-                title.textContent = o.sub;
+                title.innerHTML = o.sub + `
+                    <img src="" class="category-title-img"></img>
+                `;
                 categorySelector.textContent = o.title;
             }
         }
@@ -1234,7 +1242,7 @@ let productManager = {
                     this.createTag('fa-bolt', `${utils.persianNum(o.tags.watt)} وات`, product);
                 }
                 if(o.tags.box_amount){
-                    this.createTag('fa-box', `${utils.persianNum(o.tags.box_amount)} عدد`, product);
+                    this.createTag('fa-box', `کارتن ${utils.persianNum(o.tags.box_amount)} عددی`, product);
                     product.setAttribute('data-box-quantity', o.tags.box_amount);
                 }
                 if(o.tags.custom){
@@ -1291,6 +1299,10 @@ let productManager = {
             productManager.changeOrderCount(product, -99999);
         }
         this.changeOrderCount(product, -1, true);
+
+        if(o.image){
+            o.category.container.querySelector('.category-title-img').src = o.image;
+        }
 
         o.category.container.querySelector('.product-list').appendChild(product);
         o.category.container.classList.remove('hidden');
@@ -1531,7 +1543,11 @@ let productManager = {
             $('.search-not-found').show();
         }
 
-        function search(a, b){ // searching for a in b
+        function search(a, b){
+            return b.indexOf(a) >= 0;
+        }
+
+        function searchX(a, b){ // searching for a in b
             let aSplit = a.split(' '),
                 bSplit = b.split(' ');
             
