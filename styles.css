@@ -88,6 +88,15 @@ body {
     padding: 10px;
 }
 
+h1.generic-page-header {
+    background: white;
+    font-size: medium;
+    padding: 20px;
+    margin: -10px;
+    border-bottom: 1px solid var(--seperatorClr);
+    margin-bottom: 10px;
+}
+
 .header-wrapper {
     padding: 10px;
     background-color: rgb(255 255 255);
@@ -1905,11 +1914,19 @@ hr {
     width: 100%;
     height: 100%;
     content: "";
-    background: radial-gradient(#ff893a00, #ff880c 90%);
     z-index: 3;
     top: 0px;
     left: 0px;
     position: absolute;
+}
+.special-img-clr-orange:after {
+    background: radial-gradient(#ff893a00, #ff880c 90%);
+}
+.special-img-clr-red {
+    transform: translateY(-30px) scale(1.146)
+}
+.special-img-clr-red:after {
+    background: radial-gradient(#ff007300, #E40066 70%);
 }
 .special-wrapper-img {
     width: 100%;

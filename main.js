@@ -207,7 +207,6 @@ let main = {
         document.querySelector('#app-bar-home').click();
     },
     handleHamburgerMenu: function(){
-        console.log(main.dom.hamburgerMenu)
         main.dom.barsIcon.onclick = function(){
             let menuHidden = main.dom.hamburgerMenu.classList.contains('soft-hidden');
             if(menuHidden) {
@@ -494,6 +493,14 @@ let main = {
                 }
             })
 
+
+            // updated states
+            utils.setCookie('order-history', (JSON.stringify(history)), 365);
+            let lastOrderHistoryCookie = utils.getCookie('order-history');
+            if(lastOrderHistoryCookie){
+                let lastOrderHistory = JSON.parse(lastOrderHistoryCookie);
+                console.log({lastOrderHistory});
+            }
 /* 
             // home order history
             let maxIndex = 3;
@@ -730,12 +737,14 @@ let main = {
             background: "#ff893a",
             icon: 'fa-duotone fa-sparkles',
             img: 'resources/materials/salesbox_banner_01.png',
+            imgClass: 'special-img-clr-orange',
         },
         'تازه ها': {
             title: 'تــــــــازه ها',
             background: "#E40066",
             icon: 'fa-solid fa-zap',
-            // img: 'resources/materials/newsbox_banner_01.png',
+            img: 'resources/materials/newsbox_banner_01.png',
+            imgClass: 'special-img-clr-red',
         }
     },
     createSpecialContainers: function(title, arrProductIds){
@@ -770,13 +779,13 @@ let main = {
                 title.innerHTML = `<i class="${special.icon} special-title-icon-anim"></i> ${special.title} <i style="animation-delay: 0s; animation-direction: alternate-reverse" class="${special.icon} special-title-icon-anim"></i> `
                 if(special.img){
                     title.classList.add('has-image');
-                    title.innerHTML += `<div class="special-wrapper-img-container"><img class="special-wrapper-img" src="${special.img}"></img></div>`;
+                    title.innerHTML += `<div class="special-wrapper-img-container ${special.imgClass}"><img class="special-wrapper-img" src="${special.img}"></img></div>`;
                 }
                 
                 // creating icons
                 // title.innerHTML += `<i class="fa-duotone fa-sparkles special-title-icons"></i>`
                 
-                main.dom.pages['page-home'].appendChild(container);
+                main.dom.pages['page-home'].querySelector('.special-containers-wrapper').appendChild(container);
 
             specialProducts.forEach(item => {
                 if(item.tags['home_special'] != containerName) return;
@@ -1069,6 +1078,7 @@ let initializers = {
         this.home_page();
         this.order_page();
         this.user_page();
+        this.messages_page();
     },
     home_page: function(){
         $("#qi-order").click(() => {
@@ -1079,6 +1089,12 @@ let initializers = {
         });
         $("#qi-product-prices").click(() => {
             main.switchPage('page-product-prices');
+        });
+        $("#qi-catalogue").click(() => {
+            main.switchPage('page-catalogue');
+        });
+        $("#qi-messages").click(() => {
+            main.switchPage('page-messages');
         });
         $("#qi-contact").click(() => {
             document.querySelector(".floating-help-btn").click();
@@ -1101,6 +1117,9 @@ let initializers = {
         document.querySelector('.order-checkout-cancel').onclick = function(){
             productManager.trashOrdered();
         }
+    },
+    messages_page: function(){
+        
     }
 }
 
@@ -1337,7 +1356,6 @@ let productManager = {
             product.dataset.orders = order.quantity;
             product.dataset.orderType = order.type;
             productManager.changeOrderCount(product, 0, true);
-            console.log(product, 'done');
         })
     },
     handleCheckoutCard: function(){
@@ -1455,7 +1473,6 @@ let productManager = {
                     }),
                     dataType: "json", 
                     success: function(response) {
-                        console.log(response);
                         resolve({...response, setId});
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
