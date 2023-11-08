@@ -1336,6 +1336,14 @@ h1.generic-page-header {
     /* margin: 10px 5px 5px; */
 }
 
+.product-color-blob {
+    height: 100%;
+    display: inline-block;
+    aspect-ratio: 4/4;
+    border-radius: 100px;
+    scale: 0.6;
+}
+
 .product-card .divider {
     /* background: linear-gradient(45deg, #b1b1b1, rgb(214, 214, 214)); */
     background-color: var(--seperatorClr);

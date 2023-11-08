@@ -1151,7 +1151,12 @@ let productManager = {
     orderStates: null,
     createTag: function(icon, text, product, important){
         let tag = main.dom.cloneableTag.cloneNode(true);
-        if(icon) tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
+        if(icon) {
+            tag.querySelector('.tag-icon').className = `tag-icon fa-solid ${icon}`;
+        } else {
+            tag.querySelector('.tag-icon').remove();
+            tag.querySelector('.tag-divider').remove();
+        }
         if(text) tag.querySelector('.tag-text').innerHTML = text;
         if(important) tag.classList.add('tag-important');
         tag.setAttribute('id', '');
