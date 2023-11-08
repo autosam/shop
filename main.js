@@ -747,7 +747,7 @@ let main = {
             imgClass: 'special-img-clr-red',
         }
     },
-    createSpecialContainers: function(title, arrProductIds){
+    createSpecialContainers: function(){
         let specialContainers = [], specialProducts = [];
         
         productManager.list.forEach(item => {
@@ -795,35 +795,54 @@ let main = {
                 if(!itemDom) return;
 
                 let product = main.dom.cloneable['vertical-product'].cloneNode(true);
-                    product.querySelector('.vertical-product-image').src = item.image || main.placeholderImg;
-                    product.querySelector('.vertical-product-title').textContent = itemDom.querySelector('.product-title').innerHTML;
-                    product.querySelector('.vertical-product-tag-container').innerHTML = itemDom.querySelector('.product-tags').innerHTML;
-                    product.querySelector('.vertical-product-price').innerHTML = itemDom.querySelector('.product-price').innerHTML;
-                    if(itemDom.querySelector('.product-off-price')){
-                        product.querySelector('.vertical-product-off-price').innerHTML = itemDom.querySelector('.product-off-price').innerHTML;
-                        let offBadge = itemDom.querySelector('.product-off-percent-badge').cloneNode(true);
-                            // offBadge.innerHTML += ' تخفیف ';
-                            offBadge.innerHTML = (offBadge.innerHTML).replace('-', '') + ' تخفیف ';
-                        product.appendChild(offBadge);
-                    }
-                    else {
-                        product.querySelector('.vertical-product-off-price').classList.add('hidden');
-                    }
-                    product.querySelector('.vertical-product-add-btn').onclick = function(){
-                        itemDom.querySelector('.btn.action.add-box').click();
-                        main.switchPage('page-order', true);
-                        document.querySelector('#app-bar-order').onclick(null, true);
-                        setTimeout(() => {
-                            window.scrollTo({
-                                left: 0, 
-                                top: itemDom.offsetTop - main.dom.headerWrapper.offsetHeight + 122,
-                                behavior: 'instant',
-                            });
-                        }, 1);
-                    }
-                    
-    
-                    product.querySelector('.vertical-product-tag-container');
+                let imageDom = product.querySelector('.vertical-product-image');
+
+                let images = item.image.split('\n');
+
+                
+                if(images.length > 1){
+                    let currentImageIndex = 0;
+                    let slideshowTask = setInterval(() => {
+                        currentImageIndex++;
+                        if(currentImageIndex >= images.length)
+                            currentImageIndex = 0;
+
+                        $(imageDom).fadeOut('fast', () => {
+                            imageDom.src = images[currentImageIndex];
+                            $(imageDom).fadeIn();
+                        })
+                    }, 2000)
+                }
+
+                product.querySelector('.vertical-product-image').src = images[0] || main.placeholderImg;
+                product.querySelector('.vertical-product-title').textContent = itemDom.querySelector('.product-title').innerHTML;
+                product.querySelector('.vertical-product-tag-container').innerHTML = itemDom.querySelector('.product-tags').innerHTML;
+                product.querySelector('.vertical-product-price').innerHTML = itemDom.querySelector('.product-price').innerHTML;
+                if(itemDom.querySelector('.product-off-price')){
+                    product.querySelector('.vertical-product-off-price').innerHTML = itemDom.querySelector('.product-off-price').innerHTML;
+                    let offBadge = itemDom.querySelector('.product-off-percent-badge').cloneNode(true);
+                        // offBadge.innerHTML += ' تخفیف ';
+                        offBadge.innerHTML = (offBadge.innerHTML).replace('-', '') + ' تخفیف ';
+                    product.appendChild(offBadge);
+                }
+                else {
+                    product.querySelector('.vertical-product-off-price').classList.add('hidden');
+                }
+                product.querySelector('.vertical-product-add-btn').onclick = function(){
+                    itemDom.querySelector('.btn.action.add-box').click();
+                    main.switchPage('page-order', true);
+                    document.querySelector('#app-bar-order').onclick(null, true);
+                    setTimeout(() => {
+                        window.scrollTo({
+                            left: 0, 
+                            top: itemDom.offsetTop - main.dom.headerWrapper.offsetHeight + 122,
+                            behavior: 'instant',
+                        });
+                    }, 1);
+                }
+                
+
+                product.querySelector('.vertical-product-tag-container');
     
                 container.querySelector('.special-products-container').appendChild(product);
             })
@@ -1221,15 +1240,50 @@ let productManager = {
             title = product.querySelector('.product-title'),
             description = product.querySelector('.product-description'),
             price = product.querySelector('.product-price'),
-            image = product.querySelector('.product-image');
+            image = product.querySelector('.product-image'),
+            nextImage = product.querySelector('.product-image-next');
 
-        let currentPrice;
+        let currentPrice, images;
 
         if(o){
             if(o.title) title.textContent = o.title;
             if(o.description) description.textContent = o.description; else $(description).hide();
             if(o.price) currentPrice = o.offPrice || o.price;
-            if(o.image) image.src = o.image;
+            if(o.image) {
+                let currentImageIndex = 0;
+
+                let imageA = image, imageB = nextImage;
+
+                images = o.image.split('\n');
+                image.src = images[currentImageIndex];
+                nextImage.src = images[currentImageIndex];
+                // let lastImageIndex = images.length - 1;
+
+                if(images.length > 1){
+                    // slideshow task
+                    nextImage.classList.remove('hidden');
+                    let slideshowTask = setInterval(() => {
+                        let lastImageIndex = currentImageIndex;
+                        currentImageIndex++;
+                        if(currentImageIndex >= images.length)
+                            currentImageIndex = 0;
+
+                        imageA.src = images[lastImageIndex];
+                        imageB.src = images[currentImageIndex];
+
+                        imageA.classList.add('image-slide-out');
+                        imageA.classList.remove('image-slide-in');
+                        imageB.classList.add('image-slide-in');
+                        imageB.classList.remove('image-slide-out');
+
+                        let temp = imageA;
+                        imageA = imageB;
+                        imageB = temp;
+                    }, 1500);
+                } else {
+                    nextImage.remove();
+                }
+            }
             else product.setAttribute('data-no-image', true);
             if(o.tags){
                 if(o.tags.meter){
