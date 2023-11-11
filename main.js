@@ -1264,6 +1264,11 @@ let productManager = {
                 nextImage.src = images[currentImageIndex];
                 // let lastImageIndex = images.length - 1;
 
+                let categoryImg = o.category.container.querySelector('.category-title-img');
+                if(!categoryImg.getAttribute('src')){
+                    categoryImg.src = images[0];
+                }
+
                 if(images.length > 1){
                     // slideshow task
                     nextImage.classList.remove('hidden');
@@ -1358,10 +1363,6 @@ let productManager = {
             productManager.changeOrderCount(product, -99999);
         }
         this.changeOrderCount(product, -1, true);
-
-        if(o.image){
-            o.category.container.querySelector('.category-title-img').src = o.image;
-        }
 
         o.category.container.querySelector('.product-list').appendChild(product);
         o.category.container.classList.remove('hidden');
