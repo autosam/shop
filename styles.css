@@ -381,6 +381,10 @@ h1.generic-page-header {
     /* margin-bottom: -5px; */
     flex: 1 1 0px;
     cursor: pointer;
+
+    position: relative;
+    margin-top: -5px;
+    padding-top: 15px;
 }
 
 .app-bar-item > i {
@@ -672,6 +676,20 @@ h1.generic-page-header {
     opacity: 0.5;
     pointer-events: none;
     position: relative;
+}
+
+.checkout-trash-product {
+    background: rgb(255, 51, 0);
+    color: white;
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 100px;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: smaller;
 }
 
 .order-success {
@@ -2447,4 +2465,9 @@ hr {
 
 .product-card.ordered .trash-order {
     display: flex;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
 }

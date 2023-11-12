@@ -200,6 +200,13 @@ let main = {
 
                 }
             });
+        
+        let appBarCart = document.querySelector('.app-bar-item#app-bar-cart');
+        if(appBarCart){
+            appBarCart.onclick = () => {
+                main.openCheckoutScreen();
+            }
+        }
 
         // document.querySelector('#app-bar-user').onclick = function(){
         //     main.openWelcomeScreen();
@@ -242,12 +249,17 @@ let main = {
             orderListElm.innerHTML += `
                 <div class="checkout-list-item">
                     <div class="checkout-product-card">
-                        <div class="product-info">
+                        <div class="product-info" data-product-id="${order.getAttribute("data-product-id")}">
                             ${order.querySelector(".product-title").innerHTML}
-                            ${order.querySelector(".product-tags").innerHTML}
+                            <div>
+                                ${order.querySelector(".product-tags").innerHTML}
+                            </div>
                             <hr>
                             <div class="checkout-info">
-                                <div class="checkout-product-quantity badge-orange"> × ${utils.persianNum(quantity)} ${type} </div>
+                                <div class="flex-row">
+                                    <div class="checkout-product-quantity badge-orange"> × ${utils.persianNum(quantity)} ${type} </div>
+                                    <i class="checkout-trash-product fa-solid fa-trash"></i>
+                                </div>
                                 <span> ${order.querySelector(".product-price").innerHTML} </span>
                             </div>
                         </div>
@@ -256,6 +268,33 @@ let main = {
                 </div>
             `;
         });
+
+        if(!orderListElm.innerHTML){
+            orderListElm.innerHTML = `
+                <div style="color: var(--textGray);width: 100%;display: flex;flex-direction: column;align-items: center;height: 100%;justify-content: center;">
+                    <img style="width: 90%;opacity: 0.2;" src="resources/img/empty-checkout.jpg"></img>
+                    <b>سبد خرید شما خالی است</b>
+                    <span style="margin-top: 5px">همین حالا خرید خود را شروع کنید</span>
+                    <button style="margin-top: 15px; width: 250px; height: 30px" class="btn generic">سفارش دهید!</button>
+                </div>
+            `;
+            orderListElm.querySelector('.btn.generic').onclick = function(){
+                main.goBackHistory();
+                document.querySelector('#app-bar-order').click();
+            }
+            $(main.dom.orderCheckoutScreen.querySelector('.finalize-order-actions')).hide();
+        } else {
+            $(main.dom.orderCheckoutScreen.querySelector('.finalize-order-actions')).show();
+
+            [...main.dom.orderCheckoutScreen.querySelectorAll('.fa-trash')].forEach(trashBtn => {
+                trashBtn.onclick = () => {
+                    let productId = trashBtn.closest('.product-info').dataset.productId;
+                    let product = document.querySelector(`.product-card[data-product-id="${productId}"]`);
+                    productManager.changeOrderCount(product, -999);
+                    main.openCheckoutScreen();
+                }
+            });
+        }
 
         $(main.dom.orderCheckoutScreen).slideDown();
         $(main.dom.appBar).fadeOut('fast');
@@ -1428,7 +1467,11 @@ let productManager = {
             product.dataset.orders = order.quantity;
             product.dataset.orderType = order.type;
             productManager.changeOrderCount(product, 0, true);
-        })
+        });
+
+        if(main.dom.orderCheckoutScreen.style.display != 'none'){
+            main.openCheckoutScreen(); // refresh checkout cart after load if it's open
+        }
     },
     handleCheckoutCard: function(){
         let orderCountOverlay = document.querySelector('.order-count-overlay');
