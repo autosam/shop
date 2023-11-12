@@ -251,7 +251,7 @@ let main = {
                     <div class="checkout-product-card">
                         <div class="product-info" data-product-id="${order.getAttribute("data-product-id")}">
                             ${order.querySelector(".product-title").innerHTML}
-                            <div>
+                            <div style="margin-top: 5px;">
                                 ${order.querySelector(".product-tags").innerHTML}
                             </div>
                             <hr>
@@ -272,7 +272,7 @@ let main = {
         if(!orderListElm.innerHTML){
             orderListElm.innerHTML = `
                 <div style="color: var(--textGray);width: 100%;display: flex;flex-direction: column;align-items: center;height: 100%;justify-content: center;">
-                    <img style="width: 90%;opacity: 0.2;" src="resources/img/empty-checkout.jpg"></img>
+                    <img style="width: 70%;opacity: 0.2;" src="resources/img/empty-checkout.jpg"></img>
                     <b>سبد خرید شما خالی است</b>
                     <span style="margin-top: 5px">همین حالا خرید خود را شروع کنید</span>
                     <button style="margin-top: 15px; width: 250px; height: 30px" class="btn generic">سفارش دهید!</button>
@@ -538,7 +538,6 @@ let main = {
             let lastOrderHistoryCookie = utils.getCookie('order-history');
             if(lastOrderHistoryCookie){
                 let lastOrderHistory = JSON.parse(lastOrderHistoryCookie);
-                console.log({lastOrderHistory});
             }
 /* 
             // home order history
@@ -1376,7 +1375,7 @@ let productManager = {
         product.setAttribute('data-price', o.offPrice || o.price);
 
         if(o.price >= 0){
-            price.innerHTML = utils.persianNum(currentPrice) + ' <small>تومان</small>';
+            price.innerHTML = utils.persianNum(currentPrice) + ' <small>تومانء</small>';
         }
         else {
             price.innerHTML = `<span style="color: gray"> ناموجود </span>`;
@@ -1497,7 +1496,7 @@ let productManager = {
                 }
                 fullCheckoutPrice += productCheckoutPrice;
             });
-            document.querySelector("#order-checkout-card > button").textContent = `ثبت سفارش (${utils.persianNum(fullCheckoutPrice)} تومان)`
+            document.querySelector("#order-checkout-card > button").textContent = `ثبت سفارش (${utils.persianNum(fullCheckoutPrice)} تومانء)`
 
             
             orderCountOverlay.textContent = utils.persianNum(fullOrderCount.toString());

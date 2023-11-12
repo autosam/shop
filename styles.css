@@ -2471,3 +2471,11 @@ hr {
     display: flex;
     align-items: center;
 }
+
+.messages-no-message {
+    height: calc(100vh - 250px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--textGray);
+}
