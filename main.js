@@ -194,7 +194,6 @@ let main = {
                     this.querySelector('i').classList.remove('fa-regular');
                     
                     if(item.id == 'app-bar-user'){
-                        console.log(main.username, main.userNumber)
                         if(!main.username || !main.userNumber){
                             main.openWelcomeScreen();
                         } else if(document.body.dataset.currentPage != 'page-user'){
@@ -283,7 +282,7 @@ let main = {
                     <img style="width: 70%;opacity: 0.2;" src="resources/img/empty-checkout.jpg"></img>
                     <b>سبد خرید شما خالی است</b>
                     <span style="margin-top: 5px">همین حالا خرید خود را شروع کنید</span>
-                    <button style="margin-top: 15px; width: 250px; height: 30px" class="btn generic">سفارش دهید!</button>
+                    <button style="margin-top: 20px; width: 250px; height: 30px" class="btn generic">سفارش دهید!</button>
                 </div>
             `;
             orderListElm.querySelector('.btn.generic').onclick = function(){
@@ -349,10 +348,16 @@ let main = {
             continueAsGuestBtn = document.querySelector('#welcome-screen #user-guest-btn');
 
         function validate(){
-            registerBtn.disabled = true;
+            $(registerName.nextElementSibling).hide();
+            $(registerNumber.nextElementSibling).hide();
+
+            // registerBtn.disabled = true;
 
             let username = registerName.value;
             let number = registerNumber.value;
+
+            if(!username) $(registerName.nextElementSibling).show();
+            if(!number) $(registerNumber.nextElementSibling).show();
 
             if(!username || !number) {
                 return;
@@ -361,19 +366,25 @@ let main = {
             let numberEn = utils.convertNumEnToFa(number);
             let match = numberEn.match(/\d/g);
             if(!match || match.length !== 11){
+                $(registerNumber.nextElementSibling).show();
                 return;
             }
 
-            registerBtn.disabled = false;
+            // registerBtn.disabled = false;
+            return true;
         }
 
-        registerName.oninput = validate; registerName.onfocusout = validate; registerName.onfocusin = validate; registerName.onchange = validate; registerName.onkeypress = validate; 
-        registerNumber.oninput = validate; registerNumber.onfocusout = validate; registerNumber.onfocusin = validate; registerNumber.onchange = validate; registerNumber.onkeypress = validate; 
+        // registerName.oninput = validate; registerName.onfocusout = validate; registerName.onfocusin = validate; registerName.onchange = validate; registerName.onkeypress = validate; 
+        // registerNumber.oninput = validate; registerNumber.onfocusout = validate; registerNumber.onfocusin = validate; registerNumber.onchange = validate; registerNumber.onkeypress = validate; 
 
         registerName.value = '';
         registerNumber.value = '';
+        $(registerName.nextElementSibling).hide();
+        $(registerNumber.nextElementSibling).hide();
 
         registerBtn.onclick = function(){
+            if(!validate()) return;
+
             let username = registerName.value;
             let phone = registerNumber.value;
 

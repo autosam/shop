@@ -1507,6 +1507,7 @@ h1.generic-page-header {
     /* border: 1px solid var(--seperatorClr); */
     /* border-radius: 10px; */
     flex-direction: column;
+    height: calc(100% - 30px);
 }
 
 .user-register-container span {
@@ -1517,12 +1518,14 @@ h1.generic-page-header {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
+    height: 100%;
 }
 
 
 .user-register-container .btn {
     height: 40px;
     margin-top: 5px;
+    border: none;
 }
 
 .fullscreen {
@@ -2527,4 +2530,11 @@ hr {
 
 .input-group input {
     margin-top: 7.5px;
+}
+
+.input-group #warning {
+    font-weight: normal;
+    color: red;
+    font-size: smaller;
+    margin-top: 5px;
 }
