@@ -320,7 +320,7 @@ let main = {
         utils.setCookie('username', username, 100);
         utils.setCookie('number', number, 100);
         document.querySelector('.user-box #username').textContent = username;
-        document.querySelector('.user-box #usernumber').textContent = utils.convertNumFaToEn(number);
+        document.querySelector('.user-box #usernumber').textContent = (number);
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
