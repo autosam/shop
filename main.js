@@ -319,6 +319,14 @@ let main = {
         utils.setCookie('number', number || '', 100);
         document.querySelector('.user-box #username').textContent = username;
         document.querySelector('.user-box #usernumber').textContent = utils.convertNumFaToEn(number);
+
+        if(!username || !number){
+            document.querySelector("#app-bar-user > span").textContent = "ورود/عضویت";
+            document.querySelector("#app-bar-user > i").className = "fa-regular fa-sign-in";
+        } else {
+            document.querySelector("#app-bar-user > span").textContent = "کاربر";
+            document.querySelector("#app-bar-user > i").className = "fa-regular fa-user";
+        }
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
@@ -336,7 +344,8 @@ let main = {
         // return;
         let username = utils.getCookie('username');
         let number = utils.getCookie('number');
-        if(!username || !number){}
+        if(!username || !number)
+            main.setUsername('', '');
             // this.openWelcomeScreen();
         else 
             main.setUsername(username, number);
@@ -364,8 +373,7 @@ let main = {
             }
 
             let numberEn = utils.convertNumEnToFa(number);
-            let match = numberEn.match(/\d/g);
-            if(!match || match.length !== 11){
+            if(numberEn.trim().length !== 11 || numberEn[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
             }
@@ -381,6 +389,7 @@ let main = {
         registerNumber.value = '';
         $(registerName.nextElementSibling).hide();
         $(registerNumber.nextElementSibling).hide();
+        main.setUsername('', '');
 
         registerBtn.onclick = function(){
             if(!validate()) return;
