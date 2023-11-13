@@ -365,13 +365,13 @@ let main = {
                 return;
             }
 
-            let numberEn = utils.convertNumEnToFa(number);
+            let numberEn = utils.convertNumEnToFa(number) + '';
+            registerBtn.innerHTML = numberEn;
             if(numberEn.length !== 11 || numberEn[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
             }
 
-            registerBtn.innerHTML = 'تست سامان'
             return true;
         }
 
