@@ -312,15 +312,21 @@ let main = {
         $(main.dom.orderCheckoutScreen).slideUp('fast');
         $(main.dom.appBar).slideDown('fast');
     },
-    setUsername: function(_username, _number){
-        let username = _username || '';
-        let number = _number || '';
+    setUsername: function(username, number){
         main.username = username;
         main.userNumber = number;
-        utils.setCookie('username', username, 100);
-        utils.setCookie('number', number, 100);
+        utils.setCookie('username', username || '', 100);
+        utils.setCookie('number', number || '', 100);
         document.querySelector('.user-box #username').textContent = username;
         document.querySelector('.user-box #usernumber').textContent = utils.convertNumFaToEn(number);
+
+        if(!username || !number){
+            document.querySelector("#app-bar-user > span").textContent = "ورود/عضویت";
+            document.querySelector("#app-bar-user > i").className = "fa-regular fa-sign-in";
+        } else {
+            document.querySelector("#app-bar-user > span").textContent = "کاربر";
+            document.querySelector("#app-bar-user > i").className = "fa-regular fa-user";
+        }
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
@@ -338,8 +344,8 @@ let main = {
         // return;
         let username = utils.getCookie('username');
         let number = utils.getCookie('number');
-        if(!username || !number){}
-            // this.openWelcomeScreen();
+        if(!username || !number)
+            main.setUsername('', '');
         else 
             main.setUsername(username, number);
     },
@@ -365,14 +371,13 @@ let main = {
                 return;
             }
 
-            // registerBtn.innerHTML = 'number ' + number;
-            // let numberEn = utils.convertNumEnToFa(number) + '';
-            // registerBtn.innerHTML = 'ennum ' + number;
-            if(number.length !== 11 || number[0] != '0'){
+            let numberEn = utils.convertNumEnToFa(number);
+            if(numberEn.length !== 11 || numberEn[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
             }
 
+            // registerBtn.disabled = false;
             return true;
         }
 
@@ -383,6 +388,7 @@ let main = {
         registerNumber.value = '';
         $(registerName.nextElementSibling).hide();
         $(registerNumber.nextElementSibling).hide();
+        main.setUsername('', '');
 
         registerBtn.onclick = function(){
             if(!validate()) return;
@@ -1827,35 +1833,33 @@ let utils = {
     persianNum: function(text){
         return persianJs(new Intl.NumberFormat('en-US', {style : "decimal" }).format(text)).englishNumber()
     },
-    convertNumFaToEn: function(s){
-        return s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
-        // return text
-        //     .toString()
-        //     .replaceAll('1', '۱')
-        //     .replaceAll('2', '۲')
-        //     .replaceAll('3', '۳')
-        //     .replaceAll('4', '۴')
-        //     .replaceAll('5', '۵')
-        //     .replaceAll('6', '۶')
-        //     .replaceAll('7', '۷')
-        //     .replaceAll('8', '۸')
-        //     .replaceAll('9', '۹')
-        //     .replaceAll('0', '۰');
+    convertNumFaToEn: function(text){
+        return text
+            .toString()
+            .replaceAll('1', '۱')
+            .replaceAll('2', '۲')
+            .replaceAll('3', '۳')
+            .replaceAll('4', '۴')
+            .replaceAll('5', '۵')
+            .replaceAll('6', '۶')
+            .replaceAll('7', '۷')
+            .replaceAll('8', '۸')
+            .replaceAll('9', '۹')
+            .replaceAll('0', '۰');
     },
-    convertNumEnToFa: function(s){
-        return s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-        // return text
-        //     .toString()
-        //     .replaceAll('۱', '1')
-        //     .replaceAll('۲', '2')
-        //     .replaceAll('۳', '3')
-        //     .replaceAll('۴', '4')
-        //     .replaceAll('۵', '5')
-        //     .replaceAll('۶', '6')
-        //     .replaceAll('۷', '7')
-        //     .replaceAll('۸', '8')
-        //     .replaceAll('۹', '9')
-        //     .replaceAll('۰', '0');
+    convertNumEnToFa: function(text){
+        return text
+            .toString()
+            .replaceAll('۱', '1')
+            .replaceAll('۲', '2')
+            .replaceAll('۳', '3')
+            .replaceAll('۴', '4')
+            .replaceAll('۵', '5')
+            .replaceAll('۶', '6')
+            .replaceAll('۷', '7')
+            .replaceAll('۸', '8')
+            .replaceAll('۹', '9')
+            .replaceAll('۰', '0');
     },
     setCookie: function(cname, cvalue, exdays) {
         const d = new Date();
