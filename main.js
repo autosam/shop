@@ -364,7 +364,7 @@ let main = {
             }
 
             let numberEn = utils.convertNumEnToFa(number);
-            if(numberEn.trim().length !== 11 || numberEn[0] != '0'){
+            if(numberEn.length !== 11 || numberEn[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
             }
@@ -380,7 +380,6 @@ let main = {
         registerNumber.value = '';
         $(registerName.nextElementSibling).hide();
         $(registerNumber.nextElementSibling).hide();
-        main.setUsername('', '');
 
         registerBtn.onclick = function(){
             if(!validate()) return;
