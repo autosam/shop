@@ -36,7 +36,8 @@
             <!-- <img src="resources/img/logo-color-transparent-min.png" class="logo-top"></img> -->
 
             <!-- <img src="resources/img/logo-full-clr.png" class="logo-top-new"></img> -->
-            <img src="resources/img/svg/logo-full-clr-sml.svg" class="logo-top-new"></img>
+            <img src="resources/img/svg/logo-full-clr-sml.svg" id="header-logo" class="logo-top-new"></img>
+            <h3 style="display: none;" class="header-title"></h3>
 
             <!-- <img src="resources/img/logo-omega-only.png" class="logo-top-back"></img> -->
 
@@ -233,7 +234,7 @@
             </div>
 
             <!-- price list page -->
-            <div id="page-product-prices" class="page page-generic" data-needs-nav-back>
+            <div id="page-product-prices" class="page page-generic" data-needs-nav-back data-page-title="لیست قیمت">
                 <div>
                     <img class="width-100p" src="resources/materials/price-list/1.jpeg"></img>
                     <img class="width-100p" src="resources/materials/price-list/5.jpeg"></img>
@@ -245,7 +246,7 @@
             </div>
 
             <!-- catalogue page -->
-            <div id="page-catalogue" class="page page-generic" data-needs-nav-back>
+            <div id="page-catalogue" class="page page-generic" data-needs-nav-back data-page-title="کاتالوگ کالاها">
                 <div>
                     <img class="width-100p" src="resources/materials/catalogue/کاتالوگ امگا 1402_page-0001.jpg"></img>
                     <!-- <img class="width-100p" src="resources/materials/catalogue/کاتالوگ امگا 1402_page-0002.jpg"></img> -->
@@ -263,8 +264,7 @@
             </div>
 
             <!-- messages page -->
-            <div id="page-messages" class="page page-generic" data-needs-nav-back>
-                <h1 class="generic-page-header"> پیام ها </h1>
+            <div id="page-messages" class="page page-generic" data-needs-nav-back data-page-title="پیام ها">
                 <div class="messages-container"></div>
                 <div class="messages-no-message">
                     هم اکنون هیچ پیامی ندارید
@@ -272,7 +272,7 @@
             </div>
 
             <!-- about page -->
-            <div id="page-about" class="page page-generic" data-needs-nav-back>
+            <div id="page-about" class="page page-generic" data-needs-nav-back data-page-title="درباره ما">
                 <div>
                     <img style="width: calc(100% + 40px);margin: -20px;margin-top: -10px;" src="resources/materials/catalogue/کاتالوگ امگا 1402_page-0012.jpg"></img>
                 </div>

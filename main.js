@@ -6,6 +6,8 @@ let main = {
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
         header: document.querySelector(".page-header"),
+        headerLogo: document.querySelector("#header-logo"),
+        headerTitle: document.querySelector(".header-title"),
         appBar: document.querySelector('.app-bar'),
         navBackBtn: document.querySelector('.nav-back'),
         loadingOverlay: document.querySelector('.loading-overlay'),
@@ -942,10 +944,23 @@ let main = {
             if (currentPageName == pageName) {
                 page.classList.remove('hidden');
                 page.classList.add('swipe-from-left');
+
+                // navigation back
                 if(page.hasAttribute('data-needs-nav-back'))
                     $(main.dom.navBackBtn).fadeIn('fast');
                 else 
                     $(main.dom.navBackBtn).fadeOut('fast');
+
+                // page title
+                let pageHeaderTitle = page.getAttribute('data-page-title');
+                if(pageHeaderTitle){
+                    $(main.dom.headerLogo).hide();
+                    $(main.dom.headerTitle).fadeIn('fast');
+                    main.dom.headerTitle.innerHTML = pageHeaderTitle;
+                } else {
+                    $(main.dom.headerLogo).fadeIn('fast');
+                    $(main.dom.headerTitle).hide();
+                }
             }
             else {
                 page.classList.add('hidden', 'swipe-from-left');
@@ -956,7 +971,6 @@ let main = {
                 top: 0,
                 behavior: 'instant',
             });
-            
         }
 
         // history

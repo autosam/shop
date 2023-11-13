@@ -2473,7 +2473,7 @@ hr {
 }
 
 .messages-no-message {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 180px);
     display: flex;
     justify-content: center;
     align-items: center;
