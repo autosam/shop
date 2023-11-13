@@ -1,8 +1,8 @@
 const ENV = window.location.port == 5500 ? 'dev' : 'prod';
 
 let main = {
-    username: 'کاربر تست',
-    userNumber: '0123456789',
+    username: '',
+    userNumber: '',
     placeholderImg: 'resources/img/placeholder_img.png',
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
@@ -193,8 +193,13 @@ let main = {
                     this.querySelector('i').classList.add('fa-solid');
                     this.querySelector('i').classList.remove('fa-regular');
                     
-                    if(item.id == 'app-bar-user' && document.body.dataset.currentPage != 'page-user'){
-                        main.populateUserOrderHistory();
+                    if(item.id == 'app-bar-user'){
+                        console.log(main.username, main.userNumber)
+                        if(!main.username || !main.userNumber){
+                            main.openWelcomeScreen();
+                        } else if(document.body.dataset.currentPage != 'page-user'){
+                            main.populateUserOrderHistory();
+                        }
                     }
 
                     if(!other){
@@ -332,15 +337,16 @@ let main = {
         // return;
         let username = utils.getCookie('username');
         let number = utils.getCookie('number');
-        if(!username || !number)
-            this.openWelcomeScreen();
+        if(!username || !number){}
+            // this.openWelcomeScreen();
         else 
             main.setUsername(username, number);
     },
     openWelcomeScreen: function(){
         let registerBtn = document.querySelector('#welcome-screen #user-register-btn'),
             registerName = document.querySelector('#welcome-screen #user-register-name'),
-            registerNumber = document.querySelector('#welcome-screen #user-register-phone');
+            registerNumber = document.querySelector('#welcome-screen #user-register-phone'),
+            continueAsGuestBtn = document.querySelector('#welcome-screen #user-guest-btn');
 
         function validate(){
             registerBtn.disabled = true;
@@ -361,8 +367,8 @@ let main = {
             registerBtn.disabled = false;
         }
 
-        registerName.oninput = validate; registerName.onfocusout = validate; registerName.onfocusin = validate; 
-        registerNumber.oninput = validate; registerNumber.onfocusout = validate; registerNumber.onfocusin = validate;
+        registerName.oninput = validate; registerName.onfocusout = validate; registerName.onfocusin = validate; registerName.onchange = validate; registerName.onkeypress = validate; 
+        registerNumber.oninput = validate; registerNumber.onfocusout = validate; registerNumber.onfocusin = validate; registerNumber.onchange = validate; registerNumber.onkeypress = validate; 
 
         registerName.value = '';
         registerNumber.value = '';
@@ -380,7 +386,12 @@ let main = {
             document.querySelector('#app-bar-home').click();
         }
 
-        $('#welcome-screen').show();
+        continueAsGuestBtn.onclick = function(){
+            main.closeWelcomeScreen();
+            document.querySelector('#app-bar-home').click();
+        }
+
+        $('#welcome-screen').slideDown('fast');
         $(main.dom.appBar).fadeOut('fast');
 
         if (navigator.userAgent.indexOf('gonative') > -1) {
@@ -410,6 +421,12 @@ let main = {
             main.openCheckoutScreen();
         }
         document.querySelector("#order-checkout-screen .finalize-order-btn").onclick = function(){
+            if(!main.username || !main.userNumber){
+                main.closeCheckoutScreen();
+                main.openWelcomeScreen();
+                return;
+            }
+
             // (async function(){
             //     main.loadingStart();
             //     await productManager.checkout();
