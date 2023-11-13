@@ -320,7 +320,7 @@ let main = {
         utils.setCookie('username', username, 100);
         utils.setCookie('number', number, 100);
         document.querySelector('.user-box #username').textContent = username;
-        document.querySelector('.user-box #usernumber').textContent = (number);
+        document.querySelector('.user-box #usernumber').textContent = utils.convertNumFaToEn(number);
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
@@ -1827,33 +1827,35 @@ let utils = {
     persianNum: function(text){
         return persianJs(new Intl.NumberFormat('en-US', {style : "decimal" }).format(text)).englishNumber()
     },
-    convertNumFaToEn: function(text){
-        return text
-            .toString()
-            .replaceAll('1', '۱')
-            .replaceAll('2', '۲')
-            .replaceAll('3', '۳')
-            .replaceAll('4', '۴')
-            .replaceAll('5', '۵')
-            .replaceAll('6', '۶')
-            .replaceAll('7', '۷')
-            .replaceAll('8', '۸')
-            .replaceAll('9', '۹')
-            .replaceAll('0', '۰');
+    convertNumFaToEn: function(s){
+        return s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        // return text
+        //     .toString()
+        //     .replaceAll('1', '۱')
+        //     .replaceAll('2', '۲')
+        //     .replaceAll('3', '۳')
+        //     .replaceAll('4', '۴')
+        //     .replaceAll('5', '۵')
+        //     .replaceAll('6', '۶')
+        //     .replaceAll('7', '۷')
+        //     .replaceAll('8', '۸')
+        //     .replaceAll('9', '۹')
+        //     .replaceAll('0', '۰');
     },
-    convertNumEnToFa: function(text){
-        return text
-            .toString()
-            .replaceAll('۱', '1')
-            .replaceAll('۲', '2')
-            .replaceAll('۳', '3')
-            .replaceAll('۴', '4')
-            .replaceAll('۵', '5')
-            .replaceAll('۶', '6')
-            .replaceAll('۷', '7')
-            .replaceAll('۸', '8')
-            .replaceAll('۹', '9')
-            .replaceAll('۰', '0');
+    convertNumEnToFa: function(s){
+        return s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+        // return text
+        //     .toString()
+        //     .replaceAll('۱', '1')
+        //     .replaceAll('۲', '2')
+        //     .replaceAll('۳', '3')
+        //     .replaceAll('۴', '4')
+        //     .replaceAll('۵', '5')
+        //     .replaceAll('۶', '6')
+        //     .replaceAll('۷', '7')
+        //     .replaceAll('۸', '8')
+        //     .replaceAll('۹', '9')
+        //     .replaceAll('۰', '0');
     },
     setCookie: function(cname, cvalue, exdays) {
         const d = new Date();
