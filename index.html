@@ -122,10 +122,10 @@
 
                 <div style="height: 269px;" class="image-slideshow bshadow-1">
                     <div class="image-slideshow-container">
-                        <img class="slide-image" src="resources/materials/banner_01.png"></img>
-                        <img class="slide-image" src="resources/materials/banner_02.png"></img>
-                        <img class="slide-image" src="resources/materials/banner_03.png"></img>
                         <img class="slide-image" src="resources/materials/banner_04.png"></img>
+                        <img class="slide-image" src="resources/materials/banner_03.png"></img>
+                        <img class="slide-image" src="resources/materials/banner_02.png"></img>
+                        <img class="slide-image" src="resources/materials/banner_01.png"></img>
                         <!-- <img class="slide-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlXRLHzsJQbkZzwackkDx3uY2aje4cFHwF2u4ESUvy90WT1tM_YJrvCTwgkdGdoJlUoH8&usqp=CAU"></img> -->
                         <!-- <img class="slide-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLpPwfJjBy3_sct9dtRjFkNeiw4ZYjHsx_RdJi5ADH5Lbm1j1AmrPtNOhtotNzefPVdfY&usqp=CAU"></img> -->
                         <!-- <img class="slide-image" src="https://omegarelectrice.com/wp-content/uploads/2023/01/%D9%85%D9%82%D8%A7%D9%84%D9%87.jpg"></img> -->
@@ -210,18 +210,22 @@
             <!-- user page -->
             <div id="page-user" class="page page-generic">
                 <div class="user-box portlet-white-a">
-                    <div>
-                        <i class="fa-regular fa-user-circle"></i>
-                        <span id="username">
-                            %username%
-                        </span>
+                    <div style="display: flex;">
+                        <i style="margin-top: 5px;" class="fa-regular fa-user-circle"></i>
+                        <div style="margin-right: 10px;display: flex;flex-direction: column;">
+                            <span id="username">
+                                %username%
+                            </span>
+                            <small style="font-size: small; color: dimgrey;" id="usernumber">
+                                %usernumber%
+                            </small>
+                        </div>
                     </div>
                     <button class="btn generic-o" id="change-username-btn">
                         خروج از حساب
                         <i class="fa-regular fa-sign-out"></i>
                     </button>
                 </div>
-
                 <div class="user-last-orders-box portlet-white-a">
                     <span> <i class="fa-solid fa-history"></i> سفارش‌های اخیر: </span>
                     <div style="display: none;" class="no-order-history">
@@ -324,17 +328,30 @@
 
     <!-- username screen -->
     <div style="display: none;" id="welcome-screen" class="welcome-screen fullscreen">
-        <!-- <h2>خوش آمدید!</h2> -->
-        <div class="user-register-container">
-            <img src="resources/img/logo-full-color-transparent.png"></img>
-            <!-- <span style="text-align: center;">ورود به امگا الکتریک</span> -->
-            <div class="form-container">
-                <input id="user-register-name" placeholder="نام و نام خانوادگی"></input>
-                <input id="user-register-phone" placeholder="شماره همراه"></input>
-                <button id="user-register-btn" class="btn generic">ورود</button>
+        <img class="welcome-logo" src="resources/img/logo-white-transparent-min.png"></img>
+        <div class="content-container">
+            <div style="text-align: right;" class="user-register-container">
+                <h1 style="">ورود به امگا الکتریک</h1>
+                <div class="form-container">
+                    <span>لطفا جهت ورود به اپلیکیشن نام و نام خانوادگی و شماره همراه خود را وارد کنید.</span>
+                    <br>
+                    <div class="input-group">
+                        <label>نام و نام خانوادگی <span style="color:red">*</span> </label>
+                        <input class="input-flat" id="user-register-name" placeholder="نام و نام خانوادگی"></input>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label>شماره همراه <span style="color:red">*</span> </label>
+                        <input class="input-flat" id="user-register-phone" type="tel" placeholder="۰۹xxxxxxxxx"></input>
+                    </div>
+                    <br>
+                    <button id="user-register-btn" disabled class="btn generic">ورود</button>
+                </div>
+                <img class="welcome-down-img" src="resources/img/keys.png"></img>
             </div>
         </div>
-    </div>
+        </div>
+        <!-- <h2>خوش آمدید!</h2> -->
 
     <!-- bottom app bar -->
     <div class="app-bar">

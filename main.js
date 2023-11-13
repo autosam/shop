@@ -2,6 +2,7 @@ const ENV = window.location.port == 5500 ? 'dev' : 'prod';
 
 let main = {
     username: 'کاربر تست',
+    userNumber: '0123456789',
     placeholderImg: 'resources/img/placeholder_img.png',
     dom: {
         headerWrapper: document.querySelector(".header-wrapper"),
@@ -307,10 +308,13 @@ let main = {
         $(main.dom.orderCheckoutScreen).slideUp('fast');
         $(main.dom.appBar).slideDown('fast');
     },
-    setUsername: function(username){
+    setUsername: function(username, number){
         main.username = username;
-        utils.setCookie('username', username, 100);
+        main.userNumber = number;
+        utils.setCookie('username', username || '', 100);
+        utils.setCookie('number', number || '', 100);
         document.querySelector('.user-box #username').textContent = username;
+        document.querySelector('.user-box #usernumber').textContent = utils.convertNumFaToEn(number);
         main.populateUserOrderHistory();
     },
     handleAppDLReminder: function(){
@@ -327,18 +331,51 @@ let main = {
     handleUser: function(){
         // return;
         let username = utils.getCookie('username');
-        if(!username)
+        let number = utils.getCookie('number');
+        if(!username || !number)
             this.openWelcomeScreen();
         else 
-            main.setUsername(username);
+            main.setUsername(username, number);
     },
     openWelcomeScreen: function(){
-        document.querySelector('#welcome-screen #user-register-btn').onclick = function(){
-            let username = document.querySelector('#welcome-screen input').value;
+        let registerBtn = document.querySelector('#welcome-screen #user-register-btn'),
+            registerName = document.querySelector('#welcome-screen #user-register-name'),
+            registerNumber = document.querySelector('#welcome-screen #user-register-phone');
+
+        function validate(){
+            registerBtn.disabled = true;
+
+            let username = registerName.value;
+            let number = registerNumber.value;
+
+            if(!username || !number) {
+                return;
+            }
+
+            let numberEn = utils.convertNumEnToFa(number);
+            let match = numberEn.match(/\d/g);
+            if(!match || match.length !== 11){
+                return;
+            }
+
+            registerBtn.disabled = false;
+        }
+
+        registerName.oninput = validate; registerName.onfocusout = validate; registerName.onfocusin = validate; 
+        registerNumber.oninput = validate; registerNumber.onfocusout = validate; registerNumber.onfocusin = validate;
+
+        registerName.value = '';
+        registerNumber.value = '';
+
+        registerBtn.onclick = function(){
+            let username = registerName.value;
+            let phone = registerNumber.value;
+
             if(!username){
                 return;
             }
-            main.setUsername(username);
+
+            main.setUsername(username, phone);
             main.closeWelcomeScreen();
             document.querySelector('#app-bar-home').click();
         }
@@ -1181,6 +1218,7 @@ let initializers = {
     },
     user_page: function(){
         document.querySelector('#change-username-btn').onclick = function(){
+            utils.setCookie('username', '', 100);
             main.openWelcomeScreen();
         }
     },
@@ -1594,6 +1632,7 @@ let productManager = {
                     type: 'POST',
                     data: JSON.stringify({
                         user: main.username,
+                        user_number: main.userNumber,
                         product: productId,
                         quantity,
                         type,

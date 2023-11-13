@@ -1459,6 +1459,12 @@ h1.generic-page-header {
 }
 
 /* welcome screen */
+.welcome-screen .content-container {
+    margin-top: 100px;
+    height: calc(100% - 100px);
+    background: white;
+}
+
 .welcome-screen {
     background-color: #f16100;
     display: flex;
@@ -1471,24 +1477,36 @@ h1.generic-page-header {
     margin-top: -50px;
 }
 
-.welcome-screen img {
-    height: 150px;
+.welcome-screen .welcome-logo {
+    height: 75px;
     object-fit: contain;
     /* margin-top: -100px; */
     /* margin-bottom: 15px; */
     padding-bottom: 15px;
-    border-bottom: 1px solid var(--seperatorClr);
+    /* border-bottom: 1px solid var(--seperatorClr); */
     /* filter: grayscale() invert(); */
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 37.5px);
+}
+
+.welcome-screen .welcome-down-img {
+    position: absolute;
+    bottom: -250px;
+    width: 500px;
+    filter: grayscale(1);
+    opacity: 0.1;
+    left: calc(50% - 280px);
 }
 
 .user-register-container {
     display: flex;
+    margin: 10px 20px;
+    /* background-color: white; */
+    /* padding: 10px; */
+    /* border: 1px solid var(--seperatorClr); */
+    /* border-radius: 10px; */
     flex-direction: column;
-    margin: 10px 10%;
-    background-color: white;
-    padding: 10px;
-    border: 1px solid var(--seperatorClr);
-    border-radius: 10px;
 }
 
 .user-register-container span {
@@ -1498,10 +1516,6 @@ h1.generic-page-header {
 .user-register-container .form-container {
     display: flex;
     flex-direction: column;
-    margin-top: 5px;
-}
-
-.user-register-container input {
     margin-top: 5px;
 }
 
@@ -1528,6 +1542,11 @@ input {
     background-color: rgb(241, 241, 241);
     font-family: var(--global-font);
     padding: 0px 10px;
+}
+
+input:focus {
+    outline: none;
+    background-color: white;
 }
 
 hr {
@@ -1608,12 +1627,14 @@ hr {
     font-size: large;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 #page-user .user-box #change-username-btn {
     font-size: small;
     padding: 0px 10px;
     border-radius: 100px;
+    height: 30px;
 }
 
 .order-history-item .order-info {
@@ -2478,4 +2499,32 @@ hr {
     justify-content: center;
     align-items: center;
     color: var(--textGray);
+}
+
+.input-flat {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    border-radius: 0px;
+    height: 35px;
+    padding: 0px;
+}
+
+.input-flat:focus {
+    border-bottom-color: #555555;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-weight: bold;
+}
+
+.input-group input {
+    margin-top: 7.5px;
 }
