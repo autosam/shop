@@ -346,7 +346,6 @@ let main = {
         let number = utils.getCookie('number');
         if(!username || !number)
             main.setUsername('', '');
-            // this.openWelcomeScreen();
         else 
             main.setUsername(username, number);
     },
@@ -373,7 +372,7 @@ let main = {
             }
 
             let numberEn = utils.convertNumEnToFa(number);
-            if(numberEn.trim().length !== 11 || numberEn[0] != '0'){
+            if(numberEn.length !== 11 || numberEn[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
             }
