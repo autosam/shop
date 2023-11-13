@@ -365,8 +365,9 @@ let main = {
                 return;
             }
 
+            registerBtn.innerHTML = 'number ' + number;
             let numberEn = utils.convertNumEnToFa(number) + '';
-            registerBtn.innerHTML = numberEn;
+            registerBtn.innerHTML = 'ennum ' + number;
             if(numberEn.length !== 11 || numberEn[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
