@@ -312,11 +312,13 @@ let main = {
         $(main.dom.orderCheckoutScreen).slideUp('fast');
         $(main.dom.appBar).slideDown('fast');
     },
-    setUsername: function(username, number){
+    setUsername: function(_username, _number){
+        let username = _username || '';
+        let number = _number || '';
         main.username = username;
         main.userNumber = number;
-        utils.setCookie('username', username || '', 100);
-        utils.setCookie('number', number || '', 100);
+        utils.setCookie('username', username, 100);
+        utils.setCookie('number', number, 100);
         document.querySelector('.user-box #username').textContent = username;
         document.querySelector('.user-box #usernumber').textContent = utils.convertNumFaToEn(number);
         main.populateUserOrderHistory();
@@ -369,7 +371,7 @@ let main = {
                 return;
             }
 
-            // registerBtn.disabled = false;
+            registerBtn.innerHTML = 'تست سامان'
             return true;
         }
 
