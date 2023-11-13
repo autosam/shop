@@ -365,10 +365,10 @@ let main = {
                 return;
             }
 
-            registerBtn.innerHTML = 'number ' + number;
-            let numberEn = utils.convertNumEnToFa(number) + '';
-            registerBtn.innerHTML = 'ennum ' + number;
-            if(numberEn.length !== 11 || numberEn[0] != '0'){
+            // registerBtn.innerHTML = 'number ' + number;
+            // let numberEn = utils.convertNumEnToFa(number) + '';
+            // registerBtn.innerHTML = 'ennum ' + number;
+            if(number.length !== 11 || number[0] != '0'){
                 $(registerNumber.nextElementSibling).show();
                 return;
             }
