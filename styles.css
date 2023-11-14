@@ -3,6 +3,14 @@
     src: url('resources/fonts/Sans a4fran3.woff');
 } */
 
+:root {
+    --app-max-width: 450px;
+    --seperatorClr: #ebebeb;
+    --textBlack: #242424;
+    --textGray: rgb(156, 156, 156);
+    --global-font: IranSansX;
+}
+
 @font-face {
     font-family: "IRANSansX";
     src: url("resources/fonts/woff/IRANSansX-Regular.woff");
@@ -37,13 +45,6 @@
         -webkit-appearance: none;
         height: 0px;
     }
-  }
-
-:root {
-    --seperatorClr: #ebebeb;
-    --textBlack: #242424;
-    --textGray: rgb(156, 156, 156);
-    --global-font: IranSansX;
 }
 
 * {
@@ -207,6 +208,7 @@ h1.generic-page-header {
     color: rgb(97, 97, 97);
     color: var(--textBlack);
     padding: 10px;
+    cursor: pointer;
 }
 
 .header-icons i {
@@ -1528,7 +1530,7 @@ h1.generic-page-header {
 .user-register-container .btn {
     height: 40px;
     margin-top: 5px;
-    border: none;
+    border: none !important;
 }
 
 .fullscreen {
@@ -2354,6 +2356,7 @@ hr {
     animation-fill-mode: both;
     outline-color: #ff893a;
     outline-style: solid;
+    cursor: pointer;
 }
 
 .floating-help-btn > i {
@@ -2540,4 +2543,39 @@ hr {
     color: red;
     font-size: smaller;
     margin-top: 5px;
+}
+
+.element-loader {
+    position: fixed;
+    left: 0;
+    z-index: -5;
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+}
+
+/* desktop */
+@media (min-width:961px){
+    body, 
+    .app-bar,
+    .order-checkout-card,
+    .order-checkout-screen {
+        width: var(--app-max-width);
+    }
+    body {
+        margin-right: calc(50% - var(--app-max-width)/2);
+        background-color: #ffffff;
+        outline: 1px solid var(--seperatorClr);
+    }
+    .floating-help-btn {
+        bottom: 20px;
+        display: flex !important;
+    }
+    .fullscreen {
+        width: var(--app-max-width);
+        right: calc(50% - var(--app-max-width) / 2);
+    }
+    .page-content-wrapper {
+        background-color: rgb(247, 247, 247);
+    }
 }

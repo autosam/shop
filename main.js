@@ -355,7 +355,7 @@ let main = {
         else 
             main.setUsername(username, number);
     },
-    openWelcomeScreen: function(){
+    openWelcomeScreen: function(referer){
         let registerBtn = document.querySelector('#welcome-screen #user-register-btn'),
             registerName = document.querySelector('#welcome-screen #user-register-name'),
             registerNumber = document.querySelector('#welcome-screen #user-register-phone'),
@@ -387,6 +387,14 @@ let main = {
             return true;
         }
 
+        function handleReferer(){
+            switch(referer){
+                case 'checkout':
+                    main.openCheckoutScreen();
+                    break;
+            }
+        }
+
         // registerName.oninput = validate; registerName.onfocusout = validate; registerName.onfocusin = validate; registerName.onchange = validate; registerName.onkeypress = validate; 
         // registerNumber.oninput = validate; registerNumber.onfocusout = validate; registerNumber.onfocusin = validate; registerNumber.onchange = validate; registerNumber.onkeypress = validate; 
 
@@ -402,18 +410,24 @@ let main = {
             let username = registerName.value;
             let phone = registerNumber.value;
 
-            if(!username){
-                return;
-            }
+            main.loadingStart();
 
-            main.setUsername(username, phone);
-            main.closeWelcomeScreen();
-            document.querySelector('#app-bar-home').click();
+            setTimeout(() => {
+                main.loadingEnd();
+                
+                main.setUsername(username, phone);
+                main.closeWelcomeScreen();
+                document.querySelector('#app-bar-home').click();
+    
+                handleReferer();
+            }, (Math.random() + 0.8) * 2000);
+
         }
 
         continueAsGuestBtn.onclick = function(){
             main.closeWelcomeScreen();
             document.querySelector('#app-bar-home').click();
+            handleReferer();
         }
 
         $('#welcome-screen').slideDown('fast');
@@ -448,7 +462,7 @@ let main = {
         document.querySelector("#order-checkout-screen .finalize-order-btn").onclick = function(){
             if(!main.username || !main.userNumber){
                 main.closeCheckoutScreen();
-                main.openWelcomeScreen();
+                main.openWelcomeScreen('checkout');
                 return;
             }
 
