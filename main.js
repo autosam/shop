@@ -332,6 +332,12 @@ let main = {
     handleAppDLReminder: function(){
         if(ENV == 'dev') return;
 
+        if(navigator.userAgent.toLowerCase().indexOf('android') == -1) return; // not android
+
+        document.querySelector('.btn.download-app').onclick = function(){
+
+        }
+
         if (navigator.userAgent.indexOf('gonative') == -1) {
             document.querySelector('.dl-app-reminder').classList.remove('hidden');
         }
@@ -464,6 +470,7 @@ let main = {
                 document.querySelector('.order-tracking-code').textContent = res.setId;
                 window.scrollTo(0,0);
                 main.populateUserOrderHistory();
+                document.querySelector('#app-bar-order').onclick();
             })
             .catch(e => {
                 $('.order-success').hide();

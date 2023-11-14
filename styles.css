@@ -1173,6 +1173,9 @@ h1.generic-page-header {
     color: gray !important;
     pointer-events: none !important;
 }
+.btn a {
+    all: unset;
+}
 .gray-color {
     color: gray;
 }
