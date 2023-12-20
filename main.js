@@ -635,89 +635,88 @@ let main = {
             if(lastOrderHistoryCookie){
                 let lastOrderHistory = JSON.parse(lastOrderHistoryCookie);
             }
-/* 
-            // home order history
-            let maxIndex = 3;
-            homeOrderHistoryContainer.innerHTML = '';
-            for(let set in orderSets){
-                if(maxIndex <= 0) continue;
-                maxIndex--;
 
-                // let persianDateFull = new Date(orderSets[set].meta.date).toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
-                // let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
-                // let timeAgo = PersianTools.timeAgo(persianDateFull);
+            // // home order history
+            // let maxIndex = 3;
+            // homeOrderHistoryContainer.innerHTML = '';
+            // for(let set in orderSets){
+            //     if(maxIndex <= 0) continue;
+            //     maxIndex--;
 
-                let persianDateFull = '%date%';
-                let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
-                let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
+            //     let persianDateFull = new Date(orderSets[set].meta.date).toLocaleString('fa-IR-u-nu-latn').replaceAll(',', '');
+            //     let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
+            //     let timeAgo = PersianTools.timeAgo(persianDateFull);
 
-                let orderedItemNames = [];
-                let orderedItemCounts = [];
-                orderSets[set].list.forEach(product => {
-                    let index = orderedItemNames.indexOf(product.title);
-                    if(index == -1){
-                        orderedItemNames.push(product.title);
-                        orderedItemCounts.push(1);
-                    } else {
-                        orderedItemCounts[index]++;
-                    }
-                })
-                orderedItemNames = orderedItemNames.map((item, i) => {
-                    return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
-                })
-                if(orderedItemNames.length > 2){
-                    orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
-                } else {
-                    orderedItemNames = orderedItemNames.slice(0, 2).join('');
-                }
+            //     // let persianDateFull = '%date%';
+            //     // let persianDate = new Date(orderSets[set].meta.date).toLocaleDateString('fa-IR');
+            //     // let timeAgo = new Date(orderSets[set].meta.date).toLocaleTimeString('fa-IR');
+
+            //     let orderedItemNames = [];
+            //     let orderedItemCounts = [];
+            //     orderSets[set].list.forEach(product => {
+            //         let index = orderedItemNames.indexOf(product.title);
+            //         if(index == -1){
+            //             orderedItemNames.push(product.title);
+            //             orderedItemCounts.push(1);
+            //         } else {
+            //             orderedItemCounts[index]++;
+            //         }
+            //     })
+            //     orderedItemNames = orderedItemNames.map((item, i) => {
+            //         return `<div style="white-space: nowrap"> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemCounts[i])}</span> ${item}</div>`;
+            //     })
+            //     if(orderedItemNames.length > 2){
+            //         orderedItemNames = orderedItemNames.slice(0, 2).join('') + ` <div> <span class="badge badge-gray">× ${utils.convertNumFaToEn(orderedItemNames.length - 2)}</span> نوع محصول دیگر ... </div>`;
+            //     } else {
+            //         orderedItemNames = orderedItemNames.slice(0, 2).join('');
+            //     }
                 
-                let setCard = main.dom.cloneable.orderHistoryItem.cloneNode(true);
-                    setCard.querySelector('.badge-orange').remove();
-                    setCard.removeAttribute('id');
-                    // setCard.querySelector('#product').innerHTML = `تعداد آیتم های سفارشی: ${orderSets[set].list.length} <hr>`;
-                    setCard.querySelector('#product').innerHTML = `
-                        <div class="flex-space-around">
-                            <div>
-                                <b>کد سفارش:</b> <span class="badge badge-orange"> ${set} </span>
-                            </div>
+            //     let setCard = main.dom.cloneable.orderHistoryItem.cloneNode(true);
+            //         setCard.querySelector('.badge-orange').remove();
+            //         setCard.removeAttribute('id');
+            //         // setCard.querySelector('#product').innerHTML = `تعداد آیتم های سفارشی: ${orderSets[set].list.length} <hr>`;
+            //         setCard.querySelector('#product').innerHTML = `
+            //             <div class="flex-space-around">
+            //                 <div>
+            //                     <b>کد سفارش:</b> <span class="badge badge-orange"> ${set} </span>
+            //                 </div>
                             
-                        </div>
+            //             </div>
 
-                        <div class="" style="margin-top: 10px">
-                            ${orderedItemNames}
-                        </div>
+            //             <div class="" style="margin-top: 10px">
+            //                 ${orderedItemNames}
+            //             </div>
 
-                        <div class="gray-color" style="margin-top: 10px">
-                            <span>
-                                <i class="fa-regular fa-calendar"></i> ${persianDate} 
-                            </span>
+            //             <div class="gray-color" style="margin-top: 10px">
+            //                 <span>
+            //                     <i class="fa-regular fa-calendar"></i> ${persianDate} 
+            //                 </span>
 
-                            <span style="margin: 0px 3px;"></span>
+            //                 <span style="margin: 0px 3px;"></span>
                     
-                            <span> 
-                                <i class="fa-regular fa-clock"></i>
-                                ${utils.convertNumFaToEn(timeAgo)} 
-                            </span>
+            //                 <span> 
+            //                     <i class="fa-regular fa-clock"></i>
+            //                     ${utils.convertNumFaToEn(timeAgo)} 
+            //                 </span>
 
-                            <span style="margin: 0px 3px;"></span>
+            //                 <span style="margin: 0px 3px;"></span>
 
-                            <span>
-                                <i class="fa-regular fa-shipping-fast"></i> ${utils.convertNumFaToEn(orderSets[set].list.length)} محصول
-                            </span>
-                        </div>
-                        <hr>
-                    `;
-                    setCard.querySelector('#quantity').innerHTML = `<button style="font-size: x-small;padding: 4px 10px;border-radius: 5px;" class="btn red cancel-order">  <i style="margin-left: 3px" class="fa-solid fa-times"></i> لغو سفارش </button>`;
-                    // setCard.querySelector('#type').innerHTML = timeAgo;
-                    setCard.querySelector('#state').outerHTML = orderSets[set].meta.processedStr;
-                    // setCard.querySelector('#set-id').outerHTML = set;
-                    // setCard.setAttribute('data-order-date', order.timestamp);
-                    homeOrderHistoryContainer.appendChild(setCard);
+            //                 <span>
+            //                     <i class="fa-regular fa-shipping-fast"></i> ${utils.convertNumFaToEn(orderSets[set].list.length)} محصول
+            //                 </span>
+            //             </div>
+            //             <hr>
+            //         `;
+            //         setCard.querySelector('#quantity').innerHTML = `<button style="font-size: x-small;padding: 4px 10px;border-radius: 5px;" class="btn red cancel-order">  <i style="margin-left: 3px" class="fa-solid fa-times"></i> لغو سفارش </button>`;
+            //         // setCard.querySelector('#type').innerHTML = timeAgo;
+            //         setCard.querySelector('#state').outerHTML = orderSets[set].meta.processedStr;
+            //         // setCard.querySelector('#set-id').outerHTML = set;
+            //         // setCard.setAttribute('data-order-date', order.timestamp);
+            //         homeOrderHistoryContainer.appendChild(setCard);
                 
-                if(orderSets[set].meta.processed != 0)
-                    setCard.querySelector('.cancel-order').remove();
-            }
-             */
+            //     if(orderSets[set].meta.processed != 0)
+            //         setCard.querySelector('.cancel-order').remove();
+            // }
 
             if(homeOrderHistoryContainer.innerHTML){
                 $('.order-history-reminder').removeClass('section-hidden');
@@ -1855,7 +1854,7 @@ let utils = {
         return persianJs(new Intl.NumberFormat('en-US', {style : "decimal" }).format(text)).englishNumber()
     },
     convertNumFaToEn: function(s){
-        return s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        return s.toString().replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
     },
     convertNumEnToFa: function(s){
         return s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
