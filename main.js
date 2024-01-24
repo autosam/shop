@@ -265,7 +265,7 @@ let main = {
                             <div class="checkout-info">
                                 <div class="flex-row">
                                     <div class="checkout-product-quantity badge-orange"> × ${utils.persianNum(quantity)} ${type} </div>
-                                    <i class="checkout-trash-product fa-solid fa-trash"></i>
+                                    <i class="checkout-trash-product fa-regular fa-trash"></i>
                                 </div>
                                 <span> ${order.querySelector(".product-price").innerHTML} </span>
                             </div>
@@ -1339,7 +1339,18 @@ let productManager = {
                 }
 
                 window.scrollTo(0, targetY);
-                // categorySelector.activate();
+                let lastScrollY = -1;
+                let targetCheckTask = setInterval(() => {
+                    if(window.scrollY != lastScrollY) {
+                        lastScrollY = window.scrollY;
+                        return;
+                    }
+                    if(!categorySelector.classList.contains('active-selector')){
+                        categorySelector.activate()
+                    }
+                    clearInterval(targetCheckTask);
+                }, 50);
+
                 categorySelector.classList.add('target-selector');
             }
             categorySelector.activate = () => {

@@ -623,11 +623,12 @@ h1.generic-page-header {
     color: #ffffff;
     background: #ff6600;
     font-size: small;
-    padding: 4px;
     margin-right: -2px;
-    padding: 5px 10px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 10px;
 }
 
 .finalize-order-list {
@@ -685,7 +686,7 @@ h1.generic-page-header {
 }
 
 .checkout-trash-product {
-    background: rgb(255, 51, 0);
+    background: rgb(255 51 0 / 8%);
     color: white;
     padding: 5px;
     margin-right: 5px;
@@ -696,6 +697,7 @@ h1.generic-page-header {
     align-items: center;
     justify-content: center;
     font-size: smaller;
+    color: red;
 }
 
 .order-success {
@@ -2600,6 +2602,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: normal !important;
 }
 
 .more-angle-left {
