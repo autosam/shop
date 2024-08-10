@@ -1274,8 +1274,29 @@ let initializers = {
     },
     user_page: function(){
         document.querySelector('#change-username-btn').onclick = function(){
-            utils.setCookie('username', '', 100);
-            main.openWelcomeScreen();
+            const closeModal = () => {
+                main.goBackHistory();
+            }
+
+            const logout = () => {
+                closeModal();
+                utils.setCookie('username', '', 100);
+                main.openWelcomeScreen();
+            }
+
+            const modal = main.createModal($(`
+                <div class="modal-inner">
+                    <h1> خروج از حساب کاربری </h1>
+                    <p> آیا می خواهید از حساب خود خارج شوید؟ </p>
+                    <hr>
+                    <div class="modal-btn-group">
+                        <button id="back" class="btn transparent back-btn"> بازگشت </button>
+                        <button id="logout" class="btn red"> خروج از حساب </button>
+                    </div>
+                </div>
+            `)[0]);
+            modal.querySelector('#back').onclick = closeModal;
+            modal.querySelector('#logout').onclick = logout;
         }
     },
     order_page: function(){
